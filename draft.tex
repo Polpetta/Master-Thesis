@@ -37,27 +37,35 @@
  
  % --- INTRODUCTION ---
  \chapter{Introduction}
- 
- In the modern mobile networking, these is a continuous necessity to 
-improve the overall speed connection: important goals are low latency and a 
-high throughtput. Mobile traffic is continuously surging every year, with 
-the backbones having more data to process. In this context, in-hardware 
-backbone solutions are becoming less efficent. Their time-to-deploy, in fact, is 
-very high compared to the requirements of the network. With this trend, 
-in-hardware solutions will not be able to keep up. Is with this considerations 
-that software solutions are being proposed to become the new way to deploy 
-network components. While less efficent, they are faster to bring them up. On 
-top of that, new virtualization technologies such as Docker are becoming more 
-and more mature for being employed in large-scale production environments,
-where new frameworks, called orchestrators (e.g. Kubernetes, Docker Swarm),
-allow to easily manage the application lifecyle, i.e. deployment, scale up/down
-and finally, removal.
 
- Through the history of internet, many factor changed and new innovations came,
+  Through the history of internet, many factor changed and new innovations came,
 but at the end of the day a foundamental key remained: TCP/IP performance are, 
 indeed, what the users unconsciously want.\todo{Idea: talk about how TCP/IP 
 performes quite well in wired connections, while in wireless one, such as 
-wireless/satellite, sucks ass}
- 
+wireless/satellite, sucks ass} In this context network optimization plays an 
+important role, and it is for this reason that network packets are processed 
+while traversing the network in order to make their transmission as fast as 
+possible. On top of that, mobile traffic is continuously surging every year, 
+with the backbones having more and more data to process. In this context, 
+in-hardware VNF solutions are becoming less efficent. Their time-to-deploy, in 
+fact, is very high compared to the requirements of the network. With this trend, 
+in-hardware solutions will not be able to keep up. Is with this considerations 
+that software solutions are being proposed to become the new way to deploy 
+network components. While less efficent, they are faster to bring them up, 
+offering an unprecedented flexibility. Furthermore, new virtualization 
+technologies such as Docker are becoming more and more mature for being employed 
+in large-scale production environments, where new frameworks, called 
+orchestrators (e.g. Kubernetes, Docker Swarm), allow to easily manage the 
+application lifecyle, i.e. deployment, scale up/down
+and finally, removal.
+
  \section{The VIBES project}
+ 
+ This thesis initially begun with the goals descripted in the VIBES\todo{Talk 
+about VIBES project, add some reference, explain what it is.} project, where 
+the necessity for better TCP/IP transmission through satellite connections was 
+the main requirement. Starting from that, we encountered many that, many 
+networking tools already present in the market, required some tweaking and some 
+integrations, shifting our goal to create a complete testbed for software VNF 
+communications, following the specifications suggested in the RFC 7665.
 \end{document}
