@@ -8,8 +8,7 @@
 %  Thesis outline
 % 
 % - Introduction about the VIBES project (context, 5G, the need for a new 
-% network 
-% architecture, proposed solution, requisites)
+% network architecture, proposed solution, requisites)
 %   + Related works
 % - Analysis of the available technologies (kubernetes, openstack, openvswitch, 
 % docker, docker swarm)
@@ -63,12 +62,24 @@ and finally, removal.
 
 \section{The VIBES project}
  
- This thesis initially begun with the goals descripted in the VIBES\todo{Talk 
-about VIBES project, add some reference, explain what it is.} project, where 
-the necessity for better TCP/IP transmission through satellite connections was 
-the main requirement. Starting with this objective, we encountered that, many 
-networking tools already present in the market, required some tweaking and some 
-integrations, shifting our goal to create a complete  ETSI (European
-Telecommunications Standards Institutes) MANO testbed, following the 
-specifications suggested in the RFC 7665.
+ This thesis is part of the VIBES project\todo{Talk about VIBES project, add 
+some reference, explain what it is.}, where the necessity for better TCP/IP 
+transmission through satellite connections is the main requirement. To 
+reach this goal, the project specifications suggest to exploit the 5G incoming 
+technology and use the NFV-MANO architecture to perform first packets 
+elaboration and performance improvment and finally TCP/IP satellite chunk
+optimization with the Performance Enhancing Proxy (PEP). The VIBES project 
+proposed five technical requirements\todo{Finish list!}:
+\begin{itemize}
+ \item Analysis of the applicability of current and new Internet protocols in
+the proposed VNF-PEP architecture
+\end{itemize}
+
+Starting with the first step of creating a MANO able to process incoming data 
+packets through VNF functions, we encountered that many networking tools already 
+present in the market required some tweaking and some integrations, shifting our 
+goal to create a complete  European Telecommunications Standards Institutes 
+(ETSI) Management and orchestrator (MANO) testbed instead, following the 
+specifications suggested in the RFC 7665, thus implementing only the first three 
+requisites, without digging in the satellite data flow optimization.
 \end{document}
