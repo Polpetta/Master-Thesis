@@ -69,11 +69,45 @@ reach this goal, the project specifications suggest to exploit the 5G incoming
 technology and use the NFV-MANO architecture to perform first packets 
 elaboration and performance improvment and finally TCP/IP satellite chunk
 optimization with the Performance Enhancing Proxy (PEP). The VIBES project 
-proposed five technical requirements\todo{Finish list!}:
-\begin{itemize}
+proposed five technical requirements:
+\begin{enumerate}
  \item Analysis of the applicability of current and new Internet protocols in
 the proposed VNF-PEP architecture
-\end{itemize}
+ \item Implementation of a VNF-PEP prototype
+ \item Building of a PoC test platform
+ \item VNF-PEP validation and performance tests on 5G use-cases
+ \item Demonstration testbed management
+\end{enumerate}
+
+\subsection{VNF-PEP architecture and internet protocols}
+
+The analysis of this topic revealed to be trivial: since internet has many 
+different protocols that would become infeasible to support all of them at the 
+same time, packet incapsulation revealed to be the solution: every packet 
+incoming in the VNFs have been previously incapsulated by the MANO, making the 
+whole architecture indipendent from the protocol a particolar data-flux uses. 
+To achieve this, TUN/TAP\todo{Find out acronym} interfaces were used to deploy 
+a tunnel between VNFs, allowing them to pass packets encapsulated in UDP ones.
+
+\subsection{VNF-PEP prototype}
+
+Since our goal shifted into creating a MANO testbed, our prototype doesn't 
+include PEP. The VNF architecture was shaped following the container 
+orchestrator we decided to use: Kubernetes.
+
+\subsubsection{About kubernetes}
+
+As already introduced before, Kubernetes is an open source software framework 
+specialized in container management and orchestration. Developed by Google in 
+??\todo{Find out the actual date} and written in Go, it allows different 
+machines (called nodes from now on) to create an abstraction layer and to form a 
+cluster where is possible to run Docker containers without brothering about 
+hardware constraints. Nodes can have specific roles and specialization, all of 
+them managed by one or many master nodes, that actually manage the 
+orchestration.
+On top of that, Kubernetes astrae from the virtualization in-use, giving the 
+possibility to change the virtualization software in use (i.e. from 
+Container-based technology to Virtual machine software).
 
 Starting with the first step of creating a MANO able to process incoming data 
 packets through VNF functions, we encountered that many networking tools already 
