@@ -105,9 +105,26 @@ cluster where is possible to run Docker containers without brothering about
 hardware constraints. Nodes can have specific roles and specialization, all of 
 them managed by one or many master nodes, that actually manage the 
 orchestration.
-On top of that, Kubernetes astrae from the virtualization in-use, giving the 
-possibility to change the virtualization software in use (i.e. from 
+On top of that, Kubernetes is virtualization-agnostic, meaning that it offers 
+the possibility to change the virtualization software in use (i.e. from 
 Container-based technology to Virtual machine software).
+
+\subsubsection{About Docker}
+
+In recent years, with the new hardware capabilities and the recent development 
+of in-kernel virtualization systems (such as Hyper-V) this technology 
+begin to be adopted. Virtualization allows to run different systems on the 
+same machine, making them completely isolated and then more resilient to 
+failure. The back of the medal, though, is that virtual machines requires large 
+amount of resources, especially memory, because solutions like copy-and-write 
+of in-memory pages are not viable anymore, leading to duplication of loaded 
+libraries and assets in the memory of the host. For large deployment containing 
+only simple services (e.g. a backend application serving a website or a 
+database) this result in a waste of resources. \todo{Talk about lxc containers 
+and how Docker solved magically the problem.}
+
+, finally leading to , especially 
+regarding memory consumption. 
 
 Starting with the first step of creating a MANO able to process incoming data 
 packets through VNF functions, we encountered that many networking tools already 
