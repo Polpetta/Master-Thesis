@@ -117,14 +117,23 @@ begin to be adopted. Virtualization allows to run different systems on the
 same machine, making them completely isolated and then more resilient to 
 failure. The back of the medal, though, is that virtual machines requires large 
 amount of resources, especially memory, because solutions like copy-and-write 
-of in-memory pages are not viable anymore, leading to duplication of loaded 
-libraries and assets in the memory of the host. For large deployment containing 
-only simple services (e.g. a backend application serving a website or a 
-database) this result in a waste of resources. \todo{Talk about lxc containers 
-and how Docker solved magically the problem.}
+of in-memory pages are not viable anymore (since the Kernel gets duplicated 
+too), leading to duplication of loaded libraries and assets in the memory of the 
+host. For large deployment containing only simple services (e.g. a backend 
+application serving a website or a database) this ends up in a waste of 
+resources. \todo{Talk about lxc containers and how Docker solved magically the 
+problem.} It's here that, in ??\todo{Find Docker date of birth}, Docker was 
+created, basing its solution on an already existing product: Linux Container 
+(LXC). From this framework, docker built an entire ecosystem, consisting in a 
+client/server model giving the possibility for users to simply launch, scale and 
+delete containers \todo{Talk about Docker-Machine}, a repository system where 
+images, the snapshot of a defined image, can be stored and tagged, in a sort of 
+system version control and of another additional solutions, called 
+\textit{Docker Compose}, and \textit{Docker Swarm} to, respectively, orchestrate 
+containers in a single node or a clustered system. \vspace{0.5cm}
 
 , finally leading to , especially 
-regarding memory consumption. 
+regarding memory consumption.
 
 Starting with the first step of creating a MANO able to process incoming data 
 packets through VNF functions, we encountered that many networking tools already 
@@ -133,4 +142,6 @@ goal to create a complete  European Telecommunications Standards Institutes
 (ETSI) Management and orchestrator (MANO) testbed instead, following the 
 specifications suggested in the RFC 7665, thus implementing only the first three 
 requisites, without digging in the satellite data flow optimization.
+
+\subsubsection{Other technologies}\todo{Talk somehow of the other tecnhologies}
 \end{document}
