@@ -11,13 +11,13 @@
 % network architecture, proposed solution, requisites)
 %   + Related works
 % - Analysis of the available technologies (kubernetes, openstack, openvswitch, 
-% docker, docker swarm)
+% Docker, Docker swarm)
 %   + Choseen tecnhologies and description of the 'reason why'
 % - Project description
 %   + Initial solution with Openstack and Tacker
 %   + From Tacker to Openbaton
 %   + From Openbaton with Openstack to Openbaton with Docker
-%   + Exploration of docker orchestrators (Swam vs Kubernetes)
+%   + Exploration of Docker orchestrators (Swam vs Kubernetes)
 %   + Kubernetes internal composition (GlusterFS, Ingress, Harbor, metrics)
 %   + Openbaton and Kubernetes integration (lack of a implemented Driver, 
 % integration with existinf VNFM)
@@ -48,11 +48,11 @@ while traversing the network in order to make their transmission as fast as
 possible. On top of that, mobile traffic is continuously surging every year, 
 with the backbones having more and more data to process. In this context, 
 in-hardware VNF solutions are becoming less efficent. Their time-to-deploy, in 
-fact, is very high compared to the requirements of the network. With this trend, 
-in-hardware solutions will not be able to keep up. Is with this considerations 
-that software solutions are being proposed to become the new way to deploy 
-network components. While less efficent, they are faster to bring them up, 
-offering an unprecedented flexibility\footnote{SDN/NFV-Based Mobile Packet 
+fact, is very high compared to the requirements of the network. With this 
+trend, in-hardware solutions will not be able to keep up. Is with this 
+considerations that software solutions are being proposed to become the new way 
+to deploy network components. While less efficent, they are faster to bring them 
+up, offering an unprecedented flexibility\footnote{SDN/NFV-Based Mobile Packet 
 Core Network Architectures: A Survey}. Furthermore, new virtualization 
 technologies such as Cloud computing and Docker are becoming more and more 
 mature for being employed in large-scale production environments, where new 
@@ -100,8 +100,8 @@ orchestrator we decided to use: Kubernetes.
 As already introduced before, Kubernetes is an open source software framework 
 specialized in container management and orchestration. Developed by Google in 
 ??\todo{Find out the actual date} and written in Go, it allows different 
-machines (called nodes from now on) to create an abstraction layer and to form a 
-cluster where is possible to run Docker containers without brothering about 
+machines (called nodes from now on) to create an abstraction layer and to form 
+a cluster where is possible to run Docker containers without brothering about 
 hardware constraints. Nodes can have specific roles and specialization, all of 
 them managed by one or many master nodes, that actually manage the 
 orchestration.
@@ -115,25 +115,28 @@ In recent years, with the new hardware capabilities and the recent development
 of in-kernel virtualization systems (such as Hyper-V) this technology 
 begin to be adopted. Virtualization allows to run different systems on the 
 same machine, making them completely isolated and then more resilient to 
-failure. The back of the medal, though, is that virtual machines requires large 
+failures. The back of the medal, though, is that virtual machines require large 
 amount of resources, especially memory, because solutions like copy-and-write 
-of in-memory pages are not viable anymore (since the Kernel gets duplicated 
-too), leading to duplication of loaded libraries and assets in the memory of the 
-host. For large deployment containing only simple services (e.g. a backend 
+of in-memory pages are not viable anymore (since the kernel gets duplicated 
+too), leading to duplication of loaded libraries and assets in the memory of 
+the host. 
+For large deployment containing only simple services (e.g. a backend 
 application serving a website or a database) this ends up in a waste of 
 resources. \todo{Talk about lxc containers and how Docker solved magically the 
 problem.} It's here that, in ??\todo{Find Docker date of birth}, Docker was 
 created, basing its solution on an already existing product: Linux Container 
-(LXC). From this framework, docker built an entire ecosystem, consisting in a 
+(LXC). From this framework, Docker built an entire ecosystem, consisting in a 
 client/server model giving the possibility for users to simply launch, scale and 
-delete containers \todo{Talk about Docker-Machine}, a repository system where 
-images, the snapshot of a defined image, can be stored and tagged, in a sort of 
-system version control and of another additional solutions, called 
-\textit{Docker Compose}, and \textit{Docker Swarm} to, respectively, orchestrate 
-containers in a single node or a clustered system. \vspace{0.5cm}
+delete containers (locally or remotely with Docker-machine), a repository 
+system where images, a layer-based ``core'' where containers start running from 
+when they are launched, can be stored and tagged in a sort of version control 
+system. Finally, another couple of solutions, called Docker-compose, and Docker 
+Swarm have the purpose to, respectively, orchestrate containers in a single or 
+a clustered system. 
 
-, finally leading to , especially 
-regarding memory consumption.
+\paragraph{Docker Swarm} \todo{Talk about its characteristic and introduce it}
+
+\vspace{0.5cm}
 
 Starting with the first step of creating a MANO able to process incoming data 
 packets through VNF functions, we encountered that many networking tools already 
