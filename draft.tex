@@ -134,8 +134,19 @@ system. Finally, another couple of solutions, called Docker-compose, and Docker
 Swarm have the purpose to, respectively, orchestrate containers in a single or 
 a clustered system. 
 
-\paragraph{Docker Swarm} \todo{Talk about its characteristic and introduce it}
-
+\paragraph{Docker Swarm} Introduced in ??\todo{Find Docker Swarm date of
+birth}, Docker Swarm allows multiple Docker nodes to cluster together and be
+seen as one logical unit. This layer completely makes the underlying
+infrastructure transparent: data management, as network one, are totaly managed
+by Docker. Recently, Docker-compose support has been introduced, making
+this one-node tool available for clustered systems. At the end of the day, on
+one hand Docker Swarm provides an easy way to set up a cluster system with all
+the tools configured out-of-the-box, without the necessity to set networking
+configurations or installing ad-hoc storage solutions. On the other hand,
+though, it doesn't have all the personalization options that Kuberentes offers,
+thus making the product less flexible. This foundamental characteristic,
+although, makes the two solutions have different use cases leading to different
+market needs.
 \vspace{0.5cm}
 
 Starting with the first step of creating a MANO able to process incoming data 
