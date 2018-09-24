@@ -37,6 +37,7 @@
  
  % --- INTRODUCTION ---
 \chapter{Introduction}
+\label{chap:intro}
 
  Through the history of internet, many factor changed and new innovations came,
 but at the end of the day a foundamental key remained: TCP/IP performance are, 
@@ -175,20 +176,32 @@ three requisites, without digging in the satellite data flow optimization. In
 particular, we discovered how, these tools, were suitable to create ETSI MANO 
 and VNFs using virtual machine or exploiting cloud tecnhologies, while they 
 were not designed with enough flexibility to integrate with Docker. In the next 
-section we are going to take a deep analysis of the cited technologies, in 
+chapter we are going to take a deep analysis of the cited technologies, in 
 order to provide to the reader enough context to be able to understand our 
 design choices we are going to describe later.
 
-\section{MANO}
+
+\noindent With this in mind, we performed a requirements analysis described in 
+the next chapter.\todo{This should be put at the end of the introduction.}
+
+\chapter{Project Analysis}
+\label{chap:prjan}
+
+As in~\ref{chap:intro}, the creation of a full ETSI MANO compliant
+architecture, following the suggestions described in RFC 7665, require the 
+integration of multiple tools (some of them have been already briefly 
+introduced in~\ref{chap:intro}). The tools were choosen after their 
+analysis, where pro and cons have been studied and compared to the necessity of 
+this thesis.
 
 \todo{This section needs to be expanded a lot!!! In particular, we should put 
 some focus about VNF and MANO, introducing them}
 
-\noindent With this in mind, we performed a requirements analysis described in 
-the next chapter.\todo{This should be put at the end of the introduction.}
 
 
 
 
 \subsubsection{Other technologies}\todo{Talk somehow of the other tecnhologies}
+\paragraph{Openstack}
+\paragraph{Openvswitch}
 \end{document}
