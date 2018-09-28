@@ -193,14 +193,37 @@ integration of multiple tools (some of them have been already briefly
 introduced in~\ref{chap:intro}). The tools were choosen after their 
 analysis, where pro and cons have been studied and compared to the necessity of 
 this thesis. Since the project has been developed with the cloud provided by 
-the University of Padua, Openstack has been used as base for our deployments.
+the University of Padua, Openstack (which a product analysis can be found later 
+in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 
-\paragraph{Openstack} Created in ??\todo{Find out Openstack date of creation}, 
+\section{Technical analysis}
+
+As today, when a packets gets send from a seder $S$, to a receiver $R$, the 
+packet gets travelling to te backbone receive appropriate in-hardware packet 
+processing before being received by $R$. During this elaboration, it is 
+important to maintain the transparency of the connection, so that the network 
+users are not aware of the packets elaboration at all. To perform that, many 
+solutions are available: TUN/TAP packet incapsulation, IP over IP or TCP 
+session recreation\todo{Check if it's the same of Split TCP}.
+
+TUN/TAP and IP over IP maintain the connection transparency incapsulating the 
+packet in another one. In this way, the original packet remains preserved and it 
+becomes the new packet payload\todo{Make an image showing a packet inside 
+another packet, to make easy to understand what we're meaning here}, that can 
+be elaborated and modified accordingly, until it gets decapsulated and sent to 
+$R$ eventually. When $R$ receives the packet, it is not be aware of the packet 
+elaboration, since all the original headers were preserved (or slightly 
+modified).
+
+\todo{Explain TCP session recreation}
+
+\section{Openstack}
+\label{chap:prjan:sec:openstack}
+Created in ??\todo{Find out Openstack date of creation}, 
 Openstack allows on-permise cloud installation, using bare-metal resources to 
 provide common cloud services as object storage, virtual machine deploy, 
 virtual networking. Furthermore its modularity offers the possibility to add 
-additional components, even proprietary, to achieve a complete solution. 
-\todo{Finish him! :D}
+additional components, even proprietary, to achieve a complete cloud solution.
 
 \todo{This section needs to be expanded a lot!!! In particular, we should put 
 some focus about VNF and MANO, introducing them}
