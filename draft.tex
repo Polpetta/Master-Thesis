@@ -220,7 +220,24 @@ another packet, to make easy to understand what we're meaning here}, that can
 be elaborated and modified accordingly, until it gets decapsulated and sent to 
 $R$ eventually. When $R$ receives the packet, it is not be aware of the packet 
 elaboration, since all the original headers were preserved (or slightly 
-modified).
+modified). TCP session recreation, instead, ``split'' the TCP session in two 
+endpoints: an Ingress, that manage the connection with the client and an 
+Egress, that communicate with the packet receiver. In order to achieve that, a 
+session table needs to be established and continuously updated, while TCP 
+headers need to be accordingly modified to allow data transmission through the 
+Ingress and Egress points. TCP session recreation seems burdersome at the first 
+sight, but it offers the flexibility to perform extensive packet manipulation: 
+since the packet its recreated every time at the Ingress and Egress points, 
+while in the Network Function Virtualization Infrastructure (NFVI), the 
+original packet can be stripped of its headers (that could be saved in the 
+session table) to slightly improve internal packet transmission. \todo{Insert 
+TCP session recreation schema}
+
+During the testbed development we first tried the TUN/TAP solution, that 
+revealed to be not completely transparent and with major performance drawbacks 
+(i.e. packet transmission in a LAN connection reached latencies of 50ms) 
+\todo{Explain the constraint of point-to-point connections, while we need 
+dynamic SFC)}
 
 In TCP Splitting, instead, we split the path from sender and receiver dividing
 the end-to-end TCP connection into a multi-overlay-hop path where to each hop
