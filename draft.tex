@@ -203,7 +203,12 @@ this thesis. Since the project has been developed with the cloud provided by
 the University of Padua, Openstack (which a product analysis can be found later 
 in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 
-\section{Technical analysis}
+\section{Architecture overview}
+
+During the testbed development the software architecture diverged from the 
+original one, experiencing different evolutions and modifications.
+
+\section{SFC packet transmission strategies}
 
 As today, when a packets gets send from a seder $S$, to a receiver $R$, the 
 packet gets travelling to te backbone receive appropriate in-hardware packet 
@@ -237,7 +242,9 @@ During the testbed development we first tried the TUN/TAP solution, that
 revealed to be not completely transparent and with major performance drawbacks 
 (i.e. packet transmission in a LAN connection reached latencies of 50ms) 
 \todo{Explain the constraint of point-to-point connections, while we need 
-dynamic SFC)}
+dynamic SFC)}, so we choose to opt for a TCP session recreation solution, 
+implementing a little back-end with the aim of saving in a persistent storage 
+the SFC the packet has to perform and additional metadata.
 
 In TCP Splitting, instead, we split the path from sender and receiver dividing
 the end-to-end TCP connection into a multi-overlay-hop path where to each hop
