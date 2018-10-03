@@ -208,6 +208,28 @@ in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 During the testbed development the software architecture diverged from the 
 original one, experiencing different evolutions and modifications.
 
+\subsection{VIBES architectural description}
+
+In the original VIBES architectural design, based on leveraging virtualization 
+technologies, is possible to identify different macro-components, each of these 
+specialized in fullfilling a specific goal. For the ETSI standards, the Network 
+Function Virtualization (NFV) design should be composed as follows:\todo{Insert 
+image page 11 ETSI vibes specification}
+\begin{itemize}
+ \item Network Function Virtualization Infrastructure (NFVI): it's the heart of 
+the whole computation component, and here three sub-domains can be identified:
+\todo{Expand this section}
+\begin{itemize} 
+ \item Hypervisor domain that is composed of the Virtual Compute, the Virtual 
+Storage, and the Virtualization Layer. These components
+ \item Compute domain composed by the Physical Compute and the Physical Storage
+ \item Infrastructure domain which has the Physical Network, and its 
+virtualized counterpart as made available by the Virtualization Layer
+\end{itemize}
+
+\end{itemize}
+
+
 \section{SFC packet transmission strategies}
 
 As today, when a packets gets send from a seder $S$, to a receiver $R$, the 
