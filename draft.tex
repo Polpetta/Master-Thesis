@@ -86,10 +86,17 @@ The analysis of this topic revealed to be trivial: since internet has many
 different protocols that would become infeasible to support all of them at the
 same time, packet incapsulation present itself as the only faseable solution:
 every packet incoming in the VNFs has already been incapsulated by the MANO,
-\todo{Not sure about this, please give it a check} making the whole
-architecture indipendent from the protocol a particolar flux of data uses. To
-achieve this, TUN/TAP\todo{Find out acronym} interfaces were used to deploy a
-tunnel between VNFs, allowing them to pass packets encapsulated in UDP ones.
+\todo{Not sure about this, please give it a check - Not sure but I think that
+it is not part of the MANO the encapsulation of the packets. Also I think that
+the main purpose of UDP encapsulation is not to hide the protocol used on the
+edges but 1) usa a ``quick protocol to exchange data among VNFs and 2) we are
+hiding the path not the protocol itself. As we were discussing, we are creating
+some sort of proxy, so the aim will be the same even if we support a plethora
+of protocols.''} making the whole architecture indipendent from the protocol a
+particolar flux of data uses. To achieve this, TUN/TAP
+\todo{Find out acronym - EPKT? (Encapsulated PacKeT)}
+interfaces were used to deploy a tunnel between VNFs, allowing them to pass
+packets encapsulated in UDP ones.
 
 \subsection{VNF-PEP prototype}
 
@@ -215,6 +222,20 @@ $R$ eventually. When $R$ receives the packet, it is not be aware of the packet
 elaboration, since all the original headers were preserved (or slightly 
 modified).
 
+In TCP Splitting, instead, we split the path from sender and receiver dividing
+the end-to-end TCP connection into a multi-overlay-hop path where to each hop
+we have an independant TCP cconnection. Each segment that composes the whole
+path can use different flavours of TCP, e.g. using different enhancement based
+on the tipology of the connection (in case of satellite connection we TCP Hybla
+can be used, HighSpeed TCP in case of optical fiber). That could cause
+performance issues depending on the intermediate proxies that create the route:
+it is the case, for example, when an intermediate node sends back a spoofed ACK
+before the original packet is delivered to the real consegnee. In that senario,
+the sender unaware of the proxy, will miscalculate the sending window based on
+the too low RTT. Other problems of TCP splitting are reliability andd security:
+breacking the end to end TCP logic: a server failure is may cause to an unaware
+client to believe that all packets reach the destination.
+
 \todo{Explain TCP session recreation}
 
 \section{Openstack}
@@ -235,4 +256,6 @@ some focus about VNF and MANO, introducing them}
 \subsubsection{Other technologies}\todo{Talk somehow of the other tecnhologies}
 \paragraph{Openstack}
 \paragraph{Openvswitch}
+\paragraph{Openbaton}
+\paragraph{SDN?}
 \end{document}
