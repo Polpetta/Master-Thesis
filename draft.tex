@@ -232,11 +232,22 @@ virtualized counterpart as made available by the Virtualization Layer.
 \end{itemize}
 
 In conventional virtualization systems these resources are usually separated 
-from the host operating system, providing better isolation but worste 
+from the host operating system, providing better isolation but wrost
 performance. The ETSI infrastructure, instead, tries with container 
 virtualization technology to push for a better NFV responsiveness\todo{Check 
 term - I don't think it actually exists}, removing the additional operating 
 system (called ``guest'' OS) required by the usual hypervisor-oriented approach.
+
+To realize the required components, specific tools were suggested in the VNF 
+technical proposal: regarding the NFV (network infrastructure) domain 
+Docker-Compose was proposed as a viable solution, while to store PEP instances 
+docker swarm was described as a possible candidate.
+
+We performed an accured analysis of the tools choosen based on their maturity, 
+on the community and on the technical support offered (e.g. user manuals, 
+developer documentation), which, at the end, commited us to choose different 
+tools from the suggested ones. A detailed description of the architectural 
+implementation can be found in chapter~\ref{chap:archimpl}.
 
 \end{itemize}
 
@@ -315,4 +326,7 @@ some focus about VNF and MANO, introducing them}
 \paragraph{Openvswitch}
 \paragraph{Openbaton}
 \paragraph{SDN?}
+
+\chapter{Architectural implementation}
+\label{chap:archimpl}
 \end{document}
