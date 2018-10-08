@@ -2,6 +2,8 @@
 
 \usepackage{todonotes}
 
+\graphicspath{{res/img/}}
+
 \author{Polonio Davide}
 \title{A thesis draft}
 % The outline'd be something like this:
@@ -142,7 +144,14 @@ system where images, a layer-based ``core'' where containers start running from
 when they are launched, can be stored and tagged in a sort of version control
 system. Finally, another couple of solutions, called Docker-compose, and Docker
 Swarm have the purpose to, respectively, orchestrate containers in a single or
-a clustered system. \todo{Add Docker, docker-machine logos}
+a clustered system.
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.7]{docker_logo}
+ \caption{Official Docker logo}
+ \label{chap:intro:img:docker_logo}
+\end{figure}
+
 
 \paragraph{Docker Swarm} Introduced in ??\todo{Find Docker Swarm date of
 birth}, Docker Swarm allows multiple Docker nodes to cluster together and be
@@ -215,6 +224,14 @@ technologies, is possible to identify different macro-components, each of these
 specialized in fullfilling a specific goal. For the ETSI standards, the Network 
 Function Virtualization (NFV) design should be composed as follows:\todo{Insert 
 image page 11 ETSI vibes specification}
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=2]{etsi_arch}
+ \caption{A schematic image representing the high level NFV architecture 
+proposed by ESA.}
+ \label{chap:prjan:img:etsi_arch}
+\end{figure}
+
 \begin{itemize}
  \item Network Function Virtualization Infrastructure (NFVI): it's the heart of 
 the whole computation component, and here three sub-domains can be identified:
