@@ -209,13 +209,13 @@ the next chapter.\todo{This should be put at the end of the introduction.}
 \chapter{Project Analysis}
 \label{chap:prjan}
 
-As in~\ref{chap:intro}, the creation of a full ETSI MANO compliant
-architecture, following the suggestions described in RFC 7665, require the 
-integration of multiple tools (some of them have been already briefly 
-introduced in~\ref{chap:intro}). The tools were choosen after their 
-analysis, where pro and cons have been studied and compared to the necessity of 
-this thesis. Since the project has been developed with the cloud provided by 
-the University of Padua, Openstack (which a product analysis can be found later 
+As in chapter~\ref{chap:intro}, the creation of a full ETSI MANO compliant
+architecture, following the suggestions described in RFC 7665, require the
+integration of multiple tools (some of them have been already briefly introduced
+in~\ref{chap:intro}). The tools were choosen after their analysis, where pro and
+cons have been studied and compared to the necessity of this thesis. Since the
+project has been developed with the cloud provided by the University of Padua,
+Openstack (which a product analysis can be found later
 in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 
 \section{Architecture overview}
@@ -285,40 +285,54 @@ solutions are available: TUN/TAP packet incapsulation, IP over IP or TCP
 session recreation (know also as TCP split).
 
 TUN/TAP and IP over IP maintain the connection transparency incapsulating the
-packet in another one. In this way, the original packet remains preserved and it
-becomes the new packet payload\todo{Make an image showing a packet inside
-  another packet, to make easy to understand what we're meaning here}, that can
-be elaborated and modified accordingly, until it gets decapsulated and sent to
-$R$ eventually. When $R$ receives the packet, it is not be aware of the packet
-elaboration, since all the original headers were preserved (or slightly
-modified). TCP session recreation, instead, ``split'' the TCP session in two
-endpoints: an Ingress, that manage the connection with the client and an Egress,
-that communicate with the packet receiver creating a multi-overlay-hop path
-where for each hop there is an possible indipendent TCP connection. In order to
-achieve that, a session table needs to be established and continuously updated,
-while TCP headers need to be accordingly modified to allow data transmission
-through the Ingress and Egress points. Nonetheless, care should be given to
-packets path: in order to avoid ill-calculated congestion windows, the incoming
-packets need to follow the same (or an equivalent one) path for the same
-instatiated connection. This phenomenom is based on the intermediate proxies
-that create the route: it is the case, for example, when an intermediate node
-sends back a spoofed ACK before the original packet is delivered to the real
-consegnee. In this senario, the sender, unaware of the proxy, will miscalculate
-the sending window based on the too low RTT. Other problems of TCP splitting are
-reliability and security, especially because the end to end TCP logic is no
-longer maintained: a server failure may cause to an unaware client to believe
-that all the packets have reached the destination. TCP session recreation seems
-burdersome and it doesn't seem to add any significant benefit at the first
-sight, but it offers the flexibility to perform extensive packet manipulation:
-since the packet its recreated every time at the Ingress and Egress points,
-while in the Network Function Virtualization Infrastructure (NFVI), the original
-packet can be stripped of its headers (that could be saved in the session table)
-to slightly improve internal packet transmission. \todo{Insert TCP session
-  recreation schema} On top of that, it offers the possibility to use different
-TCP flavours, hence increasing the communication speed in heterogeneous networks
-(e.g. in case of satellite connections TCP Hybla can be employed, while it is
-known that HighSpeed TCP gives best results when applied in optical fiber-based
-connections).
+packet in another one.
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{IPoverIP}
+  \caption[IP over IP schema]{An example of IP over IP. Is noticeable how the
+    original packet becomes the payload of a new one, thus being encapsulated.
+    All the informations regarding the original packet remains untouched: when
+    this kind of packet gets send from a machine to another, the OS will remove
+    the new packet header and will present to the user-space program receiving
+    the data its payload: a IP packet. Packets encapsulation can be applied with
+    higher layers too, thus allowing for TCP and UDP packet incapsulation.}
+  \label{chap:prjan:img:ip_over_ip}
+\end{figure}
+
+
+In this way, the original packet remains preserved and it becomes the new packet
+payload\todo{Make an image showing a packet inside another packet, to make easy
+  to understand what we're meaning here}, that can be elaborated and modified
+accordingly, until it gets decapsulated and sent to $R$ eventually. When $R$
+receives the packet, it is not be aware of the packet elaboration, since all the
+original headers were preserved (or slightly modified). TCP session recreation,
+instead, ``split'' the TCP session in two endpoints: an Ingress, that manage the
+connection with the client and an Egress, that communicate with the packet
+receiver creating a multi-overlay-hop path where for each hop there is an
+possible indipendent TCP connection. In order to achieve that, a session table
+needs to be established and continuously updated, while TCP headers need to be
+accordingly modified to allow data transmission through the Ingress and Egress
+points. Nonetheless, care should be given to packets path: in order to avoid
+ill-calculated congestion windows, the incoming packets need to follow the same
+(or an equivalent one) path for the same instatiated connection. This phenomenom
+is based on the intermediate proxies that create the route: it is the case, for
+example, when an intermediate node sends back a spoofed ACK before the original
+packet is delivered to the real consegnee. In this senario, the sender, unaware
+of the proxy, will miscalculate the sending window based on the too low RTT.
+Other problems of TCP splitting are reliability and security, especially because
+the end to end TCP logic is no longer maintained: a server failure may cause to
+an unaware client to believe that all the packets have reached the destination.
+TCP session recreation seems burdersome and it doesn't seem to add any
+significant benefit at the first sight, but it offers the flexibility to perform
+extensive packet manipulation: since the packet its recreated every time at the
+Ingress and Egress points, while in the Network Function Virtualization
+Infrastructure (NFVI), the original packet can be stripped of its headers (that
+could be saved in the session table) to slightly improve internal packet
+transmission. \todo{Insert TCP session recreation schema} On top of that, it
+offers the possibility to use different TCP flavours, hence increasing the
+communication speed in heterogeneous networks (e.g. in case of satellite
+connections TCP Hybla can be employed, while it is known that HighSpeed TCP
+gives best results when applied in optical fiber-based connections).
 
 During the testbed development we first tried the TUN/TAP solution, that 
 revealed to be not completely transparent and with major performance drawbacks 
