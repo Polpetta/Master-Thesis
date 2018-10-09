@@ -282,7 +282,7 @@ processing before being received by $R$. During this elaboration, it is
 important to maintain the transparency of the connection, so that the network 
 users are not aware of the packets elaboration at all. To perform that, many 
 solutions are available: TUN/TAP packet incapsulation, IP over IP or TCP 
-session recreation\todo{Check if it's the same of Split TCP}.
+session recreation (know also as TCP split).
 
 TUN/TAP and IP over IP maintain the connection transparency incapsulating the
 packet in another one. In this way, the original packet remains preserved and it
