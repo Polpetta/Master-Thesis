@@ -118,8 +118,14 @@ them managed by one or many master nodes, that actually manage the
 orchestration.
 On top of that, Kubernetes is virtualization-agnostic, meaning that it offers
 the possibility to change the virtualization software in use (i.e. from
-Container-based technology to Virtual machine software).\todo{Add Kubernetes
-logo}
+Container-based technology to Virtual machine software).
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.35]{kubernetes_logo}
+ \caption{Kubernetes Logo}
+ \label{chap:intro:img:k8s_logo}
+\end{figure}
+
 
 \subsubsection{About Docker}
 
@@ -222,8 +228,7 @@ original one, experiencing different evolutions and modifications.
 In the original VIBES architectural design, based on leveraging virtualization 
 technologies, is possible to identify different macro-components, each of these 
 specialized in fullfilling a specific goal. For the ETSI standards, the Network 
-Function Virtualization (NFV) design should be composed as follows:\todo{Insert 
-image page 11 ETSI vibes specification}
+Function Virtualization (NFV) design should be composed as follows:
 \begin{figure}[t]
  \centering
  \includegraphics[scale=2]{etsi_arch}
@@ -326,10 +331,18 @@ client to believe that all packets reach the destination.
 \section{Openstack}
 \label{chap:prjan:sec:openstack}
 Created in ??\todo{Find out Openstack date of creation}, 
-Openstack allows on-permise cloud installation, using bare-metal resources to 
+Openstack allows on-permise cloud installations, using bare-metal resources to 
 provide common cloud services as object storage, virtual machine deploy, 
 virtual networking. Furthermore its modularity offers the possibility to add 
 additional components, even proprietary, to achieve a complete cloud solution.
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.58]{openstack_logo}
+ \caption{Openstack logo}
+ \label{chap:prjan:img:openstack_logo}
+\end{figure}
+
+
 
 \todo{This section needs to be expanded a lot!!! In particular, we should put 
 some focus about VNF and MANO, introducing them}
@@ -342,6 +355,13 @@ some focus about VNF and MANO, introducing them}
 \paragraph{Openstack}
 \paragraph{Openvswitch}
 \paragraph{Openbaton}
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.45]{openbaton_logo}
+ \caption{Openbaton logo}
+ \label{chap:prjan:img:openbaton_logo}
+\end{figure}
+
 \paragraph{SDN?}
 
 \chapter{Architectural implementation}
