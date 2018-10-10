@@ -376,10 +376,18 @@ some focus about VNF and MANO, introducing them}
 \paragraph{Openbaton} Created by the Institute Fraunhofer, it's a open-source, 
 customizable NFV MANO-compliant framework, that offers many configurations 
 options, and since it's written in Java, there is the possibility to add 
-components (plug-ins) dynamically. Openbaton can be installed on-permise 
-installations but it can also run on Docker containers. It's designed to work 
-with cloud providers like Amazon or Google Compute engine, but it offers 
-compability with on-permise cloud solutions like Openstack too.
+components (plug-ins) dynamically. Openbaton can be installed as a normal 
+computer program (they offer packages for the most common distros) but it can 
+be deployed on Docker containers too. It's designed to work with cloud 
+providers like Amazon or Google Compute engine, but it offers compability with 
+on-permise cloud solutions like Openstack, where it deploys virtual machines 
+using the API the platform offers. It can store VNF configurations saved as 
+TOSCA YAML\todo{What does TOSCA mean? Find out} and it can handle multiple 
+PoPs\todo{Write down PoP meaning}. It offers a VNF lifecyle management 
+out-of-the-box, with the possibility to customize it based on the user needs. 
+Its modular design allows developers to change parts of the codebase with 
+custom ones, making the product really flexible to different platforms. 
+Performing this operation requires a deep knowlege of the framework though.
 \begin{figure}[h]
  \centering
  \includegraphics[scale=0.45]{openbaton_logo}
