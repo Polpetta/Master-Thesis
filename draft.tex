@@ -238,14 +238,14 @@ proposed by ESA.}
 \end{figure}
 
 \begin{itemize}
- \item Network Function Virtualization Infrastructure (NFVI): it's the heart of 
-the whole computation component, and here three sub-domains can be identified:
-\todo{Expand this section}
+ \item \textbf{Network Function Virtualization Infrastructure (NFVI)}: it's the
+   heart of the whole computation component, and here three sub-domains can be
+   identified: \todo{Expand this section}
 \begin{itemize} 
- \item \textbf{Hypervisor domain} that is composed of the Virtual Compute, the 
-Virtual Storage, and the Virtualization Layer. These components are used to 
-virtualize the computational and storage resources, providing a layer for 
-accessing it.
+ \item \textbf{Hypervisor domain} that is composed of the Virtual Compute, the
+   Virtual Storage, and the Virtualization Layer. These components are used to
+   virtualize the computational and storage resources, providing a layer for
+   accessing it.
  \item \textbf{Compute domain} composed by the Physical Compute and the 
 Physical Storage. These are the real resources which are virtualized via 
 software.
@@ -272,10 +272,21 @@ tools from the suggested ones. A detailed description of the architectural
 implementation can be found in chapter~\ref{chap:archimpl}.\todo{Include prof. 
 survey about community components here}
 
-\item VNFs this are the core components that perform packets manipulation 
-\todo{Expand}
+\item \textbf{VNFs} this are the core components that perform packets
+  manipulation. This components are design to be lightweight services able to
+  elaborate a great amount of packets per seconds. Manupulation can be of two
+  typologies: stateful or stateless. In the first case, a state is maintained,
+  and the VNF can perform heuristics about data coming through it (especially
+  useful to detect patterns in the data flow, e.g. DDos attacks). In the second
+  case, no state is maintained, and every packet is treated without any
+  particular assumption. \todo{Add ref to chap about SFC?}
 
-\item NFV Management and Orchestration (MANO) \todo{Expand this part}
+\item \textbf{NFV Management and Orchestration (MANO)} also known as NFV
+  Orchestrator (NFVO) is responsible for the end-to-end management and
+  orchestration of network services (NS), also called SFC. The MANO has
+  different responsabilities, such as managing the
+  istantiation/destruction/modification of the SFCs, that achieves interacting
+  with the VIM. \todo{Expand this part}
 
 \end{itemize}
 
