@@ -54,7 +54,7 @@
  trend, in-hardware solutions will not be able to keep up. Is with this
  considerations that software solutions are being proposed to become the new way
  to deploy network components. While less efficent, they are faster to bring
- them up, offering an unprecedented flexibility\footnote{SDN/NFV-Based Mobile
+ them up, offering an unprecedented flexibility\todo{CITE: SDN/NFV-Based Mobile
    Packet Core Network Architectures: A Survey}. Furthermore, new virtualization
  technologies such as Cloud computing and Docker are becoming more and more
  mature for being employed in large-scale production environments, where new
@@ -86,7 +86,7 @@
 The analysis of this topic revealed to be trivial: since internet has many
 different protocols that would become infeasible to support all of them at the
 same time, packet incapsulation present itself as the only faseable solution:
-every packet incoming in the VNFs has already been incapsulated by the MANO,
+every packet incoming in the VNFs has already been encapsulated by the MANO,
 \todo{Not sure about this, please give it a check - Not sure but I think that it
   is not part of the MANO the encapsulation of the packets. Also I think that
   the main purpose of UDP encapsulation is not to hide the protocol used on the
@@ -94,9 +94,9 @@ every packet incoming in the VNFs has already been incapsulated by the MANO,
   hiding the path not the protocol itself. As we were discussing, we are
   creating some sort of proxy, so the aim will be the same even if we support a
   plethora of protocols.''} making the whole architecture indipendent from the
-protocol a particolar flux of data uses. To achieve this, TUN/TAP \todo{Find out
-  acronym - EPKT? (Encapsulated PacKeT)} interfaces were used to deploy a tunnel
-between VNFs, allowing them to pass packets encapsulated in UDP ones.
+protocol a particolar flux of data uses. To achieve this, TUN/TAP interfaces 
+were used to deploy a tunnel between VNFs, allowing them to pass packets 
+encapsulated in UDP ones.
 
 \subsection{VNF-PEP prototype}
 
@@ -279,7 +279,12 @@ implementation can be found in chapter~\ref{chap:archimpl}.\todo{Include prof.
   orchestration of network services (NS), also called SFC. The MANO has
   different responsabilities, such as managing the
   istantiation/destruction/modification of the SFCs, that achieves interacting
-  with the VIM. \todo{Expand this part}
+  with the VIM.\todo{CITE: SDN/NFV-Based Mobile Packet Core Network
+Architectures: A Survey}. Finally, the mano can integrate with 
+Operational and Business Support Systems (OSS/BSS), \todo{Expand this part with 
+the following papers: https://www.tandfonline.com/doi/abs/10.1057/jors.1995.176 
+https://ieeexplore.ieee.org/abstract/document/6963800 
+https://www.computer.org/csdl/proceedings/ifcsta/2009/3930/01/3930a466-abs.html}
 
 \end{itemize}
 
