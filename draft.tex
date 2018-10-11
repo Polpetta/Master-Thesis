@@ -10,11 +10,11 @@
 % 
 % - Introduction about the VIBES project (context, 5G, the need for a new 
 % network architecture, proposed solution, requisites)
-%   + Related works
+%   + Related works (how are we gonna do that??)
 % - Analysis of the available technologies (kubernetes, openstack, openvswitch, 
 % Docker, Docker swarm)
 %   + Choseen tecnhologies and description of the 'reason why'
-% - Project description
+% - Project description (tell how we've done stuff)
 %   + Initial solution with Openstack and Tacker
 %   + From Tacker to Openbaton
 %   + From Openbaton with Openstack to Openbaton with Docker
@@ -289,7 +289,12 @@ https://www.computer.org/csdl/proceedings/ifcsta/2009/3930/01/3930a466-abs.html}
 \end{itemize}
 
 
-\section{SFC packet transmission strategies}
+\section{SFC}
+
+\todo{Here it's missing an introduction about SFC and its terminology, need to 
+include parts of RFC 7665}
+
+\subsection{Packet transmission strategies}
 
 When a packets are sent from a seder $S$, to a receiver $R$, they start
 travelling to the backbone receiving appropriate in-hardware packet processing
@@ -359,9 +364,23 @@ revealed to be not completely transparent and with major performance drawbacks
 implementing a little back-end with the aim of saving in a persistent storage
 the SFC the packet has to perform and additional metadata.
 
-\todo{Explain TCP session recreation}
+\section{Available technologies in the market}
 
-\section{Openstack}
+Before starting any effective work on the project it has been decided to 
+perform an analysis of the possible technologies avvailable in the market, 
+performing a choice between them and exploiting their possibile ``weak 
+points''. Proceding with a top-down approach, the frameworks were choosen from 
+the one that had the biggest role in the testbed to conclude with the 
+less-important components.
+
+\subsection{NFVI}
+
+A critical component, as the MANO one, is the NFVI. Without it, network 
+resources can't be allocated, and since our project was focused on dynamically 
+allocating containerized applications on cloud platforms, we decided to start 
+analizing the right framework for this component first.
+
+\subsection{Openstack}
 \label{chap:prjan:sec:openstack}
 Created in ??\todo{Find out Openstack date of creation}, Openstack allows
 on-permise cloud installations, using bare-metal resources to provide common
