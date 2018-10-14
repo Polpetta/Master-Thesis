@@ -1,0 +1,90 @@
+%**************************************************************
+% Frontespizio
+%**************************************************************
+\begin{titlepage}
+
+\begin{center}
+
+\begin{LARGE}
+\textbf{\myUni}\\
+\end{LARGE}
+
+\vspace{10pt}
+
+\begin{Large}
+\textsc{\myDepartment}\\
+\end{Large}
+
+\vspace{10pt}
+
+\begin{large}
+\textsc{\myFaculty}\\
+\end{large}
+
+\vspace{30pt}
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[height=6cm]{logo-unipd}
+\end{center}
+\end{figure}
+
+\vspace{35pt}
+
+\begin{LARGE}
+\begin{center}
+\textbf{\myTitle}\\
+\end{center}
+\end{LARGE}
+
+\vspace{80pt}
+
+\ifbool{ifCoSupervisor}{
+    \begin{large}
+    \begin{flushleft}
+    \textit{Supervisor}\\ 
+    \vspace{5pt} 
+    \textbf{Prof. \mySupervisor}
+    \end{flushleft}
+
+    \begin{flushleft}
+    \textit{Co-Supervisor}\\ 
+    \vspace{5pt} 
+    \textbf{Prof. \myCoSupervisor}
+    \end{flushleft}
+
+    \vspace*{-4.23cm} 
+
+    \begin{flushright}
+    \textit{Author}\\ 
+    \vspace{5pt} 
+    \textbf{\myName}
+    \end{flushright}
+    \end{large}
+}{
+    \begin{large}
+    \begin{flushleft}
+    \textit{Supervisor}\\ 
+    \vspace{5pt} 
+    \textbf{Prof. \mySupervisor}
+    \end{flushleft}
+
+    \vspace*{-2.36cm} 
+
+    \begin{flushright}
+    \textit{Author}\\ 
+    \vspace{5pt} 
+    \textbf{\myName}
+    \end{flushright}
+    \end{large}
+}
+
+%\vspace{150pt}
+\vfill
+\includegraphics[scale=0.1]{logoDM}
+\line(1, 0){338} \\
+\begin{normalsize}
+\textsc{\myTime}
+\end{normalsize}
+
+\end{center}
+\end{titlepage}

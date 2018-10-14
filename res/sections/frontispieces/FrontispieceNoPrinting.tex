@@ -1,0 +1,102 @@
+%**************************************************************
+% Frontespizio
+%**************************************************************
+\begin{titlepage}
+
+\begin{center}
+
+\noindent\begin{minipage}{0.2\textwidth}
+\includegraphics[scale=0.1]{logo-unipd}
+\end{minipage}%
+\hspace*{0.5cm}
+\begin{minipage}{0.73\textwidth}
+
+\vspace{0.5cm}
+
+\begin{Large}
+\textbf{\textsc{\myUni}}
+\end{Large}
+
+\vspace*{-0.2cm}
+
+\hrulefill
+
+\vspace*{0.2cm}
+
+\begin{Large}
+\textsc{\myDepartment}
+\end{Large}
+
+\vspace*{0.1cm}
+
+\begin{large}
+\textit{\myFaculty}\\
+\end{large}
+\end{minipage}
+
+\vspace*{2.7cm}
+
+\makebox[0pt][c]{%
+  \raisebox{-\totalheight}[0pt][0pt]{%
+    \includegraphics[height=12cm]{logo-unipd-tr}}}%
+
+\vspace{28pt}
+
+\begin{huge}
+\begin{center}
+\textbf{\myTitle}\\
+\end{center}
+\end{huge}
+
+\vspace*{8cm}
+
+
+\ifbool{ifCoSupervisor}{
+    \begin{large}
+    \begin{flushleft}
+    \textit{Supervisor}\\ 
+    \vspace{5pt} 
+    \textbf{Prof. \mySupervisor}
+    \end{flushleft}
+
+    \begin{flushleft}
+    \textit{Co-Supervisor}\\ 
+    \vspace{5pt} 
+    \textbf{Prof. \myCoSupervisor}
+    \end{flushleft}
+
+    \vspace*{-4.23cm} 
+
+    \begin{flushright}
+    \textit{Author}\\ 
+    \vspace{5pt} 
+    \textbf{\myName}
+    \end{flushright}
+    \end{large}
+}{
+    \begin{large}
+    \begin{flushleft}
+    \textit{Supervisor}\\ 
+    \vspace{5pt} 
+    \textbf{Prof. \mySupervisor}
+    \end{flushleft}
+
+    \vspace*{-2.36cm} 
+
+    \begin{flushright}
+    \textit{Author}\\ 
+    \vspace{5pt} 
+    \textbf{\myName}
+    \end{flushright}
+    \end{large}
+}
+
+\vfill
+\includegraphics[scale=0.1]{logoDM}
+\line(1, 0){338} \\
+\begin{normalsize}
+\textsc{\myTime}
+\end{normalsize}
+
+\end{center}
+\end{titlepage}

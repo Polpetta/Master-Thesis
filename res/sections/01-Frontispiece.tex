@@ -1,0 +1,11 @@
+\frontmatter
+
+\getenv[\PRINT]{PRINT}
+
+\newcommand{\printing}{y}
+
+\if\printing\PRINT
+  \input{res/sections/frontispieces/FrontispiecePrinting}
+\else
+  \input{res/sections/frontispieces/FrontispieceNoPrinting}
+\fi
