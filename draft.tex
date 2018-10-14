@@ -1,6 +1,7 @@
 \documentclass[10pt]{book}
 
 \usepackage{todonotes}
+\usepackage{graphicx}
 
 \graphicspath{{res/img/}}
 
@@ -34,33 +35,93 @@
  
 
  % This is just a draft, nothing suitable for the final product: sources are in
- % form of a footnote
+ % form of a todo
  
  % --- INTRODUCTION ---
 \chapter{Introduction}
 \label{chap:intro}
 
- Through the history of internet, many factor changed and new innovations came,
- but at the end of the day a foundamental key remained: TCP/IP performance are,
- indeed, what the users unconsciously want.\todo{Idea: talk about how TCP/IP
+ Through the history of internet, many factors changed and new innovations came,
+ but at the end of the day a foundamental key remained: connection performances
+ are, indeed, what the users really want.\todo{Idea: talk about how TCP/IP
    performes quite well in wired connections, while in wireless one, such as
    wireless/satellite, sucks ass} In this context network optimization plays an
- important role, and it is for this reason that network packets are processed
- while traversing the network in order to make their transmission as fast as
- possible. On top of that, mobile traffic is continuously surging every year,
- with the backbones having more and more data to process. In this context,
- in-hardware VNF solutions are becoming less efficent. Their time-to-deploy, in
- fact, is very high compared to the requirements of the network. With this
- trend, in-hardware solutions will not be able to keep up. Is with this
- considerations that software solutions are being proposed to become the new way
- to deploy network components. While less efficent, they are faster to bring
- them up, offering an unprecedented flexibility\todo{CITE: SDN/NFV-Based Mobile
-   Packet Core Network Architectures: A Survey}. Furthermore, new virtualization
- technologies such as Cloud computing and Docker are becoming more and more
- mature for being employed in large-scale production environments, where new
- frameworks, called orchestrators (e.g. Kubernetes, Docker Swarm), allow to
- easily manage the application lifecyle, i.e. deployment, scale up/down and
- finally, removal.
+ important role, and it is for this reason that network packets are elaborated,
+ compressed and processed while traversing the network in order to make their
+ transmission as fast as possible. On top of that, mobile traffic is
+ continuously surging every year, with the backbones having more and more data
+ to deliver, making in-hardware backbone solutions less efficent. Their
+ time-to-deploy, in fact, is very high compared to the requirements of the
+ network. With this trend, in-hardware solutions will not be able to keep up. Is
+ with this considerations that software a software approach is being proposed to
+ become the new way to deploy network components. While less efficent, they are
+ faster to bring them up, offering an unprecedented flexibility\todo{CITE:
+   SDN/NFV-Based Mobile Packet Core Network Architectures: A Survey}.
+ Furthermore, new virtualization technologies such as Cloud computing and Docker
+ are becoming more and more mature for being employed in large-scale production
+ environments, where new frameworks, called orchestrators (e.g. Kubernetes,
+ Docker Swarm), allow to easily manage the application lifecyle, i.e.
+ deployment, scale up/down and finally, removal.
+
+\section{The upcoming connectivity standard: 5G}
+The continuous innovation in the mobile network connectivity is leading to the
+creation of a new standard, the 5G, which is estimated to arrive to the market
+constumer in 2020\todo{CITE}. Lead by the Next Generation Mobile Network (NGMN)
+alliace, a group composed by the major players in the field of mobile
+connectivity, the 5G aims to offer at the end-user a new way to browse the web,
+download and watch interactive content. Relatively to 4G, 5G points to have data
+rates $10$ times better, with $10$ times smaller end-to-end latency and
+increased connection densisty by $100$ times\todo{CITE}.
+
+\begin{table}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+  \begin{tabular}{p{4cm}|p{5,5cm}|p{5,5cm}}
+\textbf{Attribute}                                                    & \textbf{LTE capability}                                                                                                                                     & \textbf{Improvement needed to meet NGMN requirements}                 \\ \hline
+\textbf{Data rate (per user)}                                         & Up to 100 Mb/s on average Peaks of 600 Mb/s (Cat 11/12).                                                                                                    & 10X expected on average and peak rates and 100X expected on cell edge \\
+\textbf{End-to-end latency}                                           & 10 ms for two-way RAN (pre-scheduled). Typically, up to 50 ms end-to-end if other factors are considered (e.g., transmission, CN, internet, proxy servers). & 10X (smaller)                                                         \\
+\textbf{Mobility}                                                     & Functional up to 350 km/h (for certain bands up to 500 km/h). No support for civil aviation.                                                                & 1.5X                                                                  \\
+\textbf{\begin{tabular}[c]{@{}l@{}}Connection\\ density\end{tabular}} & Typically $\sim$2,000 active users/km2.                                                                                                                     & 100X                                                                 
+\end{tabular}%
+}
+\caption[5G improvement over LTE]{An extract from the official 5G white paper illustating the improvements of 5G relatively to LTE connections.}
+\label{chap:intro:table:ltevs5g}
+\end{table}
+
+Part of the new requirements can be satisfied using a large radio spectrum with
+higher frequencies. But the utilization of higher frequencies mean that the
+radio signals can be easly interrupted by physical objects, like buildings and
+many geographical elements (such as hills and mountains), clashing with the
+expectation of an ever-reachable connectivity. It is here where virtualization
+plays an important role. In fact, the re-design of some network components today
+existing via hardware can transform a monolitic networking approach to a modular
+one, exploting the flexibility that Virtual Network Functions (VNFs)\todo{CITE
+  VNF-P: A Model for Efficient Placement of Virtualized Network Functions} can
+offer thanks to virtualization, closing the gap to the use-case fullfilment
+defined by the NGMS alliance\todo{CITE: NGMN View on 5G architecture}.
+
+\subsection{5G architecture}
+
+With the constraints placed on the requirements formulated by the NGMN alliance,
+5G envisage a multi-layered architecture, based on three main layer:\todo{CITE:
+  NGMN View on 5G architecture}
+\begin{itemize}
+\item \textbf{infrastructure resouce layer}: physical resources that are exposed
+  via a virtualized interface, and that can be monitored using specific APIs
+\item \textbf{business enablement layer}: where a library of functions and
+  deployment is contained, and its configuration is accessible via APIs
+\item \textbf{business application layer}: layer that contains specific
+  applications and services of the operator
+\end{itemize}
+
+\subsubsection{Network slicing}
+The role of a ``network slice'' in a 5G architecture is to specificatly handle a
+Control-place of a praticular service (e.g. smartphones traffic, autonomous
+driving, massive IoT), deploying resources in a manner that assure the required
+latency, security and reliability. While some legacy of very peculiar services
+could require specific hardware, the common resources between services could be
+shared in a virtualized way, providing auto-scaling capabilities in services
+that are under heavy network pressure.
 
 \section{The VIBES project}
  
