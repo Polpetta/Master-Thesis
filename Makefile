@@ -20,7 +20,7 @@ compile: clean
 		$(MAIN_FILE).acn; \
 	}; \
 	function generatePdf () { \
-		pdflatex $(MAIN_FILE); \
+		pdflatex -interaction=nonstopmode $(MAIN_FILE); \
 		biber $(MAIN_FILE); \
 		glossary; \
 	}; \
@@ -43,7 +43,7 @@ compile: clean
 		generatePdf; \
 	done; \
 	for k in {1..2}; do \
-		pdflatex $(MAIN_FILE); \
+		pdflatex -interaction=nonstopmode $(MAIN_FILE); \
 	done; \
 	mv $(MAIN_FILE).pdf $(OUTPUT_NAME).pdf;
 
