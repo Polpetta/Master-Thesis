@@ -244,3 +244,4 @@ TSWLatexianTemp*
 *.fuse*
 Thesis.pdf
 .directory
+res/listOfSections.tex
