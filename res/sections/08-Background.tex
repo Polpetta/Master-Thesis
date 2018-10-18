@@ -2,20 +2,23 @@
 \label{chap:background}
 
 In this chapter we are going to explain the most important concepts of the 
-upcoming 5G, talking about the Virtual Network Functions (VNFs) and how first 
-experiments with this new technology already begun. Finally we are going to 
-briefly introduce and explain the role of the technologies used in this 
-Thesis.
+upcoming 5G standard, talking about the Virtual Network Functions (VNFs) and 
+how first experiments with this new technology already begun. Finally we are 
+going to briefly introduce and explain the technologies involved and their role.
 
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
 creation of a new standard, the 5G, which is estimated to arrive to the market
 constumer in 2020\todo{CITE}. Lead by the Next Generation Mobile Network (NGMN)
 alliace, a group composed by the major players in the field of mobile
-connectivity, the 5G aims to offer at the end-user a new way to browse the web,
-download and watch interactive content. Relatively to 4G, 5G points to have data
-rates $10$ times better, with $10$ times smaller end-to-end latency and an
-increased connection densisty by $100$ times\todo{CITE}.
+connectivity, the 5G aims to offer not only at the end-user a new way to browse 
+the web,
+download and watch interactive content but also to create an ad-hoc solution 
+for Machine-to-Machine (M2M) data traffic, which is increasing more than ever 
+thanks to the spreading of IoT devices, which sensors need to continuosly send 
+data to servers/datacenters. Relatively to LTE\todo{Explain acronym}, 5G points 
+to have data rates $10$ times better, with $10$ times smaller end-to-end 
+latency and an increased connection densisty by $100$ times\todo{CITE}.
 
 \begin{table}[t]
 \centering
@@ -58,7 +61,10 @@ existing via hardware can transform a monolitic networking approach to a modular
 one, exploting the flexibility that Virtual Network Functions (VNFs)\todo{CITE
   VNF-P: A Model for Efficient Placement of Virtualized Network Functions} can
 offer thanks to virtualization, closing the gap to the use-case fullfilment
-defined by the NGMS alliance\todo{CITE: NGMN View on 5G architecture}.
+defined by the NGMS alliance\todo{CITE: NGMN View on 5G architecture} which 
+require a descreased time to set up and deploy network services (specificatly, 
+from 90 hours to 90 minutes\todo{Search this requirement, check 90h 'cause 
+I'm not sure about it}).
 
 \subsection{5G architecture}
 
@@ -80,7 +86,7 @@ With the constraints placed on the requirements formulated by the NGMN alliance,
 The role of a ``network slice'' in a 5G architecture is to specificatly handle a
 Control-place of a praticular service (e.g. smartphones traffic, autonomous
 driving, massive IoT), deploying resources in a manner that assure the required
-latency, security and reliability. While some legacy of very peculiar services
+latency, security and reliability. While some very peculiar legacy services
 could require specific hardware, the common resources between services could be
 shared in a virtualized way, providing auto-scaling capabilities in services
 that are under heavy network pressure.
@@ -103,6 +109,14 @@ that are under heavy network pressure.
  \item VNF-PEP validation and performance tests on 5G use-cases
  \item Demonstration testbed management
 \end{enumerate}
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=1]{vibes_logo}
+ \caption{ViBeS project logo}
+ \label{chap:background:img:vibes_logo}
+\end{figure}
+
 
 \subsection{VNF-PEP architecture and internet protocols}
 
