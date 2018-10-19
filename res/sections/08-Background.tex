@@ -82,14 +82,22 @@ With the constraints placed on the requirements formulated by the NGMN alliance,
 
 \todo{Add three-layer image here?}
 
+This separation in layers allows to easly manage different identities 
+differently: an Internet Service Provider (ISP) could manage different physical
+infrastructure and have multiple business emblements dislocated 
+along an entire continet for example, but it could decide to have only a single 
+centralized business application deployment that manage all the other layers 
+resources.
+
 \subsubsection{Network slicing}
-The role of a ``network slice'' in a 5G architecture is to specificatly handle a
-Control-place of a praticular service (e.g. smartphones traffic, autonomous
-driving, massive IoT), deploying resources in a manner that assure the required
-latency, security and reliability. While some very peculiar legacy services
-could require specific hardware, the common resources between services could be
-shared in a virtualized way, providing auto-scaling capabilities in services
-that are under heavy network pressure.
+The role of a ``network slice'' in a 5G architecture is to specificatly handle 
+the Control-plane\todo{Explain what a control plane is?} of a praticular 
+service (e.g. smartphones traffic, autonomous driving, massive IoT), deploying 
+resources in a manner that assure the required latency, security and 
+reliability. While some very peculiar legacy services could require specific 
+hardware, the common resources between services could be shared in a 
+virtualized way, providing auto-scaling capabilities in services that are under 
+heavy network pressure.
 
 \section{The VIBES project}
  
@@ -123,23 +131,34 @@ that are under heavy network pressure.
 The analysis of this topic revealed to be trivial: since internet has many
 different protocols that would become infeasible to support all of them at the
 same time, packet incapsulation present itself as the only faseable solution:
-every packet incoming in the VNFs has already been encapsulated by the MANO,
-\todo{Not sure about this, please give it a check - Not sure but I think that it
-  is not part of the MANO the encapsulation of the packets. Also I think that
-  the main purpose of UDP encapsulation is not to hide the protocol used on the
-  edges but 1) usa a ``quick protocol to exchange data among VNFs and 2) we are
-  hiding the path not the protocol itself. As we were discussing, we are
-  creating some sort of proxy, so the aim will be the same even if we support a
-  plethora of protocols.''} making the whole architecture indipendent from the
-protocol a particolar flux of data uses. To achieve this, TUN/TAP interfaces 
-were used to deploy a tunnel between VNFs, allowing them to pass packets 
-encapsulated in UDP ones.
+every packet incoming in the VNFs has already been encapsulated by a generic
+packet incapsulator/decapsulator,
+\todo{Also I think that the main purpose of UDP encapsulation is not to hide 
+the protocol used on the edges but 1) usa a ``quick protocol to exchange data 
+among VNFs and 2) we are hiding the path not the protocol itself. As we were 
+discussing, we are creating some sort of proxy, so the aim will be the same 
+even if we support a plethora of protocols.''} making the whole architecture 
+indipendent from the protocol a particolar flux of data. To achieve this, 
+several solutions have been studied, and at the end packet incapsulation with 
+TCP split (for TCP sessions) have been choosen. The rationale that guided us on 
+this choice is described in Chapter~\ref{chap:vnf_ns_impl}. \todo{Update 
+reference with the section of the explanation}
 
 \subsection{VNF-PEP prototype}
 
-Since our goal shifted into creating a MANO testbed, our prototype doesn't
-include PEP. The VNF architecture was shaped following the container
-orchestrator we decided to use: Kubernetes.
+Since the requirement for the whole system (MANO+PEP) were too challenging, the 
+goal shifted into creating a MANO testbed and a working NFVI, excluding PEP. 
+The VNF architecture was shaped following the container orchestrator we decided 
+to use. An more detailed architectural implementation can be found at 
+Chapter~\ref{chap:archimpl}.
+
+\section{Technologies used}
+
+The development of the ETSI MANO testbed involved the use of several 
+tecnhologies already in the market, and in some cases the creation of ad-hoc 
+solutions to solve particular issues. Here, a brief listing of the 
+well-estabilished technologies used is performed, describing even solutions 
+that at the end weren't choosen because they didn't fit with the defined goals.
 
 \subsubsection{About Kubernetes}
 
