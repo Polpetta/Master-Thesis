@@ -152,88 +152,7 @@ The VNF architecture was shaped following the container orchestrator we decided
 to use. An more detailed architectural implementation can be found at 
 Chapter~\ref{chap:archimpl}.
 
-\section{Technologies used}
-
-The development of the ETSI MANO testbed involved the use of several 
-tecnhologies already in the market, and in some cases the creation of ad-hoc 
-solutions to solve particular issues. Here, a brief listing of the 
-well-estabilished technologies used is performed, describing even solutions 
-that at the end weren't choosen because they didn't fit with the defined goals.
-
-\subsubsection{About Kubernetes}
-
-As already introduced before, Kubernetes is an open source software framework
-specialized in container management and orchestration. Developed by Google in
-??\todo{Find out the actual date} and written in Go, it allows different
-machines (called nodes from now on) to create an abstraction layer and to form a
-cluster where is possible to run Docker containers without brothering about
-hardware constraints. Nodes can have specific roles and specialization, all of
-them managed by one or many master nodes, that actually manage the
-orchestration. On top of that, Kubernetes is virtualization-agnostic, meaning
-that it offers the possibility to change the virtualization software in use
-(i.e. from Container-based technology to Virtual machine software).
-\begin{figure}[h]
- \centering \includegraphics[scale=0.35]{kubernetes_logo}
- \caption{Kubernetes Logo}
- \label{chap:intro:img:k8s_logo}
-\end{figure}
-
-
-\subsubsection{About Docker}
-
-In recent years, with the new hardware capabilities and the recent development
-of in-kernel virtualization systems (such as Hyper-V) this technology begin to
-be adopted. Virtualization allows to run different systems on the same machine,
-making them completely isolated and then more resilient to failures. The back of
-the medal, though, is that virtual machines require large amount of resources,
-especially memory, because solutions like copy-and-write of in-memory pages are
-not viable anymore (since the kernel gets duplicated too), leading to
-duplication of loaded libraries and assets in the memory of the host. For large
-deployment containing only simple services (e.g. a backend application serving a
-website or a database) this ends up in a waste of resources. \todo{Talk about
-  lxc containers and how Docker solved magically the problem.} It's here that,
-in ??\todo{Find Docker date of birth}, Docker was created, basing its solution
-on an already existing product: Linux Container (LXC). From this framework,
-Docker built an entire ecosystem, consisting in a client/server model giving the
-possibility for users to simply launch, scale and delete containers (locally or
-remotely with Docker-machine), a repository system where images, a layer-based
-``core'' where containers start running from when they are launched, can be
-stored and tagged in a sort of version control system. Finally, another couple
-of solutions, called Docker-compose, and Docker Swarm have the purpose to,
-respectively, orchestrate containers in a single or a clustered system.
-\begin{figure}[t]
- \centering \includegraphics[scale=0.7]{docker_logo}
- \caption{Official Docker logo}
- \label{chap:intro:img:docker_logo}
-\end{figure}
-
-
-\paragraph{Docker Swarm} Introduced in ??\todo{Find Docker Swarm date of
-birth}, Docker Swarm allows multiple Docker nodes to cluster together and be
-seen as one logical unit. This layer completely makes the underlying
-infrastructure transparent: data management, as network one, are totaly managed
-by Docker. Recently, Docker-compose support has been introduced, making this
-one-node tool available for clustered systems. At the end of the day, on one
-hand Docker Swarm provides an easy way to set up a cluster system with all the
-tools configured out-of-the-box, without the necessity to set networking
-configurations or installing ad-hoc storage solutions. On the other hand,
-though, it doesn't have all the personalization options that Kuberentes offers,
-thus making the product less flexible. This foundamental characteristic,
-although, makes the two solutions have different use cases leading to different
-market needs. \todo{Add Docker Swarm}
-
-\paragraph{Docker-compose} As briefly discussed above, Docker-compose is a tool
-that allows services orchestration. It automates most of the tasks that should
-be performed by hand when launching one or multiple docker containers. It's
-particulary useful when more continers have to interact together,
-because\todo{Write down docker-compose functionalities and describe the product
-  a little bit} all the services rules are described in a simple YAML file. With
-the birth of Docker Swarm, work has started to port this tool to the Swarm
-framework. At the time of this writing, the procedure to port a Docker-compose
-configuration in Docker Swarm is still not completely transparent, and it
-requires a sort of compilation, where Docker-compose bundles all the necessaries
-resources into a binary file that Docker Swarm will use to allocate the
-necessary resources.
+% \section{Technologies used}
 
 \vspace{0.5cm}
 
@@ -246,11 +165,11 @@ specifications suggested in the RFC 7665, thus implementing only the first three
 requisites, without digging in the satellite data flow optimization. In
 particular, we discovered how, these tools, were suitable to create ETSI MANO
 and VNFs using virtual machine or exploiting cloud tecnhologies, while they were
-not designed with enough flexibility to integrate with Docker. In the next
-chapter we are going to take a deep analysis of the cited technologies, in order
-to provide to the reader enough context to be able to understand our design
-choices we are going to describe later.
-
+not designed with enough flexibility an integration with Docker. In the next
+chapter we are going to take a deep analysis of the cited technologies 
+(Section~\ref{chap:prjan:sec:tech}, in order to provide to the reader enough 
+context to be able to understand our design choices we are going to describe 
+later.
 
 \noindent With this in mind, we performed a requirements analysis described in
 the next chapter.\todo{This should be put at the end of the introduction.}

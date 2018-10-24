@@ -164,6 +164,7 @@ implementing a little back-end with the aim of saving in a persistent storage
 the SFC the packet has to perform and additional metadata.
 
 \section{Available technologies in the market}
+\label{chap:prjan:sec:tech}
 
 Before starting any effective work on the project it has been decided to 
 perform an analysis of the possible technologies avvailable in the market, 
@@ -179,7 +180,7 @@ resources can't be allocated, and since our project was focused on dynamically
 allocating containerized applications on cloud platforms, we decided to start 
 analizing the right framework for this component first.
 
-\subsection{Openstack}
+\subsubsection{Openstack}
 \label{chap:prjan:sec:openstack}
 Created in ??\todo{Find out Openstack date of creation}, Openstack allows
 on-permise cloud installations, using bare-metal resources to provide common
@@ -192,25 +193,134 @@ even proprietary, to achieve a complete cloud solution.
  \label{chap:prjan:img:openstack_logo}
 \end{figure}
 
+\subsubsection{Kubernetes}
+
+As already introduced before, Kubernetes is an open source software framework
+specialized in container management and orchestration. Developed by Google in
+??\todo{Find out the actual date} and written in Go, it allows different
+machines (called nodes from now on) to create an abstraction layer and to form a
+cluster where is possible to run Docker containers without brothering about
+hardware constraints. Nodes can have specific roles and specialization, all of
+them managed by one or many master nodes, that actually manage the
+orchestration. On top of that, Kubernetes is virtualization-agnostic, meaning
+that it offers the possibility to change the virtualization software in use
+(i.e. from Container-based technology to Virtual machine software).
+\begin{figure}[h]
+ \centering \includegraphics[scale=0.35]{kubernetes_logo}
+ \caption{Kubernetes Logo}
+ \label{chap:intro:img:k8s_logo}
+\end{figure}
 
 
-\todo{This section needs to be expanded a lot!!! In particular, we should put
-  some focus about VNF and MANO, introducing them}
+\subsubsection{Docker}
+
+In recent years, with the new hardware capabilities and the recent development
+of in-kernel virtualization systems (such as Hyper-V) this technology begin to
+be adopted. Virtualization allows to run different systems on the same machine,
+making them completely isolated and then more resilient to failures. The back of
+the medal, though, is that virtual machines require large amount of resources,
+especially memory, because solutions like copy-and-write of in-memory pages are
+not viable anymore (since the kernel gets duplicated too), leading to
+duplication of loaded libraries and assets in the memory of the host. For large
+deployment containing only simple services (e.g. a backend application serving a
+website or a database) this ends up in a waste of resources. \todo{Talk about
+  lxc containers and how Docker solved magically the problem.} It's here that,
+in ??\todo{Find Docker date of birth}, Docker was created, basing its solution
+on an already existing product: Linux Container (LXC). From this framework,
+Docker built an entire ecosystem, consisting in a client/server model giving the
+possibility for users to simply launch, scale and delete containers (locally or
+remotely with Docker-machine), a repository system where images, a layer-based
+``core'' where containers start running from when they are launched, can be
+stored and tagged in a sort of version control system. Finally, another couple
+of solutions, called Docker-compose, and Docker Swarm have the purpose to,
+respectively, orchestrate containers in a single or a clustered system.
+\begin{figure}[t]
+ \centering \includegraphics[scale=0.7]{docker_logo}
+ \caption{Official Docker logo}
+ \label{chap:intro:img:docker_logo}
+\end{figure}
+
+\vspace{0.5cm}
+
+% The development of the ETSI MANO testbed involved the use of several 
+% tecnhologies already in the market, and in some cases the creation of ad-hoc 
+% solutions to solve particular issues. Here, a brief listing of the 
+% well-estabilished technologies used is performed, describing even solutions 
+% that at the end weren't choosen because they didn't fit with the defined goals.
+
+\subsection{MANO}
+
+Another foundamental component in the architecture is the MANO, that has to 
+manage the Network Services and the deployment of new VNFs. In coordination 
+with Kubernetes, it composes the core of the testbed architecture. Initially 
+identified with Openbaton (the component is described later 
+in~\ref{chap:prjan:sec:tech:sub:other:sub:openbaton}), afterword it has been 
+discovered to be not fexible enough to support other kinds of virtualization 
+tecniques than pure or in-cloud virtual machines\todo{AAAAAA rewrite this}. 
+Since this was a strong project requisite that could not be easily changed, it 
+has been decided to opt for the creation of a smaller and simpler clone that 
+offered a full integration with Docker and Kubernetes.
+
+\subsubsection{Harbor} \todo{Talk about harbor!}
+Started as a Virtual VNFM (Network Function Virtualization Manager) for 
+Openbaton, during the project it has been expanded to become a complete 
+replacement of the original product, adding the possibility to manage Network 
+Services and to update the route tables, Roulette Controller (the tool 
+description can be found in \todo{Insert roulette ref!}).
 
 
+\subsection{Technologies used during development}
+
+Since the testbed is composed by different components and thanks to its 
+modularity, the implementation of the single components has been done with the 
+help of additional tools, illustrated below
+
+\paragraph{Docker Swarm} Introduced in ??\todo{Find Docker Swarm date of
+birth}, Docker Swarm allows multiple Docker nodes to cluster together and be
+seen as one logical unit. This layer completely makes the underlying
+infrastructure transparent: data management, as network one, are totaly managed
+by Docker. Recently, Docker-compose support has been introduced, making this
+one-node tool available for clustered systems. At the end of the day, on one
+hand Docker Swarm provides an easy way to set up a cluster system with all the
+tools configured out-of-the-box, without the necessity to set networking
+configurations or installing ad-hoc storage solutions. On the other hand,
+though, it doesn't have all the personalization options that Kuberentes offers,
+thus making the product less flexible. This foundamental characteristic,
+although, makes the two solutions have different use cases leading to different
+market needs. \todo{Add Docker Swarm}
+
+\paragraph{Docker-compose} As briefly discussed above, Docker-compose is a tool
+that allows services orchestration. It automates most of the tasks that should
+be performed by hand when launching one or multiple docker containers. It's
+particulary useful when more continers have to interact together,
+because\todo{Write down docker-compose functionalities and describe the product
+  a little bit} all the services rules are described in a simple YAML file. With
+the birth of Docker Swarm, work has started to port this tool to the Swarm
+framework. At the time of this writing, the procedure to port a Docker-compose
+configuration in Docker Swarm is still not completely transparent, and it
+requires a sort of compilation, where Docker-compose bundles all the necessaries
+resources into a binary file that Docker Swarm will use to allocate the
+necessary resources.
 
 
+\subsection{Other technologies evaluated}
 
-\subsubsection{Other technologies}\todo{Talk somehow of the other tecnhologies}
-\paragraph{Openvswitch}
-\paragraph{Openbaton} Patrocined by the Institute Fraunhofer, it's a 
-open-source, customizable NFV MANO-compliant framework, that offers many
-configurations options, and since it's written in Java, there is the possibility
-to add components (plug-ins) dynamically. Openbaton can be installed as a normal
-computer program (they offer packages for the most common distros) but it can be
-deployed on Docker containers too. It's designed to work with cloud providers
-like Amazon or Google Compute engine, but it offers compability with on-permise
-cloud solutions like Openstack, where it deploys virtual machines using the API
+Additional components have been evaluated during the development of the 
+testbed, and here we propose a list of the most important ones. Some of them 
+where discarded as no more necessary, or during the evolution of the project 
+itself they have become obsolete.
+
+\subsubsection{Openvswitch} \todo{Talk about Openvswitch!!}
+\subsubsection{Openbaton}
+\label{chap:prjan:sec:tech:sub:other:sub:openbaton}
+Patrocined by the Institute Fraunhofer, it's a open-source, customizable NFV 
+MANO-compliant framework, that offers manyconfigurations options, and since it's 
+written in Java, there is the possibility to add components (plug-ins) 
+dynamically. Openbaton can be installed as a normal computer program (they 
+offer packages for the most common distros) but it can be deployed on Docker 
+containers too. It's designed to work with cloud providers like Amazon or 
+Google Compute engine, but it offers compability with on-permise cloud 
+solutions like Openstack, where it deploys virtual machines using the API
 the platform offers. It can store VNF configurations saved as TOSCA
 YAML\todo{What does TOSCA mean? Find out} and it can handle multiple
 PoPs\todo{Write down PoP meaning}. It offers a VNF lifecyle management
@@ -223,5 +333,4 @@ operation requires a deep knowlege of the framework though.
  \caption{Openbaton logo}
  \label{chap:prjan:img:openbaton_logo}
 \end{figure}
-
-\paragraph{SDN?}
+% \paragraph{SDN?}
