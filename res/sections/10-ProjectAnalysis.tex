@@ -262,25 +262,25 @@ has been decided to opt for the creation of a smaller and simpler clone that
 offered a full integration with Docker and Kubernetes.
 
 \subsubsection{Harbor}
-Started as a VNFM (Virtual Network Function Virtualization Manager) to offer 
-a bridge for Openbaton to interact with Kubernetes, during the project it has 
-been expanded to become a complete replacement of the original product, adding 
-the possibility to manage Network Services and to update the routing tables 
+Started as a VNFM (Virtual Network Function Virtualization Manager) to offer a
+bridge for Openbaton to interact with Kubernetes, during the project it has been
+expanded to become a complete replacement of the original product, adding the
+possibility to manage Network Services and to update the routing tables
 contained in the Roulette Controller (the tool description can be found below
-in~\ref{chap:prjan:sec:tech:sub:SFC:sub:roulette}). Harbor doesn't have a web 
-interface, but it has a RESTful API that allow users to interact with him 
-using CRUD operations. It offers functionalities similar to Openbaton: 
-possibility to upload VNF definitions (basically, Kuberentes YAML deployments), 
-and possibility to upload NS definitions. When an NS is saved, a consistency 
-check is performed to assure that alle the VNF are already present in Harbor. 
-Similarly to Openbaton an NS is deployed, all the associated VNFs are deployed 
-with it, making the whole operation atomic from the user point-of-view. 
-What Openbaton doesn't do is a smart resource utilization: Harbor, in fact, 
-during NS is deletion, it checks if any related VNF remains orphan (which means 
-without any NS using it). In that case the VNF will enter in a state of 
-pruning: after five minutes, if the VNF has not be reutilized by another NS it 
-will be deleted. This mechanism assure faster deployments in environments where 
-NSs are continuously launched and deleted.
+in~\ref{chap:prjan:sec:tech:sub:SFC:sub:roulette}). Harbor doesn't have a web
+interface, but it has a RESTful API that allow users to interact with it using
+CRUD operations. It offers functionalities similar to Openbaton: possibility to
+save and retrieve VNF and NS definitions (basically, Kuberentes YAML
+deployments). When an NS is saved, a consistency check is performed to assure
+that all the VNFs have already been defined in Harbor. On an NS deployment, with
+a mechanism similar to the Openbaton one, all the associated VNFs are set up
+too, making the whole operation of launching a NS atomic from the user
+point-of-view. What Openbaton doesn't do is a smart resource utilization:
+Harbor, in fact, during NS is deletion, it checks if any related VNF remains
+orphan (which means without any NS using it). In that case the VNF will enter in
+a state of pruning: after five minutes, if the VNF has not be reutilized by any
+other NS it will be deleted. This mechanism assure faster deployments in
+environments where NSs are continuously taken up and down.
 
 \subsection{SFC}
 
@@ -298,7 +298,7 @@ Since the testbed is composed by different components and thanks to its
 modularity, the implementation of the single components has been done with the 
 help of additional tools, illustrated below
 
-\paragraph{Docker Swarm} Introduced in ??\todo{Find Docker Swarm date of
+\subsubsection{Docker Swarm} Introduced in ??\todo{Find Docker Swarm date of
 birth}, Docker Swarm allows multiple Docker nodes to cluster together and be
 seen as one logical unit. This layer completely makes the underlying
 infrastructure transparent: data management, as network one, are totaly managed
@@ -312,7 +312,7 @@ thus making the product less flexible. This foundamental characteristic,
 although, makes the two solutions have different use cases leading to different
 market needs. \todo{Add Docker Swarm}
 
-\paragraph{Docker-compose} As briefly discussed above, Docker-compose is a tool
+\subsubsection{Docker-compose} As briefly discussed above, Docker-compose is a tool
 that allows services orchestration. It automates most of the tasks that should
 be performed by hand when launching one or multiple docker containers. It's
 particulary useful when more continers have to interact together,
