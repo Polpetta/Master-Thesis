@@ -262,13 +262,14 @@ has been decided to opt for the creation of a smaller and simpler clone that
 offered a full integration with Docker and Kubernetes.
 
 \subsubsection{Harbor}
+\label{chap:prjan:sec:tech:sub:MANO:sub:harbor}
 Started as a VNFM (Virtual Network Function Virtualization Manager) to offer a
 bridge for Openbaton to interact with Kubernetes, during the project it has been
 expanded to become a complete replacement of the original product, adding the
 possibility to manage Network Services and to update the routing tables
 contained in the Roulette Controller (the tool description can be found below
 in~\ref{chap:prjan:sec:tech:sub:SFC:sub:roulette}). Harbor doesn't have a web
-interface, but it has a RESTful API that allow users to interact with it using
+interface, but it has a RESTful API that allows users to interact with it using
 CRUD operations. It offers functionalities similar to Openbaton: possibility to
 save and retrieve VNF and NS definitions (basically, Kuberentes YAML
 deployments). When an NS is saved, a consistency check is performed to assure
@@ -276,16 +277,34 @@ that all the VNFs have already been defined in Harbor. On an NS deployment, with
 a mechanism similar to the Openbaton one, all the associated VNFs are set up
 too, making the whole operation of launching a NS atomic from the user
 point-of-view. What Openbaton doesn't do is a smart resource utilization:
-Harbor, in fact, during NS is deletion, it checks if any related VNF remains
+Harbor, in fact, during a NS deletion, it checks if any related VNF remains
 orphan (which means without any NS using it). In that case the VNF will enter in
 a state of pruning: after five minutes, if the VNF has not be reutilized by any
 other NS it will be deleted. This mechanism assure faster deployments in
-environments where NSs are continuously taken up and down.
+environments where NSs are continuously taken up and down. \todo{I've made an
+  Harbor implementation schema, I dunno if its usefult to put it here}
 
 \subsection{SFC}
+The tools analysis revealed little about already existent VNF or NS
+implementations, so it was neccesary to fill the gap. Since this one of our
+thesis goals, we devepled a complete solution to create a complete SFCs, trying
+to standardize our vocabulary as much as possible, and giving basic
+documentation when possible.
 
 \subsubsection{Roulette Controller}
-\label{chap:prjan:sec:Stech:sub:SFC:sub:roulette}
+\label{chap:prjan:sec:tech:sub:SFC:sub:roulette}
+Dynamic communications between VNFs would not be possible without a thrid
+component acting as a route controller. Roulette fulfulls this role, providing a
+backend where the single VNF can ask the next packet hop. Indeed, routes must be
+submitted by another component, that we identified as Harbor (component
+description available above in
+sub-section~\ref{chap:prjan:sec:tech:sub:MANO:sub:harbor}). After a NS
+deployment, Roulette gets instructed with a new route describing a NS. Every NS
+has a proper ID (called \verb!sfid!), and thus when the classifier checks a
+packet typology, it labels that packet with the specific NS ID (for a detailed
+description about the SFC header see Section~\todo{Add section/chapter/paragraph
+  ref!}). Finally, thanks to this label, every VNF knows the packet's chain and
+it will correctly forward the it to the next VNF.
 
 \subsubsection{Astaire}
 
