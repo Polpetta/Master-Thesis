@@ -93,6 +93,14 @@ https://www.computer.org/csdl/proceedings/ifcsta/2009/3930/01/3930a466-abs.html}
 \todo{Here it's missing an introduction about SFC and its terminology, need to 
 include parts of RFC 7665}
 
+Even though SFCs and VNFs are part of the ETSI architecture, the complexity 
+behind was so high to require particular care and a separated study. Indeed, 
+the  SFCs are the core of the whole project: packet transmission and 
+elaboration is made here. Challenges regarding this topic are building a 
+system that is flexible enough to allow dynamic packet routing, support 
+scalability and provide methods to recovery from failures. With this challenges 
+packet transmission revealed to be a foundamental point to choose carefully.
+
 \subsection{Packet transmission strategies}
 
 When a packets are sent from a seder $S$, to a receiver $R$, they start
