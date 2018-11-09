@@ -23,7 +23,7 @@ security, scalability and elasticity, because of the centralized architecture.
  \label{chap:background:img:sdn_architecture}
 \end{figure}
 As depicted in Figure~\ref{chap:background:img:sdn_architecture} the SDN
-architecture can be splitted into three different layers, based on their
+architecture can be splitted in three different layers, based on their
 functionalities. \emph{SDN Applications} are programs that communicate the
 behaviour to the SDN controllers and request for needed resources and data
 through APIs, often called \emph{northbound interfaces}(NBI). NBIs add a level
@@ -44,7 +44,11 @@ applications (\emph{NBI agents}), the second one represent the SDN controller
 logic and finally the third layer has the task to communicate with the network
 (Control to Data-Plane Interface or southbound interface).
 
-In the lowest part of the architecture we can find the \emph{SDN Networking Devices}. These ones control packet forwarding and data processing capabilities of the network. They comprises a CDPI agent and a set of one or more traffic forwarding engines and zero or more traffic processing functions (the logic of the devices).
+In the lowest part of the architecture we can find the \emph{SDN Networking 
+Devices}. These ones control packet forwarding and data processing capabilities 
+of the network. They comprises a CDPI agent and a set of one or more traffic 
+forwarding engines and zero or more traffic processing functions (the logic of 
+the devices).
 
 \subsection{The OpenFlow protocol}
 The SDN strategy is often associated with OpenFlow protocol: this communication
@@ -78,7 +82,10 @@ network resources. \todo{To change I do not what can I write, stolen from ``The
 research and implementation of cloud computing platform based on docker'' paper}
 
 \subsection{Network Virtualization}
-%https://s3.amazonaws.com/academia.edu.documents/29016225/cs-2008-25.pdf?AWSAccessKeyId=AKIAIWOWYYGZ2Y53UL3A&Expires=1541352965&Signature=On6XJ5daSAmnfJMnNf41fBNHFgg%3D&response-content-disposition=inline%3B%20filename%3DA_survey_of_network_virtualization.pdf
+%https://s3.amazonaws.com/academia.edu.documents/29016225/cs-2008-25.pdf?AWSAcce
+%ssKeyId=AKIAIWOWYYGZ2Y53UL3A&Expires=1541352965&Signature=On6XJ5daSAmnfJMnNf41f
+%BNHFgg%3D&response-content-disposition=inline%3B%20filename%3DA_survey_of_netwo
+%r k _virtualization.pdf
 Virtualization, in the networking context, refers to the act of combining
 hardware, software and functionalities into a virtual network. This abstraction
 runs on the top of a physical network in a hypervisor, decupling the logical
