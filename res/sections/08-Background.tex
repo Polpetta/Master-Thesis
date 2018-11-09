@@ -24,16 +24,18 @@ security, scalability and elasticity, because of the centralized architecture.
 \end{figure}
 As depicted in Figure~\ref{chap:background:img:sdn_architecture} the SDN
 architecture can be splitted in three different layers, based on their
-functionalities. \emph{SDN Applications} are programs that communicate the
-behaviour to the SDN controllers and request for needed resources and data
-through APIs, often called \emph{northbound interfaces}(NBI). NBIs add a level
-of abstraction to the higher level application on the set of functionalities of
-the controllers: ideally, taking advantage of NBIs, application could use
-controllers of different vendors in the same way. So, SDN applications can be
-seen as 2 layers programs, the logic and the communication part that uses NBIs.
+functionalities. The \emph{SDN Applications} role is to set the 
+behaviour of the SDN controllers and manage its hardware resources and data 
+through APIs, often called \emph{northbound interfaces}(NBI).
+These interfaces provide an additional abstraction layer that high-level 
+applications can consume, enabling the possibility to use a variety of 
+different verdors' controllers in the same way.
+Analysing the SDN applications is possible to note two defined layers, one that 
+is responsible to manage the whole logic, and another one dedicated to the 
+communication part, that in particular uses the previsously defined NBIs.
 Theese applications can also build an abstracted view of the network, using
-information of controllers, in order to make easier the analysis of the traffic
-and simplifing the decision making process.
+controllers information, in order to make the traffic analysis easier and to 
+simplify the decision making process.
 
 \emph{SDN controllers}, instead, are logically centralized components that
 receive requests from the application and either translate them in a fashion
@@ -258,7 +260,7 @@ the protocol used on the edges but 1) usa a ``quick protocol to exchange data
 among VNFs and 2) we are hiding the path not the protocol itself. As we were 
 discussing, we are creating some sort of proxy, so the aim will be the same 
 even if we support a plethora of protocols.''} making the whole architecture 
-indipendent from the protocol a particolar flux of data. To achieve this, 
+indipendent from the protocol a particular flux of data. To achieve this, 
 several solutions have been studied, and at the end packet incapsulation with 
 TCP split (for TCP sessions) have been choosen. The rationale that guided us on 
 this choice is described in Chapter~\ref{chap:vnf_ns_impl}. \todo{Update 
