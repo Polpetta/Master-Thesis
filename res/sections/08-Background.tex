@@ -85,15 +85,15 @@ packet types, traffic or network load.
 
 In Figure~\ref{chap:background:img:openflow_protocol} it is possible to see the
 how switches works in the OpenFlow protocol. Basically, OpenFlow swiches own a
-set of tables to organizedpacket control and forwarding. These tables can be
+set of tables to organized packet control and forwarding. These tables can be
 updated by higher-level application, usually an SDN application or controller,
-taking advatage of OpenFlow channels (OF channels). 
+taking advatage of OpenFlow channels (called OF channels). 
 
 \section{Virtualization}
-Cloud computing is now leading-edge Internet technology and virtualization
-technology is one of the important part of cloud computing system.
+Cloud computing is now a leading-edge Internet technology and the virtualization
+technology is one of the most important part of cloud computing systems.
 Virtualization, in computing, refers to the act of creating a virtual (rather
-than actual) version of something, including but not limited to a virtual
+than an actual) version of something, including but not limited to a virtual
 computer hardware platform, operating system (OS), storage device, or computer
 network resources. \todo{To change I do not what can I write, stolen from ``The
 research and implementation of cloud computing platform based on docker'' paper}
@@ -114,31 +114,32 @@ The idea of network virtualization came from the decoupling of the role of the
 traditional ISP into two different entities: who provides the infrastucture
 (InPs) and who provides the services(SPs). In that context it is possible to
 aggregate resources, even from different InPs, creating a virtual network,
-offering an end-to-end service. Most known instances of NV are \emph{VPN},
+offering an end-to-end service. Most known instances of NV are \emph{VPNs},
 dedicated networks that allows the communication among multiple sites, using
 private and secure tunnels, relying on the public network such as Internet.
 Other examples of netvork virtualization are \emph{overlay networks}. They are
 logical networks, build on the top of an existing physical network, tipically
-implemented at application layer. 
+implemented at the application layer. 
 
 \subsection{Network Function Virtualization}
-The NFC concept refers to the use of virtualization tecnologies to virtualize
-network nodes functions. VNFs may run different processes and softwares, on the
-top of servers, switches, storage devices or on cloud computing infrastucture,
-that substitute custom hardware. That approach worked well on the past, because
-of the need to follow rigorous standards, providing at the same time high
-quality, but it led to long product cycles and high specialized proprietary
-hardware. New Internet senarios, that include IoT and the increasing number of
-services to spread multimedia data (Skype, Netflix, Spotify, ...), requires
-more flexibles function and faster network deployment. NFV technology is
-exploited in a framework, composed at least by three components:
+The \emph{Network Function Virtualization} (NFV) concept refers to the use of 
+virtualization tecnologies to virtualize network nodes functions. VNFs may run 
+different processes and softwares, on the top of servers, switches, storage 
+devices or on cloud computing infrastuctures, that substitute custom hardware. 
+That approach worked well in the past, because of the need to follow rigorous 
+standards, providing at the same time high quality, but it led to long product 
+cycles and high specialized proprietary hardware. New Internet senarios, that 
+include IoT and the increasing number of services to spread multimedia data 
+(Skype, Netflix, Spotify, ...), requires more flexible functions and faster 
+network deployments. The NFV technology is exploited in a framework, organized
+at least by three components:
 \begin{enumerate}
  \item a software that performs the network function that must be deployed,
  that is the VNF;
- \item NFV Infrastructure (NFVI) that are all hardware and software components
- that build the environment where VNFs are deployed;
+ \item NFV Infrastructure (NFVI) that is composed by all hardware and software 
+components that builds the environment where the VNFs are deployed;
  \item NFV Management And Orchestration (NFV-MANO) architectural framework that
- is all functional blocks, data repositories used by these blocks, and
+ is all the functional blocks, data repositories used by these blocks,
  reference points and interfaces through which these functional blocks exchange
  information for the purpose of managing and orchestrating NFVI and VNFs.
 \end{enumerate}
