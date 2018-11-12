@@ -1,0 +1,27 @@
+\chapter{Tests and metrics}
+
+After the testbed implementation, tests about its performance and metrics were 
+gathered in order to understand the real project effectiveness. We performed 
+tests relatively at two main sections: one testing the architecture 
+overall responsivness and one checking the SFC implementation and efficiency.
+
+Regarding the overall system responsivness, a metric we considered worth to 
+test was the VNF start up time in a docker environment versus one virtualized 
+through a common virtual machine system (we actually used Virtual Box). To 
+make this simulation as fair as possible, we used the same node (an Openstack 
+VM vith 32GB of RAM, 8 vCPU and solid state storage) and used the same ``boot 
+sequence'' for both the VNFs: first we launched the Astaire framework, 
+ensuring it's availability to process data and then we notified the test 
+machine of the successful boot. The startup time was measured from the 
+beginning of the startup command (\verb!docker run! for docker and 
+\verb!VBoxManage -s! for Virtual Box) till the first TCP hit to the test 
+backend received (to make things as smooth as possible, \verb!netcat! was used 
+to listen to incoming TCP data).
+
+It is worth saying that Docker metrics are generally more precise than the 
+Virtual Box one: docker allows to inspect the container and to gain startup and 
+shutdown times with a precision of millseconds, while to gather this 
+information for VirtualBox instances we had to use the command line utility 
+\verb!time!, that registered timing with a precision of centiseconds\todo{For 
+the love of god check it out}. Nonetheless, this didn't influence the test too 
+much % explain that the difference is so big it doesn't really matter at the end
