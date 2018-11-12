@@ -52,7 +52,8 @@ data needed by the application itself.
 Due to the variety of tasks a controller has to accomplish, its logical 
 suddivision is achieved with a three-layer architecture, in which every layer 
 exposes it's own interface, that can be consequently used by the upper 
-layers, up to the \emph{NBI agents}\todo{explain them?}.
+layers, up to the \emph{NBI agents}.
+NBI agents manages the communication with SDN applications, exposing interfaces that usually provide an abstract view of the network and a set of functionalities of the controller.
 In particular, the middle layer represents the controller inner-logic, which 
 process the requests coming from the upper layer (aka the third layer), that 
 has the specific task to communicate with the remaining network compoents, in 
