@@ -29,6 +29,21 @@ by the Virtual Machines to boot up was of $2000$\todo{Update with the real
 value} seconds, while with containers the same number of start ups resulted in a 
 total of $1.xx$\todo{Update with the real value}. % Insert graphs, explain the 
 %problems of virtual machines
+\begin{figure}[t] % TODO set subfigure and put the pie plot on the right!
+ \centering
+ \includegraphics[scale=0.5]{docker_vs_vmBarplotGraph}
+ \caption[Docker vs Virtual Box barplot results]{Docker vs Virtual Box barplot 
+results. It is possible to see how the total time to start up a virtual machine 
+through Virtual Box is very high compared to the time required to the overall 
+Docker containers to boot. A single VirtualBox instance requires on average 20 
+seconds to boot up, while a container requires, on average, only 0.02 seconds. 
+The main reason behind this difference, as already explained in other parts of 
+this thesis, it is caused by the guest's kernel that has to initialized itself, 
+before starting any program. On Docker, instead, the kernel is the same of the 
+host, so the only operations needed are to isolate the program from the rest of 
+the OS and add it to the process list.}
+ \label{chap:tests:sec:dockervsvb:img:barplot}
+\end{figure}
 
 
 % Talk about the next test
