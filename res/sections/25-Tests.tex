@@ -1,9 +1,13 @@
 \chapter{Tests and metrics}
 
-After the testbed implementation, tests about its performance and metrics were 
-gathered in order to understand the real project effectiveness. We performed 
-tests relatively two main sections: one testing the architecture 
-overall responsivness and one checking the SFC implementation and efficiency.
+After the testbed implementation, tests about its performance and metrics were
+gathered in order to understand the real project effectiveness. We performed
+tests relatively two main sections: one testing the architecture overall
+responsivness and one checking the SFC implementation and efficiency.
+
+\section{System responsivness}
+
+\subsection{Docker vs Virtual Box startup measurement}
 
 Regarding the overall system responsivness, a metric we considered worth to 
 test was the VNF start up time in a docker environment versus one virtualized 
@@ -18,30 +22,29 @@ beginning of the startup command (\verb!docker run! for docker and
 test backend (to make things as smooth as possible, \verb!netcat! was used 
 to listen to incoming TCP data).
 
-It is worth saying that Docker metrics are generally more precise than the 
-Virtual Box one: Docker allows to inspect the container and to gain startup and 
-shutdown times with a precision of millseconds, while to gather this 
-information for VirtualBox instances we had to use the command line utility 
-\verb!time!, that registered timing with a precision of hundredths of a 
-second. Nonetheless, this didn't influence the test too much. To avoid possible 
-outliers we perfomed the test $100$ times. With this $N$, the total time spent 
-by the Virtual Machines to boot up was of $2000$\todo{Update with the real 
-value} seconds, while with containers the same number of start ups resulted in a 
-total of $1.xx$\todo{Update with the real value}. % Insert graphs, explain the 
-%problems of virtual machines
+It is worth saying that Docker metrics are generally more precise than the
+Virtual Box one: Docker allows to inspect the container and to gain startup and
+shutdown times with a precision of millseconds, while to gather this information
+for VirtualBox instances we had to use the command line utility \verb!time!,
+that registered timing with a precision of hundredths of a second. Nonetheless,
+this didn't influence the test too much. To avoid possible outliers we perfomed
+the test $100$ times. With this $N$, the total time spent by the Virtual
+Machines to boot up was of $2021,15$ seconds, while with containers the same
+number of start ups resulted in a total of $1.638$. Summing up, Docker employs
+only the $0,08\%$ of the overall time spent for the test, underlining how
+isolating the process with a set of defined policy and avoiding a virtualized
+kernel boot-up saves a considerable amount of time.
 
-
-\begin{figure}[t] % TODO fix image dimensions!
+\begin{figure}[t]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{docker_vs_vmBarplotGraph}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[scale=0.4]{docker_vs_vmBarplotGraph}
         \caption{Barplot between Virtual Box and Docker startup times.}
         \label{chap:tests:sec:dockervsvb:img:barplot}
     \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{docker_vs_vmBoxplotGraph}
+    ~
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[scale=0.35]{docker_vs_vmBoxplotGraph}
         \caption{Boxplot between Virtual Box and Docker with values normalized 
 in $0-1$ range.}
         \label{chap:tests:sec:dockervsvb:img:boxplot}
@@ -59,4 +62,17 @@ to the process list.}
     \label{chap:tests:sec:dockervsvb:subimg:plots}
 \end{figure}
 
-% Talk about the next test
+\subsection{SFC chain deploy measurement}
+
+The previous test make us see how much Docker is faster than a traditional
+virtual machine. The test, though, was performed on a single node, interacting
+directly with Docker and not through the orchestrator we used in the thesis
+development, in other words Kubernetes. The following measurement will allow us
+to see the time required in order to deploy an SFC of different elements in a
+Kubernetes environment. The deployment consisted in a Pod inside a Deployment
+definition with a Service related, to simulate a real VNF. After the Pod
+startup, a request is made to a backend designed to count the chain elements
+that have successfully boot-up that will return, eventually, the timing when all
+the VNFs are up and running.
+
+% Add SFC definition, graphs, talk about them
