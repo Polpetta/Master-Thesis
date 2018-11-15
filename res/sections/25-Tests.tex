@@ -69,10 +69,17 @@ virtual machine. The test, though, was performed on a single node, interacting
 directly with Docker and not through the orchestrator we used in the thesis
 development, in other words Kubernetes. The following measurement will allow us
 to see the time required in order to deploy an SFC of different elements in a
-Kubernetes environment. The deployment consisted in a Pod inside a Deployment
-definition with a Service related, to simulate a real VNF. After the Pod
+Kubernetes environment. The deployment consist in a Pod inside a Deployment
+definition with a related Service, to simulate a real VNF. After the Pod
 startup, a request is made to a backend designed to count the chain elements
-that have successfully boot-up that will return, eventually, the timing when all
-the VNFs are up and running.
+that have successfully boot-up returning, eventually, the overall start up 
+timing.
 
+% TODO: missing YAML definition: [language=YAML]
+%https://tex.stackexchange.com/questions/152829/how-can-i-highlight-yaml-code-in
+%- a-pretty-way-with-listings
+\lstinputlisting{res/code/sfc_test.yaml}
+
+As is possible to see from the YAML definition, the test % talk about 
+%imagepull policy
 % Add SFC definition, graphs, talk about them
