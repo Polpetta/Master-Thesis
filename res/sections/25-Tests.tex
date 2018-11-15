@@ -111,14 +111,15 @@ boot-up returning, eventually, the overall start up timing.
 \vspace{0.5cm}
 
 \noindent As is possible to see from the YAML definition, the test involved, for
-every launch, the VNF download from the Docker hub repositories. This, while it
-forced every node to delete and download the image for each test, it ensured
-consistent measurements in cases where the selected node for the deployment did
-not have the image already pulled. In addition to that, another consideration
-needs to be taken into account: when the chain consists of two or more elements,
-the container image which is used for the container deployment is the same for
-every VNF involved, thus reducing the start up time for the subsequent pods that
-reside in nodes that have already deployed one.
+every launch (that included and $N = 100$, for a total for 1000 tests), the VNF
+download from the Docker hub repositories. This, while it forced every node to
+delete and download the image for each test, it ensured consistent measurements
+in cases where the selected node for the deployment did not have the image
+already pulled. In addition to that, another consideration needs to be taken
+into account: when the chain consists of two or more elements, the container
+image which is used for the container deployment is the same for every VNF
+involved, thus reducing the start up time for the subsequent pods that reside in
+nodes that have already deployed one.
 
 \begin{figure}[t]
   \centering
