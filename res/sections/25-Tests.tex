@@ -154,12 +154,26 @@ reside in nodes that have already deployed one.
 \newpage
 
 \paragraph*{Kubernetes specifications}
-A Kubernetes installation was performed in order to carry out the test above.
-All the machines (master node and minions) involved had the same specifications
-i.e., 4GB of RAM, 2 vCPU and 10GB of SSD storage. Nonetheless the constrained
-resources, absolutely far from a real Kubernetes production environment, is
-possible to notice how, even with a chain of ten elements, the average time
-required to deploy an SFC is equal, if not smaller, of the time required to
-deploy a Virtual Box machine on an instance with 32GB of RAM, 8 vCPU and 50GB of
-SSD storage.
+A Kubernetes installation was performed in order to carry out the test
+descripted above. All the machines (master node and minions) involved had the
+same specifications i.e., 4GB of RAM, 2 vCPU and 10GB of SSD storage.
+Nonetheless the constrained resources, absolutely far from a real Kubernetes
+production environment, is possible to notice how, even with a chain of ten
+elements, the average time required to deploy an SFC is equal, if not smaller,
+of the time required to deploy a Virtual Box machine on an instance with 32GB of
+RAM, 8 vCPU and 50GB of SSD storage.
 % graphs, talk about them
+
+\section{Final considerations}
+
+In these tests is possible to see one critical aspect concerning an architecture
+that follows the containerization approach: great flexibility in terms of
+deployments. This possibility to deploy services in the form of SFCs and VNFs in
+a very small amount of time is one of the key point required in the new 5G
+architecture, that the tests above demonstrated this project is able to adhere.
+Finally, the ability to rapidly redeploy software means smooth and easier
+software development lifecycle, where developers have the possibility to
+automatically push ``fresh'' software in production, letting the MANO and thus
+the container orchestrator handling all the difficult and delicate tasks to put
+software in a production environment, eliminating the possibility of human
+errors and assuring longer uptimes.
