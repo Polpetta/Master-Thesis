@@ -69,9 +69,9 @@ in range $0-1$.}
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|c|c}
-                     & \textbf{Total start up time (seconds)} & \textbf{Average start up time (seconds)} \\ \hline
-\textbf{Docker}      & 1,638                                 & 0,016                                     \\
-\textbf{Virtual Box} & 2021,150                              & 20,211                                 
+                     & \textbf{Standard deviation (seconds)} & \textbf{Average start up time (seconds)} \\ \hline
+\textbf{Docker}      & 0.009620874                           & 0,016                                    \\
+\textbf{Virtual Box} & 0.755                                 & 20,211                                 
 \end{tabular}%
 }
 \caption[Docker vs Virtual Box start up times comparison]{Docker vs Virtual Box
@@ -133,19 +133,19 @@ nodes that have already deployed one.
 \end{figure}
 
 \begin{longtable}[c]{c|c|c}
-\textbf{SFC length} & \textbf{Total deploy time (seconds)} & \textbf{Average deploy time (seconds)} \\ \hline
+\textbf{SFC length} & \textbf{Stamdard deviation (seconds)} & \textbf{Average deploy time (seconds)} \\ \hline
 \endhead
 %
-\textbf{1}          & 1329,119                   & 13,291                       \\
-\textbf{2}          & 1420,693                   & 14,207                       \\
-\textbf{3}          & 1534,487                   & 15,345                       \\
-\textbf{4}          & 1645,298                   & 16,453                       \\
-\textbf{5}          & 1663,905                   & 16,634                       \\
-\textbf{6}          & 1741,825                   & 17,418                       \\
-\textbf{7}          & 1881,525                   & 18,815                       \\
-\textbf{8}          & 2085,622                   & 20,856                       \\
-\textbf{9}          & 2018,718                   & 20,187                       \\
-\textbf{10}         & 2047,645                   & 20,476                       \\
+\textbf{1}          & 2.560102                   & 13,291                       \\
+\textbf{2}          & 0.6301444                  & 14,207                       \\
+\textbf{3}          & 1.14903                    & 15,345                       \\
+\textbf{4}          & 3.592179                   & 16,453                       \\
+\textbf{5}          & 0.9728132                  & 16,634                       \\
+\textbf{6}          & 1.103802                   & 17,418                       \\
+\textbf{7}          & 1.561451                   & 18,815                       \\
+\textbf{8}          & 0.7698537                  & 20,856                       \\
+\textbf{9}          & 1.889197                   & 20,187                       \\
+\textbf{10}         & 1.709227                   & 20,476                       \\
 \caption[SFC start up time]{Table of the results. It is possible to see how the
   time required for the SFC to go up increases with the length, reaching an
   average of 20 seconds for chain of eight, nine and ten elements.}
