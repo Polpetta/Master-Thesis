@@ -9,14 +9,14 @@ responsiveness and one checking the SFC implementation and efficiency.
 
 \subsection{Docker vs Virtual Box startup measurement}
 
-Regarding the overall system responsiveness, a metric we considered worth to 
-test was the VNF start up time in a docker environment versus one virtualized 
-through a common virtual machine system (in this case Virtual Box was chosen). 
+Regarding the overall system responsiveness, a metric we considered worth to
+test was the VNF start up time in a docker environment versus one virtualized
+through a common virtual machine system (in this case Virtual Box was chosen).
 To make this simulation as fair as possible, we used the same node (an 
-Openstack VM with 32GB of RAM, 8 vCPU and solid state storage) and used the same 
-``boot sequence'' for both the VNFs: first we launched the Astaire framework, 
-ensuring its availability to process data and then we notified the test 
-machine of the successful boot. The startup time was measured from the 
+Openstack VM with 32GB of RAM, 8 vCPU and solid state storage) and used the
+same ``boot sequence'' for both the VNFs: first we launched the Astaire
+framework, ensuring its availability to process data and then we notified the
+test machine of the successful boot. The startup time was measured from the 
 beginning of the startup command (\verb!docker run! for Docker and 
 \verb!VBoxManage -s! for Virtual Box) till the first TCP hit received by the 
 test backend (to make things as smooth as possible, \verb!netcat! was used 
@@ -24,10 +24,11 @@ to listen to incoming TCP data).
 
 It is worth saying that Docker metrics are generally more precise than the
 Virtual Box one: Docker allows to inspect the container and to gain startup and
-shutdown times with a precision of millseconds, while to gather this information
-for VirtualBox instances we had to use the command line utility \verb!time!,
-that registered timing with a precision of hundredths of a second. Nonetheless,
-this didn't influence the test too much. To reduce possible outliers we performed
+shutdown times with a precision of milliseconds, while to gather this
+information for VirtualBox instances we had to use the command line utility
+\verb!time!, that registered timing with a precision of hundredths of a second.
+Nonetheless,this didn't influence the test too much. To reduce possible
+outliers we performed
 the test $100$ times. With this $N$, the total time spent by the Virtual
 Machines to boot up was of $2021,15$ seconds, while with containers the same
 number of start ups resulted in a total of $1.638$ seconds. Summing up, Docker
@@ -143,7 +144,7 @@ with 32GB of RAM, 8 vCPU and 50GB of SSD storage.
 
 % TODO is it worth to keep it as a long table?
 \begin{longtable}[c]{c|c|c}
-\textbf{SFC length} & \textbf{Stamdard deviation (seconds)} & \textbf{Average 
+\textbf{SFC length} & \textbf{Standard deviation (seconds)} & \textbf{Average 
 deploy time (seconds)} \\ \hline
 \endhead
 %
