@@ -12,7 +12,7 @@ network in a programmatically way, possibly enhancing monitoring and
 performances. The main sake of SDN is to the packet forwarding process,
 \emph{data plane}, from the routing one, the so called \emph{control plane}.
 The latter component serves as the centralized network intelligence and could
-consists of one or more controllers. It has some drawbacks in teorms of
+consists of one or more controllers. It has some drawbacks in terms of
 security, scalability and elasticity, because of the centralized architecture.
 
 \subsection{SDN stack}
@@ -25,7 +25,7 @@ the Data plane.}
  \label{chap:background:img:sdn_architecture}
 \end{figure}
 As depicted in Figure~\ref{chap:background:img:sdn_architecture} the SDN
-architecture can be splitted in three different layers, called planes, based on 
+architecture can be split in three different layers, called planes, based on 
 their functionalities. 
 
 \subsubsection{Application plane}
@@ -35,10 +35,10 @@ and manage its hardware resources and data through APIs, often called
 \emph{northbound interfaces} (NBI).
 These interfaces provide an additional abstraction layer that high-level 
 applications can consume, enabling the possibility to use a variety of 
-different verdors' controllers in the same way.
-Analysing the SDN applications is possible to note two defined layers, one that 
+different vendors' controllers in the same way.
+Analyzing the SDN applications is possible to note two defined layers, one that 
 is responsible to manage the whole logic, and another one dedicated to the 
-communication part, that in particular uses the previsously defined NBIs.
+communication part, that in particular uses the previously defined NBIs.
 These applications can also build an abstracted view of the network, using
 controllers information, in order to make the traffic analysis easier and to 
 simplify the decision making process.
@@ -50,7 +50,7 @@ receive requests from the mentioned SDN applications and either translate them
 in a fashion that can be understood from the lower layer\todo{who?}, or collect 
 data needed by the application itself. 
 Due to the variety of tasks a controller has to accomplish, its logical 
-suddivision is achieved with a three-layer architecture, in which every layer 
+subdivision is achieved with a three-layer architecture, in which every layer 
 exposes it's own interface, that can be consequently used by the upper 
 layers, up to the \emph{NBI agents}.
 NBI agent manages the communications with SDN applications, exposing interfaces
@@ -58,7 +58,7 @@ that usually provide an abstract view of the network and a set of
 the controller functionalities.
 In particular, the middle layer represents the controller inner-logic, which 
 process the requests coming from the upper layer (aka the third layer), that 
-has the specific task to communicate with the remaining network compoents, in 
+has the specific task to communicate with the remaining network components, in 
 other words the Control to Data-Plane Interface and/or the already 
 mentioned southbound interface.
 
@@ -87,10 +87,10 @@ ad-hoc, based on packet types, traffic or network load.
 \end{figure}
 
 In Figure~\ref{chap:background:img:openflow_protocol} it is possible to see the
-how switches works in the OpenFlow protocol. Basically, OpenFlow swiches own a
+how switches works in the OpenFlow protocol. Basically, OpenFlow switches own a
 set of tables to organized packet control and forwarding. These tables can be
 updated by higher-level application, usually an SDN application or controller,
-taking advatage of OpenFlow channels (called OF channels). 
+taking advantage of OpenFlow channels (called OF channels). 
 
 \section{Virtualization}
 Cloud computing is now a leading-edge Internet technology and the virtualization
@@ -109,32 +109,32 @@ in a way it doesn't seem to be copied.}
 %r k _virtualization.pdf
 Virtualization, in the networking context, refers to the act of combining
 hardware, software and functionalities into a virtual network. This abstraction
-runs on the top of a physical network in a hypervisor, decupling the logical
-network from the harwdare one. Network virtualization allow multiple,
+runs on the top of a physical network in a hyper-visor, decoupling the logical
+network from the hardware one. Network virtualization allow multiple,
 heterogeneous networks to cohabit, increasing the flexibility and manageability.
 %http://www.csc.villanova.edu/~nadi/csc8580/S11/DeeptiNune.pdf
 %https://www.sciencedirect.com/science/article/abs/pii/S1389128609003387
 The idea of network virtualization came from the decoupling of the role of the
-traditional ISP into two different entities: who provides the infrastucture
+traditional ISP into two different entities: who provides the infrastructure
 (InPs) and who provides the services(SPs). In that context it is possible to
 aggregate resources, even from different InPs, creating a virtual network,
 offering an end-to-end service. Most known instances of NV are \emph{VPNs},
 dedicated networks that allows the communication among multiple sites, using
 private and secure tunnels, relying on the public network such as Internet.
-Other examples of netvork virtualization are \emph{overlay networks}. They are
-logical networks, build on the top of an existing physical network, tipically
+Other examples of network virtualization are \emph{overlay networks}. They are
+logical networks, build on the top of an existing physical network, typically
 implemented at the application layer. 
 
 \subsection{Network Function Virtualization}
 The \emph{Network Function Virtualization} (NFV) concept refers to the use of 
-virtualization tecnologies to virtualize network nodes functions. VNFs may run 
-different processes and softwares, on the top of servers, switches, storage 
-devices or on cloud computing infrastuctures, that substitute custom hardware. 
+virtualization technologies to virtualize network nodes functions. VNFs may run 
+different processes and software, on the top of servers, switches, storage 
+devices or on cloud computing infrastructures, that substitute custom hardware. 
 That approach worked well in the past, because of the need to follow rigorous 
 standards, providing at the same time high quality, but it led to long product 
-cycles and high specialized proprietary hardware. New Internet senarios, that 
+cycles and high specialized proprietary hardware. New Internet scenarios, that 
 include IoT and the increasing number of services to spread multimedia data 
-(Skype, Netflix, Spotify, ...), requires more flexible functions and faster 
+(Skype, Netflix, Spotify, \dots), requires more flexible functions and faster 
 network deployments. The NFV technology is exploited in a framework, organized
 at least by three components:
 \begin{enumerate}
