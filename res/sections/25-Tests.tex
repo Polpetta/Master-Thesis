@@ -210,7 +210,7 @@ total number of packets that have passed through it.
 \centering
 \begin{tabular}{@{}cc@{}}
 \toprule
-\textbf{SFC length} & \textbf{Mean RTT (milliseconds)} \\ \midrule
+\textbf{SFC length} & \textbf{Mean RTT (Seconds)} \\ \midrule
 len. 0              & 0.0009668279      \\
 len. 1              & 0.0555884027      \\
 len. 2              & 0.0702438903      \\
@@ -279,9 +279,10 @@ value is higher than the others. Other differences among SFC, instead, are
 quite similar.
 
 \begin{table}[]
+\centering
 \begin{tabular}{@{}cc@{}}
 \toprule
-\textbf{SFC Length} & \textbf{Jitter(Milliseconds)} \\ \midrule
+\textbf{SFC Length} & \textbf{Jitter(Seconds)} \\ \midrule
 len. 0    & 0.0001484817    \\
 len. 1    & 0.0034793676    \\
 len. 2    & 0.0040213103    \\
@@ -299,3 +300,32 @@ different SFC length, based on values of RTT measured in the previous test.
 Jitter is the variation in the delay of received packet, and gives a measure of
 the congestion of the network. As we can see values are really low, even if the
 lowest result is always the one calculated without the chain.
+
+\subsection{Resilience}
+We also developed also a test to analyze the resilience of the system. One of the most important requirements of our implementation is to make the system to be able to recover after an SF crash. Thanks to the exploit of Docker container technology and Kubernetes platform it is quite straightforward to restart a container after a fault. In fact, \texttt{yaml} files that allows to deploy containers on Kubernetes, make possible to set pods restart policy to always(the default one), on failure or never, but the overall system must be able to recognize that the SF is brought up again. 
+
+During this test test we send out 500 UDP packets (1 packet each 50ms) from a sender to a receiver through an SFC of length 3. The configuration of the test is represented in Figure~\ref{chap:tests:sec:fault:img:testfaultconf}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{testfaultconf}
+  \caption{Host logical configuration for testing}
+  \label{chap:tests:sec:fault:img:testfaultconf}
+\end{figure}
+The receiver record the instant on which it receives a packet and, to emulate a SF crash, we bring down the central link of the chain after 5 seconds using the command \verb!kubectl delete pods <pod-id> --grace-period=0 --force!, to force the stop of a pod.
+
+The behavior of the system in the case of the crash of a SF is depicted in Figure~\ref{chap:tests:sec:fault:img:faultgraph}. We repeated the test 20 times and we measured an average interval of time on which the receiver does not receive anything of 13.5793391228s. In the graph are only shown the best and the worst cases. In both cases we can see that the interval of time in which packets are not delivered is similar and it is not significantly different from the average (around 12.75 the best case, 14.41 the worst one).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{faultgraph}
+  \caption{Packet time arrival in case of SF fault}
+  \label{chap:tests:sec:fault:img:faultgraph}
+\end{figure}
+
+After those results, we repeated the test with the configuration shown in Figure~\ref{chap:tests:sec:fault:img:testfaultconfwithreplica}, in order to test the resilience of the system in case of replicas of SF. In that case after repeating the test 10 times, bringing down only one of the 2 equal SFs. In that case we were not able to record any significant interval of time in which the receiver does not received packet (receiving times are consistent with sending times).
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{testfaultconfwithreplica}
+  \caption{Host logical configuration in case of a replicated SF for testing}
+  \label{chap:tests:sec:fault:img:testfaultconfwithreplica}
+\end{figure}
