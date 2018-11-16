@@ -17,7 +17,7 @@ Openstack VM vith 32GB of RAM, 8 vCPU and solid state storage) and used the same
 ``boot sequence'' for both the VNFs: first we launched the Astaire framework, 
 ensuring its availability to process data and then we notified the test 
 machine of the successful boot. The startup time was measured from the 
-beginning of the startup command (\verb!docker run! for docker and 
+beginning of the startup command (\verb!docker run! for Docker and 
 \verb!VBoxManage -s! for Virtual Box) till the first TCP hit received by the 
 test backend (to make things as smooth as possible, \verb!netcat! was used 
 to listen to incoming TCP data).
@@ -110,15 +110,15 @@ boot-up returning, eventually, the overall start up timing.
 \vspace{0.5cm}
 
 \noindent As is possible to see from the YAML definition, the test involved, for
-every launch (that included and $N = 100$, for a total for 1000 tests), the VNF
-download from the Docker hub repositories. This, while it forced every node to
-delete and download the image for each test, it ensured consistent measurements
-in cases where the selected node for the deployment did not have the image
-already pulled. In addition to that, another consideration needs to be taken
-into account: when the chain consists of two or more elements, the container
-image which is used for the container deployment is the same for every VNF
-involved, thus reducing the start up time for the subsequent pods that reside in
-nodes that have already deployed one.
+every launch (that included and $N = 100$, for a total for 1000 tests), the 
+download of the container image from the Docker hub repositories. This, while 
+it forced every node to delete and download the image for each test, it ensured 
+consistent measurements in cases where the selected node for the deployment did 
+not have the image already pulled. In addition to that, another consideration 
+needs to be taken into account: when the chain consists of two or more 
+elements, the container image which is used for the container deployment is the 
+same for every VNF involved, thus reducing the start up time for the subsequent 
+pods that reside in nodes that have already deployed one.
 
 \begin{figure}[t]
   \centering
@@ -131,49 +131,49 @@ nodes that have already deployed one.
   \label{chap:tests:sec:sfclength:img:barplot}
 \end{figure}
 
+\paragraph*{Kubernetes specifications}
+A Kubernetes installation was performed in order to carry out the test
+descripted above. All the machines involved (master node and minions) had the
+same specifications i.e., 4GB of RAM, 2 vCPU and 10GB of SSD storage.
+Nonetheless the constrained resources, absolutely far from a real Kubernetes
+production environment, it is possible to notice how, even with a chain of ten
+elements, the average time required to deploy an SFC is equal, if not smaller,
+of the average time required to deploy a Virtual Box machine on an instance 
+with 32GB of RAM, 8 vCPU and 50GB of SSD storage.
+
+% TODO is it worth to keep it as a long table?
 \begin{longtable}[c]{c|c|c}
-\textbf{SFC length} & \textbf{Stamdard deviation (seconds)} & \textbf{Average deploy time (seconds)} \\ \hline
+\textbf{SFC length} & \textbf{Stamdard deviation (seconds)} & \textbf{Average 
+deploy time (seconds)} \\ \hline
 \endhead
 %
-\textbf{1}          & 2.560102                   & 13,291                       \\
-\textbf{2}          & 0.6301444                  & 14,207                       \\
-\textbf{3}          & 1.14903                    & 15,345                       \\
-\textbf{4}          & 3.592179                   & 16,453                       \\
-\textbf{5}          & 0.9728132                  & 16,634                       \\
-\textbf{6}          & 1.103802                   & 17,418                       \\
-\textbf{7}          & 1.561451                   & 18,815                       \\
-\textbf{8}          & 0.7698537                  & 20,856                       \\
-\textbf{9}          & 1.889197                   & 20,187                       \\
-\textbf{10}         & 1.709227                   & 20,476                       \\
+\textbf{1}          & 2.560102                   & 13,291                     \\
+\textbf{2}          & 0.6301444                  & 14,207                     \\
+\textbf{3}          & 1.14903                    & 15,345                     \\
+\textbf{4}          & 3.592179                   & 16,453                     \\
+\textbf{5}          & 0.9728132                  & 16,634                     \\
+\textbf{6}          & 1.103802                   & 17,418                     \\
+\textbf{7}          & 1.561451                   & 18,815                     \\
+\textbf{8}          & 0.7698537                  & 20,856                     \\
+\textbf{9}          & 1.889197                   & 20,187                     \\
+\textbf{10}         & 1.709227                   & 20,476                     \\
 \caption[SFC start up time]{Table of the results. It is possible to see how the
   time required for the SFC to go up increases with the length, reaching an
   average of 20 seconds for chain of eight, nine and ten elements.}
 \label{chap:tests:sec:sfclength:tab:sfcdata}\\
 \end{longtable}
 
-\newpage
-
-\paragraph*{Kubernetes specifications}
-A Kubernetes installation was performed in order to carry out the test
-descripted above. All the machines (master node and minions) involved had the
-same specifications i.e., 4GB of RAM, 2 vCPU and 10GB of SSD storage.
-Nonetheless the constrained resources, absolutely far from a real Kubernetes
-production environment, is possible to notice how, even with a chain of ten
-elements, the average time required to deploy an SFC is equal, if not smaller,
-of the time required to deploy a Virtual Box machine on an instance with 32GB of
-RAM, 8 vCPU and 50GB of SSD storage.
-% graphs, talk about them
 
 \section{Final considerations}
 
 In these tests is possible to see one critical aspect concerning an architecture
 that follows the containerization approach: great flexibility in terms of
 deployments. This possibility to deploy services in the form of SFCs and VNFs in
-a very small amount of time is one of the key point required in the new 5G
+a very small amount of time is one of the key points required in the new 5G
 architecture, that the tests above demonstrated this project is able to adhere.
 Finally, the ability to rapidly redeploy software means smooth and easier
 software development lifecycle, where developers have the possibility to
-automatically push ``fresh'' software in production, letting the MANO and thus
+automatically push ``fresh'' software to production, letting the MANO and thus
 the container orchestrator handling all the difficult and delicate tasks to put
 software in a production environment, eliminating the possibility of human
 errors and assuring longer uptimes.
