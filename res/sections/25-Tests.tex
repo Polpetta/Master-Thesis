@@ -189,7 +189,7 @@ All the machine used for testing purposes are Openstack virtual machines, with t
 \end{itemize}
 
 \subsection{RTT measurement}
-Regarding the delivery performance, a metric to take in account is the \emph{round trip time}(RTT), that is the time interval between the instant in whic a packet is sent and the response is received. To test it there was developed a script that sends a packet and waits for the corrispondant response, recording the instants (expressed as \emph{epoch}) of send and receive. The sake of thi test is to compare the RTT measured without any SFC (only sending the packet to the receiver waiting for the response) and making packets pass through different length SFCs, in particular with 1, 2, 3, 4, 5, and 10 hops. Packets traverse the SFC on both sides and the results are collected after 100 tests and the SF only prints the packet received and the total number of packets that have passed throught it.
+Regarding the delivery performance, a metric to take in account is the \emph{round trip time}(RTT), that is the time interval between the instant in whic a packet is sent and the response is received. To test it there was developed a script that sends a packet with 8B of payload and waits for the corrispondant response, recording the instants (expressed as \emph{epoch}) of send and receive. The sake of thi test is to compare the RTT measured without any SFC (only sending the packet to the receiver waiting for the response) and making packets pass through different length SFCs, in particular with 1, 2, 3, 4, 5, and 10 hops. Packets traverse the SFC on both sides and the results are collected after 100 tests and the SF only prints the packet received and the total number of packets that have passed throught it.
 
 \begin{table}[H]
 \centering
@@ -212,10 +212,48 @@ Not surprisingly, as depicted in the Table~\ref{chap:tests:sec:rtt:tab:meanrtt},
 the RTT increase with the number of elements of the chain. There is a big difference between the mean RTT of the configuration wiothout any chain and the one with an SFC with a single link: this outcome has different explaination. As explained in \todo{Add reference to implementation} the chain has always at least 3 hops (ingress, SF, egress), so the packet must be elaborated by 3 different running software. Another explaination lays into how the code was developed: it was not developed as a production ready product, but for a feasibility test, so connections and trasmissions can be enhanced. Finally, SFs are meant to perform some modifications to the packet, so, unavoidably, some time is waisted. 
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.35]{meanrtt}
-  \caption{Mean RTT calculate using SFCs with different lengths}
-  \label{chap:tests:sec:rtt:img:meanstt}
+  %\centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[scale=0.4]{meanrtt}
+        \caption{Mean RTT calculate using SFCs of different lengths}
+        \label{chap:tests:sec:rtt:img:meanstt}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[scale=0.4]{differencenosfc}
+        \caption{Time increase using SFCs of different lengths}
+        \label{chap:tests:sec:rtt:img:differencertt}
+    \end{subfigure}
 \end{figure}
 
-The results are better represented in Figure~\ref{chap:tests:sec:rtt:img:meanstt}. In that graph we can easier see the difference among the chains with different lengths and the trasmission that does not use any SFC. Looking at the bars representing the SFC composed by 1, 2, 3, 4 and 5 links we can see a pretty linear increase of the RTT. This trend strongly depends on the nature of the SF involved in the SFC.
+The results are better represented in Figure~\ref{chap:tests:sec:rtt:img:meanstt}. In that graph we can easier see the difference among the chains with different lengths and the trasmission that does not use any SFC. Looking at the bars representing the SFC composed by 1, 2, 3, 4 and 5 links we can see a pretty linear increase of the RTT. This trend strongly depends on the nature of the SF involved in the SFC, in that case the linear increase is highligted due to the use of the same funcion. In Figure~\ref{chap:tests:sec:rtt:img:differencertt} is depicted the difference between the RTT measured with a normal packet transmission and using the chains with different size, that represent the additional time needed for each transmission. Even in that case we can see that some time is waisted against a normal transmission and that this delta of time depends on the number of SFC involved in the chain.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.4]{differenceonehop}
+  \caption{Time difference between SFCs that have a length difference of one SF}
+  \label{chap:tests:sec:rtt:img:differenceonehop}
+\end{figure}
+
+In Figure~\ref{chap:tests:sec:rtt:img:differenceonehop} is represented the difference in terms of RTT among chains that have a length difference of one link. The first bar represent the comparison between an SFC composed by only one element and the direct trasmission to the receiver: that explain why that value is higher than the others. Other differences among SFC, instead, are quite similar.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\centering
+\begin{tabular}{@{}cc@{}}
+\toprule
+\textbf{SFC length} & \textbf{Jitter (Milliseconds)} \\ \midrule
+len. 0              & 0.0001074767    \\
+len. 1              & 0.0028695822    \\
+len. 2              & 0.0032037902    \\
+len. 3              & 0.0031961584    \\
+len. 4              & 0.0027278513    \\
+len. 5              & 0.0036802184    \\
+len. 10             & 0.0063434506    \\ \bottomrule
+\end{tabular}
+\caption{Jitterf for different SFC lengths}
+\label{chap:tests:sec:rtt:tab:jitter}
+\end{table}
+
+Table~\ref{chap:tests:sec:rtt:tab:jitter} represent the jitter calculated for different SFC length, based on values of RTT measured in the previous test. Jitter is the variation in the delay of received packet, and gives a measure of the congestion of the network. As we can see values are really low, even if the lowest one is always the one calculated without the chain.
