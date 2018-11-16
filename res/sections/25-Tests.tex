@@ -177,3 +177,45 @@ automatically push ``fresh'' software to production, letting the MANO and thus
 the container orchestrator handling all the difficult and delicate tasks to put
 software in a production environment, eliminating the possibility of human
 errors and assuring longer uptimes.
+
+\section{System performances}
+
+\subsection{Test system}
+All the machine used for testing purposes are Openstack virtual machines, with the following specifications:
+\begin{itemize}
+\item 1 machine with 32GB of RAM, 8vCPU and solid state storage, on which the receiver of packets is running;
+\item 4 machines with 16GB of RAM, 6vCPU and solid state storage, that form a Kubernetes cluster on which SFC infrastructure is deployed;
+\item 1 machine with 4GB of RAM, 2vCPU and solid state storage, on which scripts to send packets run.
+\end{itemize}
+
+\subsection{RTT measurement}
+Regarding the delivery performance, a metric to take in account is the \emph{round trip time}(RTT), that is the time interval between the instant in whic a packet is sent and the response is received. To test it there was developed a script that sends a packet and waits for the corrispondant response, recording the instants (expressed as \emph{epoch}) of send and receive. The sake of thi test is to compare the RTT measured without any SFC (only sending the packet to the receiver waiting for the response) and making packets pass through different length SFCs, in particular with 1, 2, 3, 4, 5, and 10 hops. Packets traverse the SFC on both sides and the results are collected after 100 tests and the SF only prints the packet received and the total number of packets that have passed throught it.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cc@{}}
+\toprule
+\textbf{SFC length} & \textbf{Mean RTT (milliseconds)} \\ \midrule
+len. 0              & 0.0009668279      \\
+len. 1              & 0.0555884027      \\
+len. 2              & 0.0702438903      \\
+len. 3              & 0.0888472247      \\
+len. 4              & 0.1045638967      \\
+len. 5              & 0.1239343858      \\
+len. 10             & 0.2135494161      \\ \bottomrule
+\end{tabular}
+\caption{Mean RTT measured with different SFC length}
+\label{chap:tests:sec:rtt:tab:meanrtt}
+\end{table}
+
+Not surprisingly, as depicted in the Table~\ref{chap:tests:sec:rtt:tab:meanrtt},
+the RTT increase with the number of elements of the chain. There is a big difference between the mean RTT of the configuration wiothout any chain and the one with an SFC with a single link: this outcome has different explaination. As explained in \todo{Add reference to implementation} the chain has always at least 3 hops (ingress, SF, egress), so the packet must be elaborated by 3 different running software. Another explaination lays into how the code was developed: it was not developed as a production ready product, but for a feasibility test, so connections and trasmissions can be enhanced. Finally, SFs are meant to perform some modifications to the packet, so, unavoidably, some time is waisted. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{meanrtt}
+  \caption{Mean RTT calculate using SFCs with different lengths}
+  \label{chap:tests:sec:rtt:img:meanstt}
+\end{figure}
+
+The results are better represented in Figure~\ref{chap:tests:sec:rtt:img:meanstt}. In that graph we can easier see the difference among the chains with different lengths and the trasmission that does not use any SFC. Looking at the bars representing the SFC composed by 1, 2, 3, 4 and 5 links we can see a pretty linear increase of the RTT. This trend strongly depends on the nature of the SF involved in the SFC.
