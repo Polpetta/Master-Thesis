@@ -4,7 +4,7 @@
 As in chapter~\ref{chap:intro}, the creation of a full ETSI MANO compliant
 architecture, following the suggestions described in RFC 7665, require the
 integration of multiple tools (some of them have been already briefly introduced
-in~\ref{chap:intro}). The tools were choosen after their analysis, where pro and
+in~\ref{chap:intro}). The tools were chosen after their analysis, where pro and
 cons have been studied and compared to the necessity of this thesis. Since the
 project has been developed with the cloud provided by the University of Padua,
 Openstack (which a product analysis can be found later
@@ -12,14 +12,14 @@ in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 
 \section{Architecture overview}
 
-During the testbed development the software architecture diverged from the
+During the test-bed development the software architecture diverged from the
 original one, experiencing different evolutions and modifications.
 
 \subsection{VIBES architectural description}
 
 In the original VIBES architectural design, based on leveraging virtualization
 technologies, is possible to identify different macro-components, each of these
-specialized in fullfilling a specific goal. For the ETSI standards, the Network
+specialized in fulfilling a specific goal. For the ETSI standards, the Network
 Function Virtualization (NFV) design should be composed as follows:
 \begin{figure}[t]
  \centering \includegraphics[scale=2]{etsi_arch}
@@ -33,7 +33,7 @@ Function Virtualization (NFV) design should be composed as follows:
    heart of the whole computation component, and here three sub-domains can be
    identified: \todo{Expand this section}
 \begin{itemize} 
- \item \textbf{Hypervisor domain} that is composed of the Virtual Compute, the
+ \item \textbf{Hyper-visor domain} that is composed of the Virtual Compute, the
    Virtual Storage, and the Virtualization Layer. These components are used to
    virtualize the computational and storage resources, providing a layer for
    accessing it.
@@ -44,27 +44,28 @@ Function Virtualization (NFV) design should be composed as follows:
 \end{itemize}
 
 In conventional virtualization systems these resources are usually separated
-from the host operating system, providing better isolation but wrost
+from the host operating system, providing better isolation but worst
 performance. The ETSI infrastructure, instead, tries with container
 virtualization technology to push for a better NFV responsiveness\todo{Check
   term - I don't think it actually exists}, removing the additional operating
-system (called ``guest'' OS) required by the usual hypervisor-oriented approach.
+system (called ``guest'' OS) required by the usual hyper-visor-oriented 
+approach.
 
 To realize the required components, specific tools were suggested in the VNF
 technical proposal: regarding the NFV (network infrastructure) domain
 Docker-Compose was proposed as a viable solution, while to store PEP instances
 docker swarm was described as a possible candidate.
 
-We performed an accured analysis of the tools choosen based on their maturity,
+We performed an accurate analysis of the tools chosen based on their maturity,
 on the community and on the technical support offered (e.g. user manuals,
-developer documentation), which, at the end, commited us to choose different
+developer documentation), which, at the end, committed us to choose different
 tools from the suggested ones. A detailed description of the architectural
 implementation can be found in chapter~\ref{chap:archimpl}.\todo{Include prof.
   survey about community components here}
 
 \item \textbf{VNFs} this are the core components that perform packets
   manipulation. This components are design to be lightweight services able to
-  elaborate a great amount of packets per seconds. Manupulation can be of two
+  elaborate a great amount of packets per seconds. Manipulation can be of two
   typologies: stateful or stateless. In the first case, a state is maintained,
   and the VNF can perform heuristics about data coming through it (especially
   useful to detect patterns in the data flow, e.g. DDos attacks). In the second
@@ -76,10 +77,10 @@ implementation can be found in chapter~\ref{chap:archimpl}.\todo{Include prof.
 \item \textbf{NFV Management and Orchestration (MANO)} also known as NFV
   Orchestrator (NFVO) is responsible for the end-to-end management and
   orchestration of network services (NS), also called SFC. The MANO has
-  different responsabilities, such as managing the
-  istantiation/destruction/modification of the SFCs, that achieves interacting
+  different responsibilities, such as managing the
+  creation/destruction/modification of the SFCs, that achieves interacting
   with the VIM.\todo{CITE: SDN/NFV-Based Mobile Packet Core Network
-Architectures: A Survey}. Finally, the mano can integrate with 
+Architectures: A Survey}. Finally, the MANO can integrate with 
 Operational and Business Support Systems (OSS/BSS), \todo{Expand this part with 
 the following papers: https://www.tandfonline.com/doi/abs/10.1057/jors.1995.176 
 https://ieeexplore.ieee.org/abstract/document/6963800 
@@ -99,31 +100,31 @@ the  SFCs are the core of the whole project: packet transmission and
 elaboration is made here. Challenges regarding this topic are building a 
 system that is flexible enough to allow dynamic packet routing, support 
 scalability and provide methods to recovery from failures. With this challenges 
-packet transmission revealed to be a foundamental point to choose carefully.
+packet transmission revealed to be a fundamental point to choose carefully.
 
 \subsection{Packet transmission strategies}
 
-When a packets are sent from a seder $S$, to a receiver $R$, they start
+When a packets are sent from a sender $S$, to a receiver $R$, they start
 travelling to the backbone receiving appropriate in-hardware packet processing
 before being received by $R$. During this elaboration, it is important to
 maintain the transparency of the connection, so that the network users are not
 aware of the packets elaboration at all. To perform that, many solutions are
-available: TUN/TAP packet incapsulation, IP Encapsulation within IP or TCP
+available: TUN/TAP packet encapsulation, IP Encapsulation within IP or TCP
 session recreation (know also as TCP split).
 
 TUN/TAP and IP Encapsulation within IP (initially defined in RFC 2003 with the
 aim to deliver IP packets over Mobile IP for mobile networks) maintain the
-connection transparency incapsulating the packet in another one.
+connection transparency encapsulating the packet in another one.
 \begin{figure}[t]
   \centering \includegraphics[scale=0.5]{IPoverIP}
   \caption[IP Encapsulation within IP packet schema]{A schema of IP
     Encapsulation within IP. Is noticeable how the original packet becomes the
-    payload of a new one, thus being encapsulated. All the informations
+    payload of a new one, thus being encapsulated. All the information
     regarding the original packet remains untouched: when this kind of packet
     gets send from a machine to another, the OS will remove the new packet
     header and will present to the user-space program receiving the data its
     payload: a IP packet. Packets encapsulation can be applied with higher
-    layers too, thus allowing for TCP and UDP packet incapsulation.}
+    layers too, thus allowing for TCP and UDP packet encapsulation.}
   \label{chap:prjan:img:ip_over_ip}
 \end{figure}
 
@@ -137,21 +138,21 @@ allow the packets to make intermediate destinations that otherwise would not be
 selected. TCP session recreation, instead, ``split'' the TCP session in two
 endpoints: an Ingress, that manage the connection with the client and an Egress,
 that communicate with the packet receiver creating a multi-overlay-hop path
-where for each hop there is an possible indipendent TCP connection. In order to
+where for each hop there is an possible independent TCP connection. In order to
 achieve that, a session table needs to be established and continuously updated,
 while TCP headers need to be accordingly modified to allow data transmission
 through the Ingress and Egress points. Nonetheless, care should be given to
 packets path: in order to avoid ill-calculated congestion windows, the incoming
 packets need to follow the same (or an equivalent one) path for the same
-instatiated connection. This phenomenom is based on the intermediate proxies
+instantiated connection. This phenomenon is based on the intermediate proxies
 that create the route: it is the case, for example, when an intermediate node
 sends back a spoofed ACK before the original packet is delivered to the real
-consegnee. In this senario, the sender, unaware of the proxy, will miscalculate
+consignee. In this scenario, the sender, unaware of the proxy, will miscalculate
 the sending window based on the too low RTT. Other problems of TCP splitting are
 reliability and security, especially because the end to end TCP logic is no
 longer maintained: a server failure may cause to an unaware client to believe
 that all the packets have reached the destination. TCP session recreation seems
-burdersome and it doesn't seem to add any significant benefit at the first
+burdensome and it doesn't seem to add any significant benefit at the first
 sight, but it offers the flexibility to perform extensive packet manipulation:
 since the packet its recreated every time at the Ingress and Egress points,
 while in the Network Function Virtualization Infrastructure (NFVI), the original
@@ -163,7 +164,7 @@ TCP flavours, hence increasing the communication speed in heterogeneous networks
 known that HighSpeed TCP gives best results when applied in optical fiber-based
 connections).
 
-During the testbed development we first tried the TUN/TAP solution, that
+During the test-bed development we first tried the TUN/TAP solution, that
 revealed to be not completely transparent and with major performance drawbacks
 (i.e. packet transmission in a LAN connection reached latencies of 50ms)
 \todo{Explain the constraint of point-to-point connections, while we need
@@ -175,10 +176,10 @@ the SFC the packet has to perform and additional metadata.
 \label{chap:prjan:sec:tech}
 
 Before starting any effective work on the project it has been decided to 
-perform an analysis of the possible technologies avvailable in the market, 
-performing a choice between them and exploiting their possibile ``weak 
-points''. Proceding with a top-down approach, the frameworks were choosen from 
-the one that had the biggest role in the testbed to conclude with the 
+perform an analysis of the possible technologies available in the market, 
+performing a choice between them and exploiting their possible ``weak 
+points''. Proceeding with a top-down approach, the frameworks were chosen from 
+the one that had the biggest role in the test-bed to conclude with the 
 less-important components.
 
 \subsection{NFVI}
@@ -186,12 +187,12 @@ less-important components.
 A critical component, as the MANO one, is the NFVI. Without it, network 
 resources can't be allocated, and since our project was focused on dynamically 
 allocating containerized applications on cloud platforms, we decided to start 
-analizing the right framework for this component first.
+analyzing the right framework for this component first.
 
 \subsubsection{Openstack}
 \label{chap:prjan:sec:openstack}
 Created in ??\todo{Find out Openstack date of creation}, Openstack allows
-on-permise cloud installations, using bare-metal resources to provide common
+on-premise cloud installations, using bare-metal resources to provide common
 cloud services as object storage, virtual machine deploy, virtual networking.
 Furthermore its modularity offers the possibility to add additional components,
 even proprietary, to achieve a complete cloud solution.
@@ -207,7 +208,7 @@ As already introduced before, Kubernetes is an open source software framework
 specialized in container management and orchestration. Developed by Google in
 ??\todo{Find out the actual date} and written in Go, it allows different
 machines (called nodes from now on) to create an abstraction layer and to form a
-cluster where is possible to run Docker containers without brothering about
+cluster where is possible to run Docker containers without bothering about
 hardware constraints. Nodes can have specific roles and specialization, all of
 them managed by one or many master nodes, that actually manage the
 orchestration. On top of that, Kubernetes is virtualization-agnostic, meaning
@@ -230,7 +231,8 @@ the medal, though, is that virtual machines require large amount of resources,
 especially memory, because solutions like copy-and-write of in-memory pages are
 not viable anymore (since the kernel gets duplicated too), leading to
 duplication of loaded libraries and assets in the memory of the host. For large
-deployment containing only simple services (e.g. a backend application serving a
+deployment containing only simple services (e.g. a back-end application serving 
+a
 website or a database) this ends up in a waste of resources. \todo{Talk about
   lxc containers and how Docker solved magically the problem.} It's here that,
 in ??\todo{Find Docker date of birth}, Docker was created, basing its solution
@@ -250,21 +252,21 @@ respectively, orchestrate containers in a single or a clustered system.
 
 \vspace{0.5cm}
 
-% The development of the ETSI MANO testbed involved the use of several 
+% The development of the ETSI MANO test-bed involved the use of several 
 % tecnhologies already in the market, and in some cases the creation of ad-hoc 
 % solutions to solve particular issues. Here, a brief listing of the 
 % well-estabilished technologies used is performed, describing even solutions 
-% that at the end weren't choosen because they didn't fit with the defined goals.
+% that at the end weren't chosen because they didn't fit with the defined goals.
 
 \subsection{MANO}
 
-Another foundamental component in the architecture is the MANO, that has to 
+Another fundamental component in the architecture is the MANO, that has to 
 manage the Network Services and the deployment of new VNFs. In coordination 
-with Kubernetes, it composes the core of the testbed architecture. Initially 
+with Kubernetes, it composes the core of the test-bed architecture. Initially 
 identified with Openbaton (the component is described later 
 in~\ref{chap:prjan:sec:tech:sub:other:sub:openbaton}), afterword it has been 
-discovered to be not fexible enough to support other kinds of virtualization 
-tecniques than pure or in-cloud virtual machines\todo{AAAAAA rewrite this}. 
+discovered to be not flexible enough to support other kinds of virtualization 
+techniques than pure or in-cloud virtual machines\todo{Rewrite this}. 
 Since this was a strong project requisite that could not be easily changed, it 
 has been decided to opt for the creation of a smaller and simpler clone that 
 offered a full integration with Docker and Kubernetes.
@@ -279,7 +281,7 @@ contained in the Roulette Controller (the tool description can be found below
 in~\ref{chap:prjan:sec:tech:sub:SFC:sub:roulette}). Harbor doesn't have a web
 interface, but it has a RESTful API that allows users to interact with it using
 CRUD operations. It offers functionalities similar to Openbaton: possibility to
-save and retrieve VNF and NS definitions (basically, Kuberentes YAML
+save and retrieve VNF and NS definitions (basically, Kubernetes YAML
 deployments). When an NS is saved, a consistency check is performed to assure
 that all the VNFs have already been defined in Harbor. On an NS deployment, with
 a mechanism similar to the Openbaton one, all the associated VNFs are set up
@@ -287,23 +289,24 @@ too, making the whole operation of launching a NS atomic from the user
 point-of-view. What Openbaton doesn't do is a smart resource utilization:
 Harbor, in fact, during a NS deletion, it checks if any related VNF remains
 orphan (which means without any NS using it). In that case the VNF will enter in
-a state of pruning: after five minutes, if the VNF has not be reutilized by any
+a state of pruning: after five minutes, if the VNF has not be re-utilized by any
 other NS it will be deleted. This mechanism assure faster deployments in
 environments where NSs are continuously taken up and down. \todo{I've made an
-  Harbor implementation schema, I dunno if its usefult to put it here}
+  Harbor implementation schema, I dunno if its useful to put it here}
 
 \subsection{SFC}
 The tools analysis revealed little about already existent VNF or NS
-implementations, so it was neccesary to fill the gap. Since this one of our
-thesis goals, we devepled a complete solution to create a complete SFCs, trying
+implementations, so it was necessary to fill the gap. Since this one of our
+thesis goals, we developed a complete solution to create a complete SFCs, trying
 to standardize our vocabulary as much as possible, and giving basic
 documentation when possible.
 
 \subsubsection{Roulette Controller}
 \label{chap:prjan:sec:tech:sub:SFC:sub:roulette}
-Dynamic communications between VNFs would not be possible without a thrid
+Dynamic communications between VNFs would not be possible without a third
 component acting as a route controller. Roulette fulfills this role, providing a
-backend where the single VNF can ask the next packet hop. Indeed, routes must be
+back-end where the single VNF can ask the next packet hop. Indeed, routes must 
+be
 submitted by another component, that we identified as Harbor (component
 description available above in
 sub-section~\ref{chap:prjan:sec:tech:sub:MANO:sub:harbor}). After a NS
@@ -317,14 +320,15 @@ it will correctly forward the it to the next VNF.
 \subsubsection{Astaire}
 As is possible to denote, a VNF doesn't only process the incoming packets, 
 but it has to manage the communications and the related forward operations. To 
-possibly ease part of the transmission problem and to make it easier to create a 
+possibly ease part of the transmission problem and to make it easier to create 
+a 
 VNF without requiring the whole knowledge about SFC, it has been decided to 
 build a framework, Astaire, that could keep the SFC related details decoupled 
 from the core of the VNF, in other words, the entity that actually elaborates 
 the packet. Built using an event-based pattern, it presents hooks that allow 
 other software written in different languages from the Astaire one (e.g. Java), 
 to be called dynamically at runtime in order to process the packet. The result 
-of this elaboration gets returned to astaire, that performs the beforehand 
+of this elaboration gets returned to Astaire, that performs the beforehand 
 cited operations of VNFs communications and forwarding.
 
 \subsubsection{Ironhide}
@@ -333,24 +337,26 @@ and entry and an exit point. These, defined as \textit{Ingress} and
 \textit{Egress} points, are performed by Ironhide. Ironhide acts like a proxy, 
 hiding the whole packet processing to the sender $S$ and the receiver $R$. When 
 a client $S$ performs a request to $R$, the packet actually goes through 
-Ironhide, who has an internal classifier that it is able to recognise the type 
+Ironhide, who has an internal classifier that it is able to recognize the type 
 of connection and to choose the right NS the packet has to go through. This 
-process in foundamental since it keeps the connection between $S$ and $R$ up, 
+process in fundamental since it keeps the connection between $S$ and $R$ up, 
 for both TCP and UDP based communications.
 
 \subsection{Technologies used during development}
 
-Since the testbed is composed by different components and thanks to its 
+Since the test-bed is composed by different components and thanks to its 
 modularity, the implementation of the single components has been done with the 
 help of additional tools, illustrated below
 
 \subsubsection{Docker-compose} 
 Docker-compose is a tool that allows services orchestration. It automates most 
 of the tasks that should be performed by hand when launching one or multiple 
-docker containers. It's particulary useful when more continers have to interact 
+docker containers. It's particularly useful when more containers have to 
+interact 
 together, because\todo{Write down docker-compose functionalities and describe 
 the product a little bit} all the services rules are described in a simple 
-YAML file. With the birth of Docker Swarm, work has started to port this tool to 
+YAML file. With the birth of Docker Swarm, work has started to port this tool 
+to 
 the Swarm framework. At the time of this writing, the procedure to port a 
 Docker-compose configuration in Docker Swarm (which a description of the 
 product can be found in 
@@ -362,7 +368,7 @@ Docker Swarm will use to allocate the necessary resources.
 \subsection{Other technologies evaluated}
 
 Additional components have been evaluated during the development of the 
-testbed, and here we propose a list of the most important ones. Some of them 
+test-bed, and here we propose a list of the most important ones. Some of them 
 where discarded as no more necessary, or during the evolution of the project 
 itself they have become obsolete.
 
@@ -371,31 +377,31 @@ itself they have become obsolete.
 Introduced in ??\todo{Find Docker Swarm date of birth}, Docker Swarm allows 
 multiple Docker nodes to cluster together and be seen as one logical unit. This 
 layer completely makes the underlying infrastructure transparent: data 
-management, as network one, are totaly managed by Docker. Recently, 
+management, as network one, are totally managed by Docker. Recently, 
 Docker-compose support has been introduced, making this one-node tool available 
 for clustered systems. At the end of the day, on one hand Docker Swarm provides 
 an easy way to set up a cluster system with all the tools configured 
 out-of-the-box, without the necessity to set networking configurations or 
 installing ad-hoc storage solutions. On the other hand, though, it doesn't have 
-all the personalization options that Kuberentes offers, thus making the product 
-less flexible. This foundamental characteristic, although, makes the two 
+all the customization options that Kubernetes offers, thus making the product 
+less flexible. This fundamental characteristic, although, makes the two 
 solutions have different use cases leading to different market needs.
 
-\subsubsection{Openvswitch} \todo{Talk about Openvswitch!!}
+\subsubsection{OpenvSwitch} \todo{Talk about OpenvSwitch!!}
 \subsubsection{Openbaton}
 \label{chap:prjan:sec:tech:sub:other:sub:openbaton}
-Patrocined by the Institute Fraunhofer, it's a open-source, customizable NFV 
-MANO-compliant framework, that offers manyconfigurations options, and since 
+Patronized by the Institute Fraunhofer, it's a open-source, customizable NFV 
+MANO-compliant framework, that offers many configurations options, and since 
 it's 
 written in Java, there is the possibility to add components (plug-ins) 
 dynamically. Openbaton can be installed as a normal computer program (they 
 offer packages for the most common distros) but it can be deployed on Docker 
 containers too. It's designed to work with cloud providers like Amazon or 
-Google Compute engine, but it offers compability with on-permise cloud 
+Google Compute engine, but it offers compatibility with on-premise cloud 
 solutions like Openstack, where it deploys virtual machines using the API
 the platform offers. It can store VNF configurations saved as TOSCA
 YAML\todo{What does TOSCA mean? Find out} and it can handle multiple
-PoPs\todo{Write down PoP meaning}. It offers a VNF lifecyle management
+PoPs\todo{Write down PoP meaning}. It offers a VNF lifecycle management
 out-of-the-box, with the possibility to customize it based on the user needs.
 Its modular design allows developers to change parts of the codebase with custom
 ones, making the product really flexible to different platforms. Performing this
