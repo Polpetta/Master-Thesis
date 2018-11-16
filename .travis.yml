@@ -1,7 +1,7 @@
 language:
 - generic
 dist: trusty
-sudo: true
+sudo: false
 addons:
   apt:
     packages:
@@ -20,7 +20,7 @@ addons:
     - aspell
     - aspell-en
 script:
-- make compile
+- make ci LANG=en
 after_failure:
 - cat Thesis.log
 before_deploy:
