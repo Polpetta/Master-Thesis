@@ -151,16 +151,16 @@ components that builds the environment where the VNFs are deployed;
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
 creation of a new standard, the 5G, which is estimated to arrive to the market
-constumer in 2020\todo{CITE}. Lead by the Next Generation Mobile Network (NGMN)
-alliace, a group composed by the major players in the field of mobile
+consumer in 2020\todo{CITE}. Lead by the Next Generation Mobile Network (NGMN)
+alliance, a group composed by the major players in the field of mobile
 connectivity, the 5G aims to offer not only at the end-user a new way to browse 
-the web,
-download and watch interactive content but also to create an ad-hoc solution 
-for Machine-to-Machine (M2M) data traffic, which is increasing more than ever 
-thanks to the spreading of IoT devices, which sensors need to continuosly send 
-data to servers/datacenters. Relatively to LTE\todo{Explain acronym}, 5G points 
-to have data rates $10$ times better, with $10$ times smaller end-to-end 
-latency and an increased connection densisty by $100$ times\todo{CITE}.
+the web, download and watch interactive content but also to create an ad-hoc 
+solution for Machine-to-Machine (M2M) data traffic, which is increasing more 
+than ever thanks to the spreading of IoT devices, which sensors need to 
+continuously send data to servers/data-centers. Relatively to LTE\todo{Explain 
+acronym}, 5G points to have data rates $10$ times better, with $10$ times 
+smaller end-to-end latency and an increased connection density by $100$ 
+times\todo{CITE}.
 
 \begin{table}[t]
 \centering
@@ -189,24 +189,24 @@ Typically $\sim$2,000 active users/km2.
 \end{tabular}%
 }
 \caption[5G improvement over LTE]{An extract from the official 5G white paper 
-illustating the improvements of 5G relatively to LTE connections.}
+illustrating the improvements of 5G relatively to LTE connections.}
 \label{chap:intro:table:ltevs5g}
 \end{table}
 
 Part of the new requirements can be satisfied using a large radio spectrum with
 higher frequencies. The utilization of higher frequencies, though, mean that the
-radio signals can be easly disrupted by physical objects, like buildings and
+radio signals can be easily disrupted by physical objects, like buildings and
 many geographical elements (such as hills and mountains), clashing with the
 expectation of an ever-reachable connectivity. It is here where virtualization
 plays an important role. In fact, the re-design of some network components today
-existing via hardware can transform a monolitic networking approach to a modular
-one, exploting the flexibility that Virtual Network Functions (VNFs)\todo{CITE
-  VNF-P: A Model for Efficient Placement of Virtualized Network Functions} can
-offer thanks to virtualization, closing the gap to the use-case fullfilment
-defined by the NGMS alliance\todo{CITE: NGMN View on 5G architecture} which 
-require a descreased time to set up and deploy network services (specificatly, 
-from 90 hours to 90 minutes\todo{Search this requirement, check 90h 'cause 
-I'm not sure about it}).
+existing via hardware can transform a monolithic networking approach to a 
+modular one, exploiting the flexibility that Virtual Network Functions 
+(VNFs)\todo{CITE VNF-P: A Model for Efficient Placement of Virtualized Network 
+Functions} can offer thanks to virtualization, closing the gap to the use-case 
+fulfillment defined by the NGMN alliance\todo{CITE: NGMN View on 5G 
+architecture} which require a decreased time to set up and deploy network 
+services (specifically, from 90 hours to 90 minutes\todo{Search this 
+requirement, check 90h 'cause I'm not sure about it}).
 
 \subsection{5G architecture}
 
@@ -214,8 +214,9 @@ With the constraints placed on the requirements formulated by the NGMN alliance,
 5G envisage a multi-layered architecture, based on three main layers:\todo{CITE:
   NGMN View on 5G architecture}
 \begin{itemize}
-\item \textbf{infrastructure resouce layer}: physical resources that are exposed
-  via a virtualized interface, and that can be monitored using specific APIs
+\item \textbf{infrastructure resource layer}: physical resources that are 
+exposed via a virtualized interface, and that can be monitored using specific 
+APIs
 \item \textbf{business enablement layer}: where a library of functions and
   deployment is contained, and its configuration is accessible via APIs
 \item \textbf{business application layer}: layer that contains specific
@@ -224,16 +225,16 @@ With the constraints placed on the requirements formulated by the NGMN alliance,
 
 \todo{Add three-layer image here?}
 
-This separation in layers allows to easly manage different identities 
-differently: an Internet Service Provider (ISP) could manage different physical
-infrastructure and have multiple business emblements dislocated 
-along an entire continet for example, but it could decide to have only a single 
-centralized business application deployment that manage all the other layers 
-resources.
+This separation in layers allows to easily manage multiple identities 
+differently: an Internet Service Provider (ISP) could manage a multitude of 
+physical infrastructures and have multiple business enablements dislocated 
+along an entire continent for example, but it could decide to have only a 
+single centralized business application deployment that manage all the other 
+layers resources.
 
 \subsubsection{Network slicing}
-The role of a ``network slice'' in a 5G architecture is to specificatly handle 
-the Control-plane\todo{Explain what a control plane is?} of a praticular 
+The role of a ``network slice'' in a 5G architecture is to specifically handle 
+the Control-plane\todo{Explain what a control plane is?} of a particular 
 service (e.g. smartphones traffic, autonomous driving, massive IoT), deploying 
 resources in a manner that assure the required latency, security and 
 reliability. While some very peculiar legacy services could require specific 
@@ -248,7 +249,7 @@ heavy network pressure.
  transmission through satellite connections is the main requirement. To reach
  this goal, the project specifications suggest to exploit the 5G incoming
  technology and use the NFV-MANO architecture to perform first packets
- elaboration and performance improvment and finally TCP/IP satellite chunk
+ elaboration and performance improvement and finally TCP/IP satellite chunk
  optimization with the Performance Enhancing Proxy (PEP). The VIBES project
  proposed five technical requirements:
 \begin{enumerate}
@@ -257,7 +258,7 @@ heavy network pressure.
  \item Implementation of a VNF-PEP prototype
  \item Building of a PoC test platform
  \item VNF-PEP validation and performance tests on 5G use-cases
- \item Demonstration testbed management
+ \item Demonstration test-bed management
 \end{enumerate}
 
 \begin{figure}[t]
@@ -272,24 +273,24 @@ heavy network pressure.
 
 The analysis of this topic revealed to be trivial: since internet has many
 different protocols that would become infeasible to support all of them at the
-same time, packet incapsulation present itself as the only faseable solution:
+same time, packet encapsulation present itself as the only feasible solution:
 every packet incoming in the VNFs has already been encapsulated by a generic
-packet incapsulator/decapsulator,
+packet encapsulator/decapsulator,
 \todo{Also I think that the main purpose of UDP encapsulation is not to hide 
-the protocol used on the edges but 1) usa a ``quick protocol to exchange data 
+the protocol used on the edges but 1) use a ``quick protocol to exchange data 
 among VNFs and 2) we are hiding the path not the protocol itself. As we were 
 discussing, we are creating some sort of proxy, so the aim will be the same 
 even if we support a plethora of protocols.''} making the whole architecture 
-indipendent from the protocol a particular flux of data. To achieve this, 
-several solutions have been studied, and at the end packet incapsulation with 
-TCP split (for TCP sessions) have been choosen. The rationale that guided us on 
+independent from the protocol a particular flux of data. To achieve this, 
+several solutions have been studied, and at the end packet encapsulation with 
+TCP split (for TCP sessions) have been chosen. The rationale that guided us on 
 this choice is described in Chapter~\ref{chap:vnf_ns_impl}. \todo{Update 
 reference with the section of the explanation}
 
 \subsection{VNF-PEP prototype}
 
 Since the requirement for the whole system (MANO+PEP) were too challenging, the 
-goal shifted into creating a MANO testbed and a working NFVI, excluding PEP. 
+goal shifted into creating a MANO test-bed and a working NFVI, excluding PEP. 
 The VNF architecture was shaped following the container orchestrator we decided 
 to use. An more detailed architectural implementation can be found at 
 Chapter~\ref{chap:archimpl}.
@@ -300,13 +301,13 @@ Chapter~\ref{chap:archimpl}.
 
 Starting with the first step of creating a MANO able to process incoming data
 packets through VNF functions, we encountered that many networking tools already
-present in the market required some tweaking and some integrations, shifting our
+present in the market required some tweaking and some integration, shifting our
 goal to create a complete European Telecommunications Standards Institutes
-(ETSI) Management and orchestrator (MANO) testbed instead, following the
+(ETSI) Management and orchestrator (MANO) test-bed instead, following the
 specifications suggested in the RFC 7665, thus implementing only the first three
 requisites, without digging in the satellite data flow optimization. In
 particular, we discovered how, these tools, were suitable to create ETSI MANO
-and VNFs using virtual machine or exploiting cloud tecnhologies, while they were
+and VNFs using virtual machine or exploiting cloud technologies, while they were
 not designed with enough flexibility an integration with Docker. In the next
 chapter we are going to take a deep analysis of the cited technologies 
 (Section~\ref{chap:prjan:sec:tech}, in order to provide to the reader enough 
