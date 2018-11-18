@@ -1,45 +1,45 @@
 \chapter{Tests and metrics}
 
-After the testbed implementation, tests about its performance and metrics were
+After the test-bed implementation, tests about its performance and metrics were
 gathered in order to understand the real project effectiveness. We performed
 tests relatively two main sections: one testing the architecture overall
-responsivness and one checking the SFC implementation and efficiency.
+responsiveness and one checking the SFC implementation and efficiency.
 
-\section{System responsivness}
+\section{System responsiveness}
 
-\subsection{Docker vs Virtual Box startup measurement}
+\subsection{Docker vs Virtual Box start-up measurement}
 
-Regarding the overall system responsivness, a metric we considered worth to 
+Regarding the overall system responsiveness, a metric we considered worth to 
 test was the VNF start up time in a docker environment versus one virtualized 
-through a common virtual machine system (in this case Virtual Box was choosen). 
+through a common virtual machine system (in this case Virtual Box was chosen). 
 To make this simulation as fair as possible, we used the same node (an 
-Openstack VM vith 32GB of RAM, 8 vCPU and solid state storage) and used the same 
-``boot sequence'' for both the VNFs: first we launched the Astaire framework, 
-ensuring its availability to process data and then we notified the test 
-machine of the successful boot. The startup time was measured from the 
-beginning of the startup command (\verb!docker run! for Docker and 
+Openstack VM vith 32GB of RAM, 8 vCPU and solid state storage) and used the 
+same ``boot sequence'' for both the VNFs: first we launched the Astaire 
+framework, ensuring its availability to process data and then we notified the 
+test machine of the successful boot. The start-up time was measured from the 
+beginning of the start-up command (\verb!docker run! for Docker and 
 \verb!VBoxManage -s! for Virtual Box) till the first TCP hit received by the 
-test backend (to make things as smooth as possible, \verb!netcat! was used 
+test back-end (to make things as smooth as possible, \verb!netcat! was used 
 to listen to incoming TCP data).
 
 It is worth saying that Docker metrics are generally more precise than the
-Virtual Box one: Docker allows to inspect the container and to gain startup and
-shutdown times with a precision of millseconds, while to gather this information
-for VirtualBox instances we had to use the command line utility \verb!time!,
-that registered timing with a precision of hundredths of a second. Nonetheless,
-this didn't influence the test too much. To reduce possible outliers we perfomed
-the test $100$ times. With this $N$, the total time spent by the Virtual
-Machines to boot up was of $2021,15$ seconds, while with containers the same
-number of start ups resulted in a total of $1.638$ seconds. Summing up, Docker
-employs only the $0,08\%$ of the overall time spent for the test, underlining
-how isolating the process with a set of defined policy and avoiding a
-virtualized kernel boot-up saves a considerable amount of time.
+Virtual Box one: Docker allows to inspect the container and to gain start-up and
+shutdown times with a precision of milliseconds, while to gather this 
+information for VirtualBox instances we had to use the command line utility 
+\verb!time!, that registered timing with a precision of hundredths of a second. 
+Nonetheless, this didn't influence the test too much. To reduce possible 
+outliers we performed the test $100$ times. With this $N$, the total time spent 
+by the Virtual Machines to boot up was of $2021,15$ seconds, while with 
+containers the same number of start ups resulted in a total of $1.638$ seconds. 
+Summing up, Docker employs only the $0,08\%$ of the overall time spent for the 
+test, underlining how isolating the process with a set of defined policy and 
+avoiding a virtualized kernel boot-up saves a considerable amount of time.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[scale=0.4]{docker_vs_vmBarplotGraph}
-        \caption{Barplot between Virtual Box and Docker startup times.}
+        \caption{Barplot between Virtual Box and Docker start-up times.}
         \label{chap:tests:sec:dockervsvb:img:barplot}
     \end{subfigure}
     ~
@@ -68,24 +68,28 @@ in range $0-1$.}
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|c|c}
-                     & \textbf{Standard deviation (seconds)} & \textbf{Average start up time (seconds)} \\ \hline
-\textbf{Docker}      & 0.009620874                           & 0,016                                    \\
-\textbf{Virtual Box} & 0.755                                 & 20,211                                 
+                     & \textbf{Standard deviation (seconds)} & \textbf{Average 
+start up time (seconds)} \\ \hline
+\textbf{Docker}      & 0.009620874                           & 0,016            
+                        \\
+\textbf{Virtual Box} & 0.755                                 & 20,211           
+                      
 \end{tabular}%
 }
 \caption[Docker vs Virtual Box start up times comparison]{Docker vs Virtual Box
   start up times comparison. Is possible to se how the overall time required to
   start $100$ containers is less than the time to start one traditional virtual
-  machine. The overall time required by the traitional virtualization system is
+  machine. The overall time required by the traditional virtualization system is
   approximately of 33 minutes, witch gives a significant insight of how much
-  time is required to create and boot a virtualized enviroment.}
+  time is required to create and boot a virtualized environment.}
 \label{my-label}
 \end{table}
 
 
-% The overall time required by the traitional virtualization system is
-% approximately of 33 minutes, witch gives a significant insight of how much time
-% is required to create and boot a virtualized enviroment.
+% The overall time required by the traditional virtualization system is
+% approximately of 33 minutes, witch gives a significant insight of how much 
+time
+% is required to create and boot a virtualized environment.
 
 
 \subsection{SFC chain deploy measurement}
@@ -96,8 +100,10 @@ directly with Docker and not through the orchestrator we used in the thesis
 development, Kubernetes. The following measurement will allow us to see the time
 required in order to deploy an SFC of different elements in a Kubernetes
 environment. The deployment consists in a Pod inside a Deployment definition
-with a related Service, to simulate a real VNF. After the Pod startup, a request
-is made to a backend designed to count the chain elements that have successfully
+with a related Service, to simulate a real VNF. After the Pod start-up, a 
+request
+is made to a back-end designed to count the chain elements that have 
+successfully
 boot-up returning, eventually, the overall start up timing.
 
 % TODO: missing YAML definition: [language=YAML]
@@ -125,7 +131,7 @@ pods that reside in nodes that have already deployed one.
   \includegraphics[scale=0.5]{sfc_startupBarplotGraph}
   \caption[SFC start-up time barplot]{SFC start-up time barplot. It is
     noticeable how there seems to be a linear correlation between the SFC
-    startup time and the SFC length, even though for the chain with eight
+    start-up time and the SFC length, even though for the chain with eight
     elements it is possible to see that the overall deploy time is more compared
     to chains with nine and ten elements.}
   \label{chap:tests:sec:sfclength:img:barplot}
@@ -133,7 +139,7 @@ pods that reside in nodes that have already deployed one.
 
 \paragraph*{Kubernetes specifications}
 A Kubernetes installation was performed in order to carry out the test
-descripted above. All the machines involved (master node and minions) had the
+described above. All the machines involved (master node and minions) had the
 same specifications i.e., 4GB of RAM, 2 vCPU and 10GB of SSD storage.
 Nonetheless the constrained resources, absolutely far from a real Kubernetes
 production environment, it is possible to notice how, even with a chain of ten
@@ -143,7 +149,7 @@ with 32GB of RAM, 8 vCPU and 50GB of SSD storage.
 
 % TODO is it worth to keep it as a long table?
 \begin{longtable}[c]{c|c|c}
-\textbf{SFC length} & \textbf{Stamdard deviation (seconds)} & \textbf{Average 
+\textbf{SFC length} & \textbf{Standard deviation (seconds)} & \textbf{Average 
 deploy time (seconds)} \\ \hline
 \endhead
 %
@@ -176,4 +182,4 @@ software development lifecycle, where developers have the possibility to
 automatically push ``fresh'' software to production, letting the MANO and thus
 the container orchestrator handling all the difficult and delicate tasks to put
 software in a production environment, eliminating the possibility of human
-errors and assuring longer uptimes.
+errors and assuring longer up-times.
