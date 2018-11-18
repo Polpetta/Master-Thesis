@@ -6,6 +6,42 @@ upcoming 5G standard, talking about the Virtual Network Functions (VNFs) and
 how first experiments with this new technology already begun. Finally we are 
 going to briefly introduce and explain the technologies involved and their role.
 
+\section{Network slicing}
+A network slice can be defined as a logical virtual network, tailored for a
+given use case, on the top a common network using technologies such as
+Software-Defined Networking and Network Function Chaining that allows network
+softwarization~\cite{ordonez2017network}. The notion of separated virtual
+networks deployed on the same infrastructure is not new, e.g. VPN, but it has
+some specifics that make it a novel idea. The concept of network slicing was
+first introduced in 2002 with the paper~\cite{peterson2003blueprint}, in which
+is described an overlay network that allow services to access different slices
+of overlay's resources and in which overlay management services run in their
+own slice. This idea was be refined during time and
+in~\cite{alliance2016description} the design of network slicing is based on a
+three-layers model, as depicted in
+Figure~\ref{chap:background:img:network_slicing}.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.2]{networkslicing}
+  \caption{The three layers model of network slicing}
+  \label{chap:background:img:network_slicing}
+\end{figure}
+
+The first layer is the \emph{Service Instance Layer} used to represent the
+business or user services supported, the second one is the \emph{Network Slice
+Instance Layer}. This is a set of network functions that allows to
+satisfy certain requirements~\cite{kotulski2017end}. Network functions, in
+general, can be both physical, thus a combination of vendor-specific hardware
+and/or virtualized. In that case the function is implemented as software and it
+is decoupled from the hardware on which it is running on. Each instance must be
+isolated, in order to ensure that function running at the top of it will always
+provide the same Quality of Service, without degrading because of a change on
+another slice~\cite{richart2016resource}. It also allows to provide better security. In fact, in case of attack or fault of a certain slice, others must not be affected. Moreover, each slice must implement it own set of security function to preventing unauthorized access. Furthermore, isolation let to manage individually each slice~\cite{ordonez2017network}. Network slice instances are defined by a \emph{Network Slice Blueprint}: a complete description of the structure and data flows that allow the creation and the control of the Network Slice Instance during its whole lifecycle. The blueprint also refers to the resources needed to assemble the network slice and defines its characteristics (e.g. ultra-low latency, ultra-reliability, value-added services for enterprises, etc.). The last layer is the \emph{Resource Layer}, containing both physical and logical resources, that involve all physical assets and resources for computation, storage or transport, including radio access. 
+
+
+
+
 \section{Software-defined networking}
 The SDN is an emerging approach to cloud computing that allows to configure
 network in a programmatically way, possibly enhancing monitoring and
@@ -16,7 +52,7 @@ consists of one or more controllers. It has some drawbacks in terms of
 security, scalability and elasticity, because of the centralized architecture.
 
 \subsection{SDN stack}
-\begin{figure}[t]
+\begin{figure}[ht]
  \centering
  \includegraphics[scale=1.3]{sdn_architecture}
  \caption[SDN architecture schema]{SDN architecture schema. Is possible to 
@@ -30,7 +66,7 @@ their functionalities.
 
 \subsubsection{Application plane}
 
-The \emph{Application plane} role is to set the behaviour of the SDN controllers 
+The \emph{Application plane} role is to set the behavior of the SDN controllers 
 and manage its hardware resources and data through APIs, often called 
 \emph{northbound interfaces} (NBI).
 These interfaces provide an additional abstraction layer that high-level 
