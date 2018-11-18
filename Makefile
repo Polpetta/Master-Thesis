@@ -50,3 +50,8 @@ compile: clean
 clean:
 	git clean -Xfd
 	if [[ -a "$(OUTPUT_NAME)" ]]; then rm -rv $(OUTPUT_NAME)/; fi;
+	
+spellcheck:
+	./tools/spellchecker/spellcheck.sh $(LANG)
+
+ci: spellcheck compile
