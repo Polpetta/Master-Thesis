@@ -154,33 +154,33 @@ Figure~\ref{chap:tests:sec:fault:img:testfaultconf}.
   \label{chap:tests:sec:fault:img:testfaultconf}
 \end{figure}
 
-The receiver record the instant on which it receives a packet and, to emulate a
-SF crash, we bring down the central link of the chain after 5 seconds using the
-command \verb!kubectl delete pods <pod-id> --grace-period=0 --force!, to force
-the stop of a pod.
+In that test we bring down the central link of the chain after 5 seconds using
+the command \verb!kubectl delete pods <pod-id> --grace-period=0 --force!, to
+force the stop of a pod and we recorded the time on which packets arrived to
+the receiver and passed through the VNF just before the one that will be make
+stopped.
 
 We performed the test using both UDP and TCP protocols, repeating for each
 protocol the measurement 20 times.
 Figure~\ref{chap:tests:sec:fault:img:faultgraphudp} and
 Figure~\ref{chap:tests:sec:fault:img:faultgraphtcp} represent the behavior of
-the system in the worst case and in the best case measured, respectively for
-UDP and TCP. The average interval of time in which the receiver does not
-receive anything was 13.5793391228s in case of UDP, 13.7828050137s in case of
-TCP. This is a good result, because in about 13s a machine can crash and can be
-recreated and be operative again. We can also notice that there are no
-significant difference between worst cases and best cases measured 
-respectively 12.75 and 14.41 for UDP and 13.14 and 14.63 for TCP)
+the system during the experiment: blue points describe packet inter-arrival
+time on the receiver, green once the same metric on the SF that precede the
+central one. The average interval of time in which the
+receiver does not receive anything was 13.5793391228s in case of UDP,
+13.7828050137s in case of TCP. This is a good result, because in about 13s a
+machine can crash and can be recreated and be operative again. 
 
 \begin{figure}[]
   %\centering
     \begin{subfigure}[b]{0.9\textwidth}
-        \includegraphics[scale=0.3]{nolog_udp}
+        \includegraphics[scale=0.3]{udp_fault}
         \caption{Packet time arrival in case of SF fault using UDP}
         \label{chap:tests:sec:fault:img:faultgraphudp}
     \end{subfigure}
     \\
     \begin{subfigure}[b]{0.9\textwidth}
-        \includegraphics[scale=0.3]{nolog_tcp}
+        \includegraphics[scale=0.3]{tcp_fault}
         \caption{Packet time arrival in case of SF fault using TCP}
         \label{chap:tests:sec:fault:img:faultgraphtcp}
     \end{subfigure}
