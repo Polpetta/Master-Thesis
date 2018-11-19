@@ -21,11 +21,19 @@ does not require too much resources \textit{per se} and in literature is
 possible to find solutions of Kubernetes installations performed on machines
 with the same harware installed on the UAVs~\cite{pahl2016container}.
 
-A virtualized EPC implementation has been describe in~\cite{hawilo2014nfv}
-% TODO talk about vEPC
+A virtualized EPC implementation, designed to allow mobile broadband services in
+the UMTS/LTE world, has been described in~\cite{hawilo2014nfv}, showing how this
+implementation is able, thanks to entities grouping, to perform better than a
+traditional EPC installation. In~\cite{afolabi2017end} is possible to read
+another vEPC implementation, where the Wireless Netowrk Virtualization (WNV),
+SDN and NFV (identified from the authors as key elements in order to implement
+the 5G architecture) are virtualized, and ported as a service (defined as
+EPCaaS) across multi-domains clouds. The realization of such framework is
+pursued thanks to end-to-end network slicing.
+% talk about end-to-end network slicing 
 
 
 
 It is interesting to note that, between all the possibile and alternative
-related works we have been albe to find, none of these used Docker as an
-alternative virtualization approach.
+related works we have been albe to find, none of these used an only
+container-based approach.
