@@ -13,12 +13,12 @@ Software-Defined Networking and Network Function Chaining that allows network
 softwarization~\cite{ordonez2017network}. The notion of separated virtual
 networks deployed on the same infrastructure is not new, e.g. VPN, but it has
 some specifics that make it a novel idea. The concept of network slicing was
-first introduced in 2002 with the paper~\cite{peterson2003blueprint}, in which
-is described an overlay network that allow services to access different slices
-of overlay's resources and in which overlay management services run in their
-own slice. This idea was be refined during time and
-in~\cite{alliance2016description} the design of network slicing is based on a
-three-layers model, as depicted in
+first introduced in 2002 in\cite{peterson2003blueprint}, where a network 
+overlay that allows services to run continuously and to access the overlay
+resources across different slices was illustrated.
+Services operating over the overlay management have their own slice instead.
+This idea was lately refined in 2016, where the design of network slicing was
+based on a three-layers model~\cite{alliance2016description}, as depicted in 
 Figure~\ref{chap:background:img:network_slicing}.
 
 \begin{figure}
@@ -52,7 +52,6 @@ services for enterprises, etc.). The last layer is the \emph{Resource Layer},
 containing both physical and logical resources, that involve all physical
 assets and resources for computation, storage or transport, including radio
 access.
-
 
 \section{Software-defined networking}
 The SDN is an emerging approach to cloud computing and networking technology
@@ -228,11 +227,13 @@ times\todo{CITE}.
 \resizebox{\textwidth}{!}{%
   \begin{tabular}{p{4,5cm}|p{5,5cm}|p{5cm}}
 \textbf{Attribute}                                                    & 
-\textbf{LTE capability}                                                          
+\textbf{LTE capability}                                                         
+ 
                                                                            & 
 \textbf{Improvement needed to meet NGMN requirements}                 \\ \hline
 \textbf{Data rate (per user)}                                         & Up to 
-100 Mb/s on average Peaks of 600 Mb/s (Cat 11/12).                               
+100 Mb/s on average Peaks of 600 Mb/s (Cat 11/12).                              
+ 
                                                                      & 10X 
 expected on average and peak rates and 100X expected on cell edge \\
 \textbf{End-to-end latency}                                           & 10 ms 
@@ -241,10 +242,12 @@ factors are considered (e.g., transmission, CN, internet, proxy servers). & 10X
 (smaller)                                                         \\
 \textbf{Mobility}                                                     & 
 Functional up to 350 km/h (for certain bands up to 500 km/h). No support for 
-civil aviation.                                                                & 
+civil aviation.                                                                
+& 
 1.5X                                                                  \\
 \textbf{\begin{tabular}[c]{@{}l@{}}Connection\\ density\end{tabular}} & 
-Typically $\sim$2,000 active users/km2.                                          
+Typically $\sim$2,000 active users/km2.                                         
+ 
                                                                            & 
 100X                                                                 
 \end{tabular}%
