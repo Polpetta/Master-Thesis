@@ -13,11 +13,11 @@ Software-Defined Networking and Network Function Chaining that allows network
 softwarization~\cite{ordonez2017network}. The notion of separated virtual
 networks deployed on the same infrastructure is not new, e.g. VPN, but it has
 some specifics that make it a novel idea. The concept of network slicing was
-first introduced in 2002 with the paper~\cite{peterson2003blueprint}, in which
-is described an overlay network that allow services to access different slices
+first introduced in 2002 with the in\cite{peterson2003blueprint}, where
+is described an overlay network that allows services to access different slices
 of overlay's resources and in which overlay management services run in their
-own slice. This idea was be refined during time and
-in~\cite{alliance2016description} the design of network slicing is based on a
+own slice. Lately this idea has be refined  and
+in\cite{alliance2016description} the design of network slicing was based on a
 three-layers model, as depicted in
 Figure~\ref{chap:background:img:network_slicing}.
 
@@ -37,7 +37,19 @@ and/or virtualized. In that case the function is implemented as software and it
 is decoupled from the hardware on which it is running on. Each instance must be
 isolated, in order to ensure that function running at the top of it will always
 provide the same Quality of Service, without degrading because of a change on
-another slice~\cite{richart2016resource}. It also allows to provide better security. In fact, in case of attack or fault of a certain slice, others must not be affected. Moreover, each slice must implement it own set of security function to preventing unauthorized access. Furthermore, isolation let to manage individually each slice~\cite{ordonez2017network}. Network slice instances are defined by a \emph{Network Slice Blueprint}: a complete description of the structure and data flows that allow the creation and the control of the Network Slice Instance during its whole lifecycle. The blueprint also refers to the resources needed to assemble the network slice and defines its characteristics (e.g. ultra-low latency, ultra-reliability, value-added services for enterprises, etc.). The last layer is the \emph{Resource Layer}, containing both physical and logical resources, that involve all physical assets and resources for computation, storage or transport, including radio access. 
+another slice~\cite{richart2016resource}. It also allows to provide better 
+security. In fact, in case of attack or fault of a certain slice, others must 
+not be affected. Moreover, each slice must implement it own set of security 
+function to preventing unauthorized access. Furthermore, isolation let to manage 
+individually each slice~\cite{ordonez2017network}. Network slice instances are 
+defined by a \emph{Network Slice Blueprint}: a complete description of the 
+structure and data flows that allow the creation and the control of the Network 
+Slice Instance during its whole lifecycle. The blueprint also refers to the 
+resources needed to assemble the network slice and defines its characteristics 
+(e.g. ultra-low latency, ultra-reliability, value-added services for 
+enterprises, etc.). The last layer is the \emph{Resource Layer}, containing both 
+physical and logical resources, that involve all physical assets and resources 
+for computation, storage or transport, including radio access. 
 
 
 
@@ -203,11 +215,13 @@ times\todo{CITE}.
 \resizebox{\textwidth}{!}{%
   \begin{tabular}{p{4,5cm}|p{5,5cm}|p{5cm}}
 \textbf{Attribute}                                                    & 
-\textbf{LTE capability}                                                          
+\textbf{LTE capability}                                                         
+ 
                                                                            & 
 \textbf{Improvement needed to meet NGMN requirements}                 \\ \hline
 \textbf{Data rate (per user)}                                         & Up to 
-100 Mb/s on average Peaks of 600 Mb/s (Cat 11/12).                               
+100 Mb/s on average Peaks of 600 Mb/s (Cat 11/12).                              
+ 
                                                                      & 10X 
 expected on average and peak rates and 100X expected on cell edge \\
 \textbf{End-to-end latency}                                           & 10 ms 
@@ -216,10 +230,12 @@ factors are considered (e.g., transmission, CN, internet, proxy servers). & 10X
 (smaller)                                                         \\
 \textbf{Mobility}                                                     & 
 Functional up to 350 km/h (for certain bands up to 500 km/h). No support for 
-civil aviation.                                                                & 
+civil aviation.                                                                
+& 
 1.5X                                                                  \\
 \textbf{\begin{tabular}[c]{@{}l@{}}Connection\\ density\end{tabular}} & 
-Typically $\sim$2,000 active users/km2.                                          
+Typically $\sim$2,000 active users/km2.                                         
+ 
                                                                            & 
 100X                                                                 
 \end{tabular}%
