@@ -1,0 +1,31 @@
+\chapter{Related Work}
+\label{chap:rel_wk}
+
+The possibility to solve the constant network capacity requests and to make
+network infrastracture lighter and faster to deploy has rouse the interests of
+many internet service providers (ISP). In literacy, several NFV implementations
+and Network Slicing solutions have been proposed and some of them will be
+discussed in the following chapter. An opportunity identified
+in~\cite{nogales2018nfv} shows that ETSI MANO implementations can be deployed
+inside Unmanned Aerial Vehicles (UAVs), giving the possibility to rapidly deploy
+network connectivity in areas where the common communication systems are
+temporarily unavailable. This can be very useful in places where natural
+disasters occurred and there is the necessity to restore the communications
+within a very short span of time. On top of that, this system is flexible enough
+to be able to provide different kind of services, in addition to simple
+broadband connectivity. The only downside of this approach are the constrained
+system rources: the authors had to install the VIM (in particular, Openstack) in
+a separated machine, located on the ground. A solution based only on
+containerization, instead, could lead to interesting results, since Kubernetes
+does not require too much resources \textit{per se} and in literature is
+possible to find solutions of Kubernetes installations performed on machines
+with the same harware installed on the UAVs~\cite{pahl2016container}.
+
+A virtualized EPC implementation has been describe in~\cite{hawilo2014nfv}
+% TODO talk about vEPC
+
+
+
+It is interesting to note that, between all the possibile and alternative
+related works we have been albe to find, none of these used Docker as an
+alternative virtualization approach.
