@@ -24,7 +24,8 @@ Figure~\ref{chap:background:img:network_slicing}.
 \begin{figure}
   \centering
   \includegraphics[scale=0.2]{networkslicing}
-  \caption{The three layers model of network slicing}
+  \caption{The three layers model of network
+  slicing~\cite{alliance2016description}}
   \label{chap:background:img:network_slicing}
 \end{figure}
 
@@ -37,18 +38,34 @@ and/or virtualized. In that case the function is implemented as software and it
 is decoupled from the hardware on which it is running on. Each instance must be
 isolated, in order to ensure that function running at the top of it will always
 provide the same Quality of Service, without degrading because of a change on
-another slice~\cite{richart2016resource}. It also allows to provide better security. In fact, in case of attack or fault of a certain slice, others must not be affected. Moreover, each slice must implement it own set of security function to preventing unauthorized access. Furthermore, isolation let to manage individually each slice~\cite{ordonez2017network}. Network slice instances are defined by a \emph{Network Slice Blueprint}: a complete description of the structure and data flows that allow the creation and the control of the Network Slice Instance during its whole lifecycle. The blueprint also refers to the resources needed to assemble the network slice and defines its characteristics (e.g. ultra-low latency, ultra-reliability, value-added services for enterprises, etc.). The last layer is the \emph{Resource Layer}, containing both physical and logical resources, that involve all physical assets and resources for computation, storage or transport, including radio access. 
-
-
+another slice~\cite{richart2016resource}. It also allows to provide better
+security. In fact, in case of attack or fault of a certain slice, others must
+not be affected. Moreover, each slice must implement it own set of security
+function to preventing unauthorized access. Furthermore, isolation let to
+manage individually each slice~\cite{ordonez2017network}. Network slice
+instances are defined by a \emph{Network Slice Blueprint}: a complete
+description of the structure and data flows that allow the creation and the
+control of the Network Slice Instance during its whole lifecycle. The blueprint
+also refers to the resources needed to assemble the network slice and defines
+its characteristics (e.g. ultra-low latency, ultra-reliability, value-added
+services for enterprises, etc.). The last layer is the \emph{Resource Layer},
+containing both physical and logical resources, that involve all physical
+assets and resources for computation, storage or transport, including radio
+access.
 
 
 \section{Software-defined networking}
-The SDN is an emerging approach to cloud computing that allows to configure
+The SDN is an emerging approach to cloud computing and networking technology
+capable of supporting the dynamic nature of future network functions and
+intelligent applications while lowering operating costs through simplified
+hardware, software, and management~\cite{sezer2013we}, that allows to configure
 network in a programmatically way, possibly enhancing monitoring and
-performances. The main sake of SDN is to the packet forwarding process,
-\emph{data plane}, from the routing one, the so called \emph{control plane}.
-The latter component serves as the centralized network intelligence and could
-consists of one or more controllers. It has some drawbacks in terms of
+performances. One of the main principles of SDN architecture is to decouple the
+packet forwarding process, \emph{data plane}, from the routing one, the so
+called \emph{control plane}. The architecture also contemplate that network
+intelligence and state are logically centralized\cite{fundation2012software}. 
+
+It has some drawbacks in terms of
 security, scalability and elasticity, because of the centralized architecture.
 
 \subsection{SDN stack}
@@ -57,59 +74,67 @@ security, scalability and elasticity, because of the centralized architecture.
  \includegraphics[scale=1.3]{sdn_architecture}
  \caption[SDN architecture schema]{SDN architecture schema. Is possible to 
 denote the three layer logic: the Application plane, the Controller plane and 
-the Data plane.}
+the Data plane~\cite{fundation2013software}.}
  \label{chap:background:img:sdn_architecture}
 \end{figure}
 As depicted in Figure~\ref{chap:background:img:sdn_architecture} the SDN
-architecture can be split in three different layers, called planes, based on 
-their functionalities. 
+architecture can be split in three different layers, also known as planes,
+based on their functionalities~\cite{fundation2012software} as explained
+in~\cite{fundation2013software}.
 
 \subsubsection{Application plane}
 
-The \emph{Application plane} role is to set the behavior of the SDN controllers 
+In the \emph{Application plane} lays \emph{SDN applications} that are programs
+whose role is to set the behavior of the SDN controllers 
 and manage its hardware resources and data through APIs, often called 
-\emph{northbound interfaces} (NBI).
+\emph{northbound interfaces} (NBI). In order to do so they can also build an
+abstracted view of the network, using controllers information, in order to make
+the traffic analysis easier and to simplify the decision making process..
 These interfaces provide an additional abstraction layer that high-level 
 applications can consume, enabling the possibility to use a variety of 
-different vendors' controllers in the same way.
-Analyzing the SDN applications is possible to note two defined layers, one that 
-is responsible to manage the whole logic, and another one dedicated to the 
-communication part, that in particular uses the previously defined NBIs.
-These applications can also build an abstracted view of the network, using
-controllers information, in order to make the traffic analysis easier and to 
-simplify the decision making process.
+different vendors' controllers in the same way. Applications consists both of
+the two defined layers, one that is responsible to manage the whole logic, and
+another one dedicated to the communication part, that in particular uses the
+previously defined NBIs.
 
 \subsubsection{Controller plane}
 
 \emph{SDN controllers}, are logically centralized components that
-receive requests from the mentioned SDN applications and either translate them 
-in a fashion that can be understood from the lower layer\todo{who?}, or collect 
-data needed by the application itself. 
+receive requests from SDN applications and either translate them 
+in a fashion that can be understood from the SDN Datapath, or collect 
+data as statics and events needed by the application to build an abstract view
+of the network. 
 Due to the variety of tasks a controller has to accomplish, its logical 
 subdivision is achieved with a three-layer architecture, in which every layer 
 exposes it's own interface, that can be consequently used by the upper 
 layers, up to the \emph{NBI agents}.
 NBI agent manages the communications with SDN applications, exposing interfaces
-that usually provide an abstract view of the network and a set of
-the controller functionalities.
-In particular, the middle layer represents the controller inner-logic, which 
-process the requests coming from the upper layer (aka the third layer), that 
-has the specific task to communicate with the remaining network components, in 
-other words the Control to Data-Plane Interface and/or the already 
-mentioned southbound interface.
+to access network data and to the set of the controller functionalities.
+In particular, the middle layer represents the \emph{SDN Controller Logic},
+which process the requests coming from the upper layer applications. Finally
+requests are communicated to the remaining network components, exploiting the
+Control to Data-Plane Interface driver.
+
+Despite the centralized design of controllers there are no limitations on the
+implementation, so it possible to create federations of controllers or organize
+them into a hierarchy.
 
 \subsubsection{Data plane}
-
-In the lowest part of the architecture we can find the \emph{SDN Networking 
-Devices}. These ones controls the packet forwarding and data processing 
-capabilities of the network. They consist of a CDPI agent and a set of one or 
-multiple traffic forwarding engines and of a zero or more traffic processing 
-functions, that are, as a matter of fact, the devices logic.
+In the lowest plane we can find the \emph{SDN Datapath}, defined as a logical
+network device, which exposes the possibility to access and control to its
+forwarding and processing capabilities.It is composed by a CDPI agent and a set
+of one or  multiple traffic forwarding engines and of a zero or more traffic
+processing functions, that are, as a matter of fact, the devices logic.
+Datapath can be mapped either to a single physical device or multiple ones and
+the implementation of the its logic does not preclude neither the
+virtualization or the sharing of physical resources nor the interoperability
+with non-SDN networking.
 
 \subsection{OpenFlow protocol}
-The SDN strategy is often associated with the OpenFlow protocol: this 
-communication protocol aims is to give access to the forwarding network 
-component to the lower layer network infrastructure, made of switches and 
+The SDN strategy is often associated with the OpenFlow protocol because it is
+the first standard communications interface defined between the control and the
+datapath in SDN architecture~\cite{fundation2013software}, making possible to
+access from controller the components of infrastructure, such as switches and
 routers. OpenFlow enables the remote administration of networks working on 
 layer 3: packets forwarding tables can be modified relying on packet matching 
 rules. Following this approach it is possible to change routes periodically or 
