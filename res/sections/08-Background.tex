@@ -172,8 +172,6 @@ emulate the entire computer. A container is seen as an isolate process running
 on the host, to which the Linux kernel gives a set of capabilities.
 
 \subsection{Network Virtualization}
-%http://www.csc.villanova.edu/~nadi/csc8580/S11/DeeptiNune.pdf
-%https://www.sciencedirect.com/science/article/abs/pii/S1389128609003387
 Virtualization, in the networking context, refers to the act of combining
 hardware, software and functionalities into a virtual network. This abstraction
 runs on the top of a physical network in a hyper-visor, decoupling the logical
@@ -194,26 +192,83 @@ implemented at the application layer.
 
 \subsection{Network Function Virtualization}
 The \emph{Network Function Virtualization} (NFV) concept refers to the use of 
-virtualization technologies to virtualize network nodes functions. VNFs may run 
-different processes and software, on the top of servers, switches, storage 
-devices or on cloud computing infrastructures, that substitute custom hardware. 
+virtualization technologies to virtualize network nodes functions. This
+emerging technology focuses on the decoupling of function logic and hardware,
+allowing VNFs to run on the top of servers, switches, storage 
+devices or on cloud computing infrastructures. In other word the software logic
+is separated from the custom platform on which it runs, enabling the use of
+commodity hardware~\cite{gray2016network}.
 That approach worked well in the past, because of the need to follow rigorous 
 standards, providing at the same time high quality, but it led to long product 
-cycles and high specialized proprietary hardware. New Internet scenarios, that 
+cycles and high specialized services that use a combination of software and
+hardware resources, typically vendor-specific, and only largely
+non-interoperable within other vendor solutions. New Internet scenarios, that 
 include IoT and the increasing number of services to spread multimedia data 
 (Skype, Netflix, Spotify, \dots), requires more flexible functions and faster 
-network deployments. The NFV technology is exploited in a framework, organized
-at least by three components:
+network deployments. 
+This detachment provides greater flexibility to scale VNF based on traffic and
+performances and also improve the automation of function deploy and update:
+removing dedicated hardware also will reduce costs machines and for
+maintenance. 
+
+
+The NFV technology is exploited in a framework, organized
+at least by three components~\cite{etsi2013gs}, as represented in
+Figure~\ref{chap:background:img:etsi_arch}:
 \begin{enumerate}
- \item a software that performs the network function that must be deployed,
- that is the VNF;
- \item NFV Infrastructure (NFVI) that is composed by all hardware and software 
-components that builds the environment where the VNFs are deployed;
- \item NFV Management And Orchestration (NFV-MANO) architectural framework that
- is all the functional blocks, data repositories used by these blocks,
- reference points and interfaces through which these functional blocks exchange
- information for the purpose of managing and orchestrating NFVI and VNFs.
+  \item a software, able to run on over the NFVI, that performs the network
+  function that must be deployed, that is the VNF;
+  \item NFV Infrastructure (NFVI) that is composed by all physical resources
+  and how these can be virtualized, that forms the environment where the VNFs
+  are deployed;
+  \item NFV Management And Orchestration (NFV-MANO) that covers the
+  orchestration and management of both physical and logical resources, the
+  functional blocks, data repositories used by these blocks, reference points
+  and interfaces through which these functional blocks exchange
+  information for the purpose of managing and orchestrating NFVI and VNFs.
 \end{enumerate}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=2]{etsi_arch}
+  \caption{Network Function Virtualization reference
+  architecture~\cite{etsi2013gs}}
+  \label{chap:background:img:etsi_arch}
+\end{figure}
+
+\subsection{Network Function Virtualized Infrastructure}
+As mentioned before, NFVI is the combination of physical and logical resources,
+that combined together create the environment on which the VNFs are deployed
+and run. Physical supplies can be proprietary systems, commercial-off-the-shelf
+hardware, software and network resources or cloud computing capabilities. The
+abstraction of resources is made taking advantage of a virtualization layer,
+that hides the underlying infrastructure. Storage and computing resources may
+be represented in terms of virtual machines or
+containers~\cite{mijumbi2016network}.
+
+
+\subsection{VNF challenges}
+This new concept open a plethora of challenges~\cite{han2015network}. Regarding
+performances, functions running on general purposes servers cloud affect
+throughput and latency, moreover the capacity of the virtualized function can
+be less than the hardware and software version. To reach comparable levels in
+terms of performances efficient algorithms are needed, as a excellent resource
+management. Another problems is the VNF management. In case of hardware
+functions resources are almost equivalent, at the contrary, virtualized ones
+could have costs and values that differs significantly depending on the point
+of presence on which are deployed. On the other hand, since VNFs are software
+components, can elastically scale up and down, depending on the traffic loads
+and user demand. Another management challenge refers to keeping track where the
+VNF is running, that is of paramount importance in case of issues. Related to
+possible dysfunctions, software function must reach a certain level of
+reliability. Generally, purpose-build network equipment can ensure the
+five-nines reliability requirement, that is more challenging to follow in that
+scenario due to the higher number of possible points of failure, such as during
+the scaling operation or VNF migrating from a point of presence to another.
+Finally even security must be taken into account. In fact, infrastructure on
+which VNFs run can be outsourced to third parties. Furthermore, orchestration
+and management components must implement some sort of intrusion prevention and
+detection system and the sharing of resources can introduce security threads.
 
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
