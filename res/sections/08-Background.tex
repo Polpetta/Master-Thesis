@@ -431,28 +431,28 @@ payload protocol.
 
 Fields are:
 \begin{description}
-  \item[Version]: This field is used to set the version of the header, used for
+  \item[Version:] This field is used to set the version of the header, used for
   ensuring backward compatibility through different NSH definitions;
-  \item[0 bit]: Bit set only in case of orchestration or management packets, and
+  \item[0 bit:] Bit set only in case of orchestration or management packets, and
   must not be changed by the SFC;
-  \item[TTL]: Time To Live, indicate the maximum number of hops among SFF and
+  \item[TTL:] Time To Live, indicate the maximum number of hops among SFF and
   its initial value should be configurable by the control plane. At each hop it
   must be decremented to 1 until 0: in the latter case the packet must be
   discarded. The default value is 63. This field is useful in loop prevention
   mechanism. The default value is 63;
-  \item[Length]: the total length of the header (in 4-byte words), including
+  \item[Length:] the total length of the header (in 4-byte words), including
   the \texttt{Fixed-Length Context Header} in NSH type 0x1 or the
   \texttt{Variable-Length Context Header} in NSH type 0x2. In case of variable
   length header data must be padded to a multiple of 4;
-  \item[Unassigned bits]: unassigned bits for future usages;
-  \item[MD]: Metadata Type, indicate the type of the NSH. Values that now
+  \item[Unassigned bits:] unassigned bits for future usages;
+  \item[MD:] Metadata Type, indicate the type of the NSH. Values that now
   accepted are \texttt{0x0} that is a reserved value and if set the packet must
   be discarded, \texttt{0x1} indicate that context header length is
   fixed~\ref{subsubsec:background:flch}, \texttt{0x2} indicate that context
   header length is variable~\ref{subsubsec:background:vlch} and \texttt{0xF} for
   testing purposes (if not part of the experiment the packet must be discarded).
   Base header length and Service Path Header have always the same size;
-  \item[Next Protocol]: indicates the protocol type of encapsulated data
+  \item[Next Protocol:] indicates the protocol type of encapsulated data
   (protocols codes can be found at~\cite{rfc8300}).
 \end{description}
 
@@ -467,9 +467,9 @@ Provides path identification and location within a service path.
 \end{figure}
 
 \begin{description}
-  \item[Service Path Identifier (SPI)]: 24 bits, identify unambiguously an SFP.
+  \item[Service Path Identifier (SPI):] 24 bits, identify unambiguously an SFP.
   The first classifier have to set it;
-  \item[Service Index (SI)]: 8 bits, provide location within the SFP. Initially
+  \item[Service Index (SI):] 8 bits, provide location within the SFP. Initially
   must be set to 255 and it must be decremented on each hop.
 \end{description}
 
@@ -515,9 +515,9 @@ Figure~\ref{chap:background:img:nshtype2variable}
 \end{figure}
 
 \begin{description}
-  \item[Metadata Class (MD Class)]: field used in order to provide hierarchical
+  \item[Metadata Class (MD Class):] field used in order to provide hierarchical
   namespaces for standards, vendors or other scopes;
-  \item[Type]: indicates the type of metadata, depending on the MD Class;
+  \item[Type:] indicates the type of metadata, depending on the MD Class;
 \end{description}
 
 
@@ -644,22 +644,20 @@ could be shared in a virtualized way, providing auto-scaling capabilities in
 services that are under heavy network pressure.
 
 \section{The VIBES project}
- 
- This thesis is part of the VIBES project\todo{Talk about VIBES project, add
-   some reference, explain what it is.}, where the necessity for better TCP/IP
- transmission through satellite connections is the main requirement. To reach
- this goal, the project specifications suggest to exploit the 5G incoming
- technology and use the NFV-MANO architecture to perform first packets
- elaboration and performance improvement and finally TCP/IP satellite chunk
- optimization with the Performance Enhancing Proxy (PEP). The VIBES project
- proposed five technical requirements:
+This thesis is part of the VIBES project~\cite{vibesesa}, whose main requirement
+is to enhance the performance of end-to-end IP based that involves satellite
+connections. To reach this goal, the project specifications suggest to exploit
+the 5G incoming technology and use the NFV-MANO architecture to perform first
+packets elaboration and performance improvement and finally TCP/IP satellite
+chunk optimization with the Performance Enhancing Proxy (PEP). The VIBES project
+proposed five technical requirements:
 \begin{enumerate}
- \item Analysis of the applicability of current and new Internet protocols in
-   the proposed VNF-PEP architecture
- \item Implementation of a VNF-PEP prototype
- \item Building of a PoC test platform
- \item VNF-PEP validation and performance tests on 5G use-cases
- \item Demonstration test-bed management
+  \item Analysis of the applicability of current and new Internet protocols in
+  the proposed VNF-PEP architecture
+  \item Implementation of a VNF-PEP prototype
+  \item Building of a PoC test platform
+  \item VNF-PEP validation and performance tests on 5G use-cases
+  \item Demonstration test-bed management
 \end{enumerate}
 
 \begin{figure}[t]
@@ -669,50 +667,56 @@ services that are under heavy network pressure.
  \label{chap:background:img:vibes_logo}
 \end{figure}
 
-
 \subsection{VNF-PEP architecture and internet protocols}
+VNF-PEP are the softwarization of usual PEP technology. One of the sake of the
+project is to research and include this technology in the usual VNF ecosystem to
+include without change satellite communications to the SFC. The architecture of
+the systems will be based on clusters of containers whose management and
+orchestration will follows the ETSI MANO architecture and SDN principles. Thanks
+to VNF-PEP will be possible to dynamically take decisions on how to optimize a
+certain communication.
 
-The analysis of this topic revealed to be trivial: since internet has many
-different protocols that would become infeasible to support all of them at the
-same time, packet encapsulation present itself as the only feasible solution:
-every packet incoming in the VNFs has already been encapsulated by a generic
-packet encapsulator/decapsulator,
-\todo{Also I think that the main purpose of UDP encapsulation is not to hide 
-the protocol used on the edges but 1) use a ``quick protocol to exchange data 
-among VNFs and 2) we are hiding the path not the protocol itself. As we were 
-discussing, we are creating some sort of proxy, so the aim will be the same 
-even if we support a plethora of protocols.''} making the whole architecture 
-independent from the protocol a particular flux of data. To achieve this, 
-several solutions have been studied, and at the end packet encapsulation with 
-TCP split (for TCP sessions) have been chosen. The rationale that guided us on 
-this choice is described in Chapter~\ref{chap:vnf_ns_impl}. \todo{Update 
-reference with the section of the explanation}
-
-\subsection{VNF-PEP prototype}
-
-Since the requirement for the whole system (MANO+PEP) were too challenging, the 
-goal shifted into creating a MANO test-bed and a working NFVI, excluding PEP. 
-The VNF architecture was shaped following the container orchestrator we decided 
-to use. An more detailed architectural implementation can be found at 
-Chapter~\ref{chap:archimpl}.
-
-\vspace{0.5cm}
-
-Starting with the first step of creating a MANO able to process incoming data
-packets through VNF functions, we encountered that many networking tools already
-present in the market required some tweaking and some integration, shifting our
-goal to create a complete European Telecommunications Standards Institutes
-(ETSI) Management and orchestrator (MANO) test-bed instead, following the
-specifications suggested in the RFC 7665, thus implementing only the first three
-requisites, without digging in the satellite data flow optimization. In
-particular, we discovered how, these tools, were suitable to create ETSI MANO
-and VNFs using virtual machine or exploiting cloud technologies, while they were
-not designed with enough flexibility an integration with Docker. In the next
-chapter we are going to take a deep analysis of the cited technologies 
-(Section~\ref{chap:prjan:sec:tech}, in order to provide to the reader enough 
-context to be able to understand our design choices we are going to describe 
-later.
-
-\noindent With this in mind, we performed a requirements analysis described in
-the next chapter.\todo{This should be put at the end of the introduction.}
- 
+%The analysis of this topic revealed to be trivial: since internet has many
+%different protocols that would become infeasible to support all of them at the
+%same time, packet encapsulation present itself as the only feasible solution:
+%every packet incoming in the VNFs has already been encapsulated by a generic
+%packet encapsulator/decapsulator,
+%\todo{Also I think that the main purpose of UDP encapsulation is not to hide 
+%the protocol used on the edges but 1) use a ``quick protocol to exchange data 
+%among VNFs and 2) we are hiding the path not the protocol itself. As we were 
+%discussing, we are creating some sort of proxy, so the aim will be the same 
+%even if we support a plethora of protocols.''} making the whole architecture 
+%independent from the protocol a particular flux of data. To achieve this, 
+%several solutions have been studied, and at the end packet encapsulation with 
+%TCP split (for TCP sessions) have been chosen. The rationale that guided us on 
+%this choice is described in Chapter~\ref{chap:vnf_ns_impl}. \todo{Update 
+%reference with the section of the explanation}
+%
+%\subsection{VNF-PEP prototype}
+%
+%Since the requirement for the whole system (MANO+PEP) were too challenging, the 
+%goal shifted into creating a MANO test-bed and a working NFVI, excluding PEP. 
+%The VNF architecture was shaped following the container orchestrator we decided 
+%to use. An more detailed architectural implementation can be found at 
+%Chapter~\ref{chap:archimpl}.
+%
+%\vspace{0.5cm}
+%
+%Starting with the first step of creating a MANO able to process incoming data
+%packets through VNF functions, we encountered that many networking tools already
+%present in the market required some tweaking and some integration, shifting our
+%goal to create a complete European Telecommunications Standards Institutes
+%(ETSI) Management and orchestrator (MANO) test-bed instead, following the
+%specifications suggested in the RFC 7665, thus implementing only the first three
+%requisites, without digging in the satellite data flow optimization. In
+%particular, we discovered how, these tools, were suitable to create ETSI MANO
+%and VNFs using virtual machine or exploiting cloud technologies, while they were
+%not designed with enough flexibility an integration with Docker. In the next
+%chapter we are going to take a deep analysis of the cited technologies 
+%(Section~\ref{chap:prjan:sec:tech}, in order to provide to the reader enough 
+%context to be able to understand our design choices we are going to describe 
+%later.
+%
+%\noindent With this in mind, we performed a requirements analysis described in
+%the next chapter.\todo{This should be put at the end of the introduction.}
+% 
