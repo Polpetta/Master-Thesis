@@ -38,7 +38,7 @@ EPCaaS) across multi-domains clouds. The realization of such framework is
 pursued thanks to end-to-end network slicing.
 
 EPC and ETSI MANO definitions are not the only solutions to have been explored
-at this time. An SDN/NFV-based end to end network slicing for 5G has been
+at this time. An SDN/NFV-based end-to-end network slicing for 5G has been
 created in~\cite{chartsias2017sdn}, where the authors provided examples to
 demonstrate how end-to-end services can be provisioned using SDN networking, in
 particular with controllers like such as OpenDaylight, Pox, Ryu ONOD and
@@ -46,6 +46,12 @@ Floodlight. The last one was studied by us too during the technologies analysis,
 and a description is available in
 Section~\ref{chap:prjan:sec:tech:sub:other:sub:floodlight}.
 %TODO section missing...write it down!!
+
+Compared to our solution, these implementations does not present an unified
+framework that gives the possbility orchestrate different network slices
+consistently. Adopting Kubernetes gives the advantage to use the Kubernetes
+Federation feature~\cite{kubeFederation}, enabling the possibility to simplify
+the management of multiple network slice in end-to-end services.
 
 \section{Network slicing security concerns}
 
@@ -56,13 +62,23 @@ In~\cite{kotulski2017end} the authors carry out a deep analysis about the
 network slice security, putting an emphasis on how this new element (the network
 slice) brings additional security questions and problems, especially about
 isolation. Moreover, slicing in 5G introduces the concept of shared services,
-that is contrary with the definition of isolation itself. In particular, 
-resource isolation gives the possibility to avoid attacks such us slice 
-resources exhaustion. Additionally, the authors give a critic regarding the 
-ETSI NFV-MANO standard making too general assumptions regarding the whole 
-system. Finally, a Service-Level Agreement (SLA) based orchestration criteria 
-between network slices is proposed as a viable solution to solve the security 
-problems about isolation.
+that is contrary with the definition of isolation itself. In particular,
+resource isolation gives the possibility to avoid attacks such us slice
+resources exhaustion. Additionally, the authors give a critic regarding the ETSI
+NFV-MANO standard making too general assumptions regarding the whole system.
+Finally, a Service-Level Agreement (SLA) based orchestration criteria between
+network slices is proposed as a viable solution to solve the security problems
+about isolation. We tried to mitigate the security consern presented above using
+the integrated Role Base Access Control system (RBAC) and other security policy
+bundled in by default in Kubernetes.
+
+\section{Provision capabilities}
+We noted how, in some other NFV/ETSI-MANO proposals like~\cite{soares2015toward}
+and~\cite{abujoda2015midas}, the implementations relays on a static provision
+system, where the SFC paths are somehow defined at deploy time, and can't change
+without decomissioning, editing and deploying the chain again. Our proposal,
+instead, is able to support chain editing on-the-fly, allowing NFV to dynamically
+change SFP.
 
 \vspace{1cm}
 
