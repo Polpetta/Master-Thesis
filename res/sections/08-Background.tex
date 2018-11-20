@@ -546,16 +546,16 @@ chain. Solution must take in account this problem and the cost to overcome it.
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
 creation of a new standard, the 5G, which is estimated to arrive to the market
-consumer in 2020\todo{CITE}. Lead by the Next Generation Mobile Network (NGMN)
-alliance, a group composed by the major players in the field of mobile
-connectivity, the 5G aims to offer not only at the end-user a new way to browse 
-the web, download and watch interactive content but also to create an ad-hoc 
-solution for Machine-to-Machine (M2M) data traffic, which is increasing more 
-than ever thanks to the spreading of IoT devices, which sensors need to 
-continuously send data to servers/data-centers. Relatively to LTE\todo{Explain 
-acronym}, 5G points to have data rates $10$ times better, with $10$ times 
-smaller end-to-end latency and an increased connection density by $100$ 
-times\todo{CITE}.
+consumer in 2020~\cite{iwamura2015ngmn}. Lead by the Next Generation Mobile
+Network (NGMN) alliance, a group composed by the major players in the field of
+mobile connectivity, the 5G aims to offer not only at the end-user a new way to
+browse the web, download and watch interactive content but also to create an
+ad-hoc solution for Machine-to-Machine (M2M) data traffic, which is increasing
+more than ever thanks to the spreading of IoT devices, which sensors need to 
+continuously send data to servers/data-centers. Relatively to \emph{Long Term
+Evolution} (LTE), 5G points to have data rates $10$ times better, with $10$
+times smaller end-to-end latency and an increased connection density by $100$ 
+times~\cite{alliance20155g}.
 
 \begin{table}[t]
 \centering
@@ -600,18 +600,16 @@ expectation of an ever-reachable connectivity. It is here where virtualization
 plays an important role. In fact, the re-design of some network components today
 existing via hardware can transform a monolithic networking approach to a 
 modular one, exploiting the flexibility that Virtual Network Functions 
-(VNFs)\todo{CITE VNF-P: A Model for Efficient Placement of Virtualized Network 
-Functions} can offer thanks to virtualization, closing the gap to the use-case 
-fulfillment defined by the NGMN alliance\todo{CITE: NGMN View on 5G 
-architecture} which require a decreased time to set up and deploy network 
-services (specifically, from 90 hours to 90 minutes\todo{Search this 
-requirement, check 90h 'cause I'm not sure about it}).
+(VNFs)\cite{moens2014vnf} can offer thanks to virtualization, closing the gap to
+the use-case fulfillment defined by the NGMN alliance~\cite{iwamura2015ngmn}
+which require a decreased time to set up and deploy network services
+(specifically, from 90 hours to 90 minutes~\cite{networld20202014role}).
 
 \subsection{5G architecture}
 
 With the constraints placed on the requirements formulated by the NGMN alliance,
-5G envisage a multi-layered architecture, based on three main layers:\todo{CITE:
-  NGMN View on 5G architecture}
+5G envisage a multi-layered architecture, based on three main
+layers~\cite{alliance20155g}:
 \begin{itemize}
 \item \textbf{infrastructure resource layer}: physical resources that are 
 exposed via a virtualized interface, and that can be monitored using specific 
@@ -622,7 +620,12 @@ APIs
   applications and services of the operator
 \end{itemize}
 
-\todo{Add three-layer image here?}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.55]{5garchitecture}
+  \caption{5G Architecture~\cite{alliance20155g}}
+  \label{chap:background:img:5garchitecture}
+\end{figure}
 
 This separation in layers allows to easily manage multiple identities 
 differently: an Internet Service Provider (ISP) could manage a multitude of 
@@ -632,14 +635,13 @@ single centralized business application deployment that manage all the other
 layers resources.
 
 \subsubsection{Network slicing}
-The role of a ``network slice'' in a 5G architecture is to specifically handle 
-the Control-plane\todo{Explain what a control plane is?} of a particular 
-service (e.g. smartphones traffic, autonomous driving, massive IoT), deploying 
-resources in a manner that assure the required latency, security and 
-reliability. While some very peculiar legacy services could require specific 
-hardware, the common resources between services could be shared in a 
-virtualized way, providing auto-scaling capabilities in services that are under 
-heavy network pressure.
+The role of a \emph{network slice} in a 5G architecture is to specifically
+handle the Control-plane of a particular service (e.g. smartphones traffic,
+autonomous driving, massive IoT), deploying resources in a manner that assure
+the required latency, security and reliability. While some very peculiar legacy
+services could require specific hardware, the common resources between services
+could be shared in a virtualized way, providing auto-scaling capabilities in
+services that are under heavy network pressure.
 
 \section{The VIBES project}
  
@@ -693,8 +695,6 @@ goal shifted into creating a MANO test-bed and a working NFVI, excluding PEP.
 The VNF architecture was shaped following the container orchestrator we decided 
 to use. An more detailed architectural implementation can be found at 
 Chapter~\ref{chap:archimpl}.
-
-% \section{Technologies used}
 
 \vspace{0.5cm}
 
