@@ -221,7 +221,7 @@ Figure~\ref{chap:background:img:etsi_arch}:
   \item NFV Infrastructure (NFVI) that is composed by all physical resources
   and how these can be virtualized, that forms the environment where the VNFs
   are deployed;
-  \item NFV Management And Orchestration (NFV-MANO) that covers the
+  \item NFV MANagement and Orchestration (NFV-MANO) that covers the
   orchestration and management of both physical and logical resources, the
   functional blocks, data repositories used by these blocks, reference points
   and interfaces through which these functional blocks exchange
@@ -246,6 +246,54 @@ that hides the underlying infrastructure. Storage and computing resources may
 be represented in terms of virtual machines or
 containers~\cite{mijumbi2016network}.
 
+\subsection{NFV MANagement and Orchestration}
+The MANO, represented in Figure~\ref{chap:background:img:etsimano}, can be splitted into three logical functional components:
+\begin{itemize}
+  \item the virtual infrastructure manager (VIM);
+  \item the VNF Manager (VNFM);
+  \item the NFV Orchestrator (NFVO).
+\end{itemize}
+And into four data repositories:
+\begin{itemize}
+  \item Network Service (NS) catalog;
+  \item VNF catalog;
+  \item NFV instances;
+  \item NFVI resources.
+\end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.3]{etsimano}
+  \caption{NFV MANO components}
+  \label{chap:background:img:etsimano}
+\end{figure}
+
+\paragraph*{VIM}
+The VIM aim is to manage and control NFVI resources. Every MANO can contain more VIM instances, each of them control NFVI resources from a single infrastructure. VIM can be developed either to administer one type of NFVI or more. VIM have to monitor the allocation of virtual resource in order to orchestrate allocation, upgrade, release, and reclamation of resources and optimize their usage, including virtual links, networks, subnets, and ports. It is also the component in charge to manage security group policies to ensure access control. In addition, VIM also has to record data on performance and faults, that can be queried. Thank to this component it is possible to dynamically allocate resource, based on demand, that is particularly using IaaS.
+
+\paragraph*{VNFM} 
+In this framework all VNFs, once created, have to register to a VNFM. This
+component is accountable to manage their lifecycle, that consists of
+instantiation, scaling, termination and, possibly, update/upgrade, and
+communicate the state of a certain VNF to others MANO blocks: this enable the
+monitoring of key performance indicators (KPI), that can help to make decision
+on VNF scaling. VNFM can manage a single type of VNF instances or multiple.
+
+\paragraph*{NFVO}
+The NFVO is responsible of combining functions to create end-to-end services.
+Its functionalities are to ensure there are adequate compute, storage, and
+network resources available to provide a network service independently of the
+VIM and the creation of end-to-end services by composing different VNFs, that
+can be deployed on different point-of-presence and registered to different VNF.
+It also managing the topology of these services. 
+
+\paragraph*{Data repositories} Data repositories are use to keep information on
+the NFV MANO. The NS catalog is a set of predefined templates, which define
+services, functions involved and their connectivity. The VNF catalog is,
+instead, a set of templates describing the deployment and characteristics of
+VNFs. The NFVI resources repository holds information about available/allocated
+NFVI resources. The NFV instances repository keep information about functions
+and services instances during their lifetimes.
 
 \subsection{VNF challenges}
 This new concept open a plethora of challenges~\cite{han2015network}. Regarding
@@ -269,6 +317,13 @@ Finally even security must be taken into account. In fact, infrastructure on
 which VNFs run can be outsourced to third parties. Furthermore, orchestration
 and management components must implement some sort of intrusion prevention and
 detection system and the sharing of resources can introduce security threads.
+
+\section{Service Function Chaining}
+The Service Function Chaining (SFC) concept was defined  in~\cite{halpern2015service} and refers to an ordered set of Service Functions (SF) and the constraint, defined after a classification process, to packets and flows. SF are the particular functions whose aim is the treatment of packets received. They can work on different levels of the network layer. These components can be implemented as virtual element or a combination of a physical network element and the software running on the top of it. There are no limitations on the number of SFs running on the same network element, so in general it is possible to have one or more functions running on the same element. SFs can be aware or not that are part of a certain chain, in the matter case they are called \emph{SFC aware} functions, in the latter \emph{SFC unaware}.
+
+An SFC can be seen as a graph in which each node is an SF and edges are the path through which a packet have to pass through. Because of this definitions there are no limitation on possible cycles that can occur in the chain, in case that a certain SF have to be reapplied on the same packet, frame or flow. These scenarios must be adequately managed to avoid endless loops. This enable even the possibility of branching on a certain node in order to define the treatment that has to be imposed from that point of the chain. The graph representation also permit to think to \emph{unidirectional} and \emph{bidirectional} chains. An SFC is defined unidirectional if traffic can traverse it only in one direction, so if it is composed by 3 SF, named \texttt{SF0}, \texttt{SF1} and \texttt{SF2} in this order, traffic can only go from \texttt{SF0} to \texttt{SF2}. On the contrary, a bidirectional SFC allows traffic in both directions. So, having the same chain as in the previous example, traffic can pass both from \texttt{SF0} to \texttt{SF2} and from \texttt{SF2} to \texttt{SF0}.
+
+
 
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
