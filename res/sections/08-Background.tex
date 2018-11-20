@@ -247,7 +247,8 @@ be represented in terms of virtual machines or
 containers~\cite{mijumbi2016network}.
 
 \subsection{NFV MANagement and Orchestration}
-The MANO, represented in Figure~\ref{chap:background:img:etsimano}, can be splitted into three logical functional components:
+The MANO, represented in Figure~\ref{chap:background:img:etsimano}, can be
+splitted into three logical functional components:
 \begin{itemize}
   \item the virtual infrastructure manager (VIM);
   \item the VNF Manager (VNFM);
@@ -268,8 +269,18 @@ And into four data repositories:
   \label{chap:background:img:etsimano}
 \end{figure}
 
+
 \paragraph*{VIM}
-The VIM aim is to manage and control NFVI resources. Every MANO can contain more VIM instances, each of them control NFVI resources from a single infrastructure. VIM can be developed either to administer one type of NFVI or more. VIM have to monitor the allocation of virtual resource in order to orchestrate allocation, upgrade, release, and reclamation of resources and optimize their usage, including virtual links, networks, subnets, and ports. It is also the component in charge to manage security group policies to ensure access control. In addition, VIM also has to record data on performance and faults, that can be queried. Thank to this component it is possible to dynamically allocate resource, based on demand, that is particularly using IaaS.
+The VIM aim is to manage and control NFVI resources. Every MANO can contain more
+VIM instances, each of them control NFVI resources from a single infrastructure.
+VIM can be developed either to administer one type of NFVI or more. VIM have to
+monitor the allocation of virtual resource in order to orchestrate allocation,
+upgrade, release, and reclamation of resources and optimize their usage,
+including virtual links, networks, subnets, and ports. It is also the component
+in charge to manage security group policies to ensure access control. In
+addition, VIM also has to record data on performance and faults, that can be
+queried. Thank to this component it is possible to dynamically allocate
+resource, based on demand, that is particularly using IaaS.
 
 \paragraph*{VNFM} 
 In this framework all VNFs, once created, have to register to a VNFM. This
@@ -319,10 +330,196 @@ and management components must implement some sort of intrusion prevention and
 detection system and the sharing of resources can introduce security threads.
 
 \section{Service Function Chaining}
-The Service Function Chaining (SFC) concept was defined  in~\cite{halpern2015service} and refers to an ordered set of Service Functions (SF) and the constraint, defined after a classification process, to packets and flows. SF are the particular functions whose aim is the treatment of packets received. They can work on different levels of the network layer. These components can be implemented as virtual element or a combination of a physical network element and the software running on the top of it. There are no limitations on the number of SFs running on the same network element, so in general it is possible to have one or more functions running on the same element. SFs can be aware or not that are part of a certain chain, in the matter case they are called \emph{SFC aware} functions, in the latter \emph{SFC unaware}.
+The Service Function Chaining (SFC) concept was defined 
+in~\cite{halpern2015service} and refers to an ordered set of Service Functions
+(SF) and the constraint, defined after a classification process, to packets and
+flows. SF are the particular functions whose aim is the treatment of packets
+received. They can work on different levels of the network layer. These
+components can be implemented as virtual element or a combination of a physical
+network element and the software running on the top of it. There are no
+limitations on the number of SFs running on the same network element, so in
+general it is possible to have one or more functions running on the same
+element. SFs can be aware or not that are part of a certain chain, in the
+matter case they are called \emph{SFC aware} functions, in the latter one \emph
+SFC unaware}.
 
-An SFC can be seen as a graph in which each node is an SF and edges are the path through which a packet have to pass through. Because of this definitions there are no limitation on possible cycles that can occur in the chain, in case that a certain SF have to be reapplied on the same packet, frame or flow. These scenarios must be adequately managed to avoid endless loops. This enable even the possibility of branching on a certain node in order to define the treatment that has to be imposed from that point of the chain. The graph representation also permit to think to \emph{unidirectional} and \emph{bidirectional} chains. An SFC is defined unidirectional if traffic can traverse it only in one direction, so if it is composed by 3 SF, named \texttt{SF0}, \texttt{SF1} and \texttt{SF2} in this order, traffic can only go from \texttt{SF0} to \texttt{SF2}. On the contrary, a bidirectional SFC allows traffic in both directions. So, having the same chain as in the previous example, traffic can pass both from \texttt{SF0} to \texttt{SF2} and from \texttt{SF2} to \texttt{SF0}.
+\subsection{Architecture principles}
+The SFC technology was though to pursue some concept. One of the most important
+principles is the \emph{decoupling}. Decoupling in terms on independence on the
+infrastructure and the network, so no change must be performed to the
+forwarding underlying topology to deploy SFCs, and in terms of separation
+between packet handling (by SFs) and forwarding. This decoupling refers even to
+architecture and functions: one must be independent from the other. Another
+main point is the possibility to dynamically set routes on the incoming traffic
+to decide the best treatment based on its typology. The classification can
+occur on different point of the chain and can be updated during the packet
+delivery. Finally creation, modification and deletion of a certain SFC must has
+To impact on the others.
 
+\subsection{Graph view of an SFC}
+An SFC can be seen as a graph in which each node is an SF and edges are the
+path through which a packet have to pass through. Because of this definitions
+there are no limitation on possible cycles that can occur in the chain, in case
+that a certain SF have to be reapplied on the same packet, frame or flow. These
+scenarios must be adequately managed to avoid endless loops. This enable even
+the possibility of branching on a certain node in order to define the treatment
+that has to be imposed from that point of the chain. Traffic path in the SFC
+graph are managed and described by the \emph{Service Function Forwarder} (SFF)
+and \emph{Service Function Path} (SFP) components. The matter is the element of
+the architecture responsible of traffic forwarding. The main goals are to
+redirect traffic according to the SFC specified for a specific packet flow,
+query the classifier if needed and manage traffic coming back from a SF. The
+SFP, instead, is an indirection layer between the fully abstract notion of SFC
+and the list of SF that the traffic has to traverse. It is used for dictate the
+constraint specification on the path of where packets assigned to a certain
+service function path must go. There are no limitation on how specific it must
+be: it can specify the exact locations, identifying both the SFF and the SF, or
+only give some recommendation or, for example, defining only the SFF and
+demanding to it the decision on the SF instance.
+
+
+The graph representation also permit to think to \emph{unidirectional} and
+\emph{bidirectional} chains. An SFC is defined unidirectional if traffic can
+traverse it only in one direction, so if it is composed by 3 SF, named
+\texttt{SF0}, \texttt{SF1} and \texttt{SF2} in this order, traffic can only go
+from \texttt{SF0} to \texttt{SF2}. On the contrary, a bidirectional SFC allows
+traffic in both directions. So, having the same chain as in the previous
+example, traffic can pass both from \texttt{SF0} to \texttt{SF2} and from
+\texttt{SF2} to \texttt{SF0}.
+
+\subsection{SFC Encapsulation}
+In order to exchange packet and information in the SFC ecosystem, traffic is
+encapsulated. The so called SFC encapsulation carries data used by the framework
+to identify SFPs, but it differs from a transport encapsulation and it is
+independent from the transport one: as such any transport protocol can be
+exploited to forward traffic.
+
+\todo{add sfc proxy}
+
+The \emph{Network Service Header} (NSH), used by SFC environment for
+encapsulation is described in~\cite{rfc8300} and consider three main fields as
+represent in Figure~\ref{chap:background:img:nshformat}: Base Header, Service
+Path Header and Context Header.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{nshformat}
+  \caption{Network Service Header~\cite{rfc8300}}
+  \label{chap:background:img:nshformat}
+\end{figure}
+
+\subsubsection{Base header}
+The Base Header utility is provide information about the service header and the
+payload protocol.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{nshbase}
+  \caption{Network Service Header~\cite{rfc8300}}
+  \label{chap:background:img:nshformat}
+\end{figure}
+
+Fields are:
+\begin{description}
+  \item[Version]: This field is used to set the version of the header, used for
+  ensuring backward compatibility through different NSH definitions;
+  \item[0 bit]: Bit set only in case of orchestration or management packets, and
+  must not be changed by the SFC;
+  \item[TTL]: Time To Live, indicate the maximum number of hops among SFF and
+  its initial value should be configurable by the control plane. At each hop it
+  must be decremented to 1 until 0: in the latter case the packet must be
+  discarded. The default value is 63. This field is useful in loop prevention
+  mechanism. The default value is 63;
+  \item[Length]: the total length of the header (in 4-byte words), including
+  the \texttt{Fixed-Length Context Header} in NSH type 0x1 or the
+  \texttt{Variable-Length Context Header} in NSH type 0x2. In case of variable
+  length header data must be padded to a multiple of 4;
+  \item[Unassigned bits]: unassigned bits for future usages;
+  \item[MD]: Metadata Type, indicate the type of the NSH. Values that now
+  accepted are \texttt{0x0} that is a reserved value and if set the packet must
+  be discarded, \texttt{0x1} indicate that context header length is
+  fixed~\ref{subsubsec:background:flch}, \texttt{0x2} indicate that context
+  header length is variable~\ref{subsubsec:background:vlch} and \texttt{0xF} for
+  testing purposes (if not part of the experiment the packet must be discarded).
+  Base header length and Service Path Header have always the same size;
+  \item[Next Protocol]: indicates the protocol type of encapsulated data
+  (protocols codes can be found at~\cite{rfc8300}).
+\end{description}
+
+\subsubsection{Service Path Header}
+Provides path identification and location within a service path.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{nshservicepath}
+  \caption{NSH Service Path Header~\cite{rfc8300}}
+  \label{chap:background:img:nshpath}
+\end{figure}
+
+\begin{description}
+  \item[Service Path Identifier (SPI)]: 24 bits, identify unambiguously an SFP.
+  The first classifier have to set it;
+  \item[Service Index (SI)]: 8 bits, provide location within the SFP. Initially
+  must be set to 255 and it must be decremented on each hop.
+\end{description}
+
+SPI combined to SI determine the next SF on each link in the chain. SI change
+provide a minimal loop prevention mechanism.
+
+\subsubsection{NSH with Fixed-Length Context Header}
+\label{subsubsec:background:flch}
+The NSH of type \texttt{0x1} have a 16-Byte Fixed-Length Context Header that
+can be used to share data along the service path.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{nshtype1}
+  \caption{NSH MD Type \texttt{0x1}~\cite{rfc8300}}
+  \label{chap:background:img:nshtype1}
+\end{figure}
+
+The specification does not specify the content of this field and if SF or SFC
+Proxy does not known its semantics they have to discard the entire packet. 
+
+\subsubsection{NSH with Variable-Length Context Header}
+\label{subsubsec:background:vlch}
+In NSH of type \texttt{0x2}, zero or more Variable-Length Context Headers may
+be added, but lengths must always be a multiple of 4-bytes (otherwise they must
+be padded).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{nshtype2}
+  \caption{NSH MD Type \texttt{0x2}~\cite{rfc8300}}
+  \label{chap:background:img:nshtype2}
+\end{figure}
+
+The structure of the variable length part is depicted in
+Figure~\ref{chap:background:img:nshtype2variable}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{nshtype2variable}
+  \caption{Variable-Length Context Header~\cite{rfc8300}}
+  \label{chap:background:img:nshtype2variable}
+\end{figure}
+
+\begin{description}
+  \item[Metadata Class (MD Class)]: field used in order to provide hierarchical
+  namespaces for standards, vendors or other scopes;
+  \item[Type]: indicates the type of metadata, depending on the MD Class;
+\end{description}
+
+
+\subsection{Classification of traffic}
+In order to define the path of which traffic have to be forwarded, it must be
+classified. The classification granularity is not specified and can occur even
+during the SFC traverse. At the ingress of SFC environment packets have to be
+classified to determine to choose an SFC and eventually, if the classification
+granularity is too coarse, can be repeated after the treatment of some SFs. The
+reclassification, also called branching, may result in a different SFP choice or
+only to a metadata change.
+
+\subsection{Considerations}
 
 
 \section{The upcoming connectivity standard: 5G}
