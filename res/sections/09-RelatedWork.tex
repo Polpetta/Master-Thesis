@@ -1,25 +1,31 @@
 \chapter{Related Work}
 \label{chap:rel_wk}
 
-The possibility to solve the constant network capacity requests and to make
-network infrastracture lighter and faster to deploy has rouse the interests of
-many internet service providers (ISP). In literacy, several NFV implementations
-and Network Slicing solutions have been proposed and some of them will be
-discussed in the following chapter. An opportunity identified
-in~\cite{nogales2018nfv} shows that ETSI MANO implementations can be deployed
-inside Unmanned Aerial Vehicles (UAVs), giving the possibility to rapidly deploy
-network connectivity in areas where the common communication systems are
-temporarily unavailable. This can be very useful in places where natural
-disasters occurred and there is the necessity to restore the communications
-within a very short span of time. On top of that, this system is flexible enough
-to be able to provide different kind of services, in addition to simple
-broadband connectivity. The only downside of this approach are the constrained
-system rources: the authors had to install the VIM (in particular, Openstack) in
-a separated machine, located on the ground. A solution based only on
-containerization, instead, could lead to interesting results, since Kubernetes
-does not require too much resources \textit{per se} and in literature is
-possible to find solutions of Kubernetes installations performed on machines
+
+The possibility to solve the increasing network capacity necessities and to make
+the network infrastracture lighter and faster to deploy has rouse the interests
+of many internet service providers (ISP).
+
+\section{NFV alternative implementations}
+
+In literacy, several NFV implementations and Network Slicing solutions have been
+proposed and some of them will be discussed in the following chapter. For
+example, an opportunity identified in~\cite{nogales2018nfv} shows that ETSI MANO
+implementations can be deployed inside Unmanned Aerial Vehicles (UAVs), giving
+the possibility to rapidly deploy network connectivity in areas where the common
+communication systems are temporarily unavailable. This can be very useful in
+places where natural disasters occurred and there is the necessity to restore
+the communications within a very short span of time. On top of that, this system
+is flexible enough to be able to provide different kind of services, in addition
+to simple broadband connectivity. The only downside of this approach are the
+constrained system rources: the authors had to install the VIM (in particular,
+Openstack) in a separated machine, located on the ground. A solution based only
+on containerization, instead, could lead to interesting results, since
+Kubernetes does not require too much resources \textit{per se} and in literature
+is possible to find solutions of Kubernetes installations performed on machines
 with the same harware installed on the UAVs~\cite{pahl2016container}.
+
+\section{EPC virtual implementations}
 
 A virtualized EPC implementation, designed to allow mobile broadband services in
 the UMTS/LTE world, has been described in~\cite{hawilo2014nfv}, showing how this
@@ -30,10 +36,36 @@ SDN and NFV (identified from the authors as key elements in order to implement
 the 5G architecture) are virtualized, and ported as a service (defined as
 EPCaaS) across multi-domains clouds. The realization of such framework is
 pursued thanks to end-to-end network slicing.
-% talk about end-to-end network slicing 
 
+EPC and ETSI MANO defitinions are not the only solutions to have been explored
+at this time. An SDN/NFV-based end to end network slicing for 5G has been
+created in~\cite{chartsias2017sdn}, where the authors provided examples to
+demonstrate how end-to-end services can be provisioned using SDN networking, in
+particular with controllers like such as OpenDaylight, Pox, Ryu ONOD and
+Floodlight. The last one was studied by us too during the technologies analysis,
+and a description is available in
+Section~\ref{chap:prjan:sec:tech:sub:other:sub:floodlight}.
+%TODO section missing...write it down!!
 
+\section{Network slicing security concerns}
 
-It is interesting to note that, between all the possibile and alternative
+Another important aspect related to 5G networking and network slice is the one
+regarding security. Security in this context plays a fundamental role, since
+secure communications depends on the security of the overall system.
+In~\cite{kotulski2017end} the authors carry out a deep analysis about the
+network slice security, putting an emphasis on how this new element (the network
+slice) brings additional security questions and problems, especially about
+isolation. Moreover, slicing in 5G introduces the concept of shared services,
+that is contrary with the definition of isolation itself. In particular, resouce
+isolation gives the possibility to avoid attacks such us slice resources
+exaustion. Additionally, the authors give a critic regarding the ETSI NFV-MANO
+standard making too general assumptions regarding the whole system. Finally, a
+Service-Level Agreement (SLA) based orchestration criteria between network
+slices is proposed as a viable solution to solve the secutiry problems about
+isolation.
+
+\vspace{1cm}
+
+\noindent It is interesting to note that, between all the possibile and alternative
 related works we have been albe to find, none of these used an only
 container-based approach.
