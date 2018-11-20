@@ -6,52 +6,42 @@ upcoming 5G standard, talking about the Virtual Network Functions (VNFs) and
 how first experiments with this new technology already begun. Finally we are 
 going to briefly introduce and explain the technologies involved and their role.
 
-\section{Network slicing}
-A network slice can be defined as a logical virtual network, tailored for a
-given use case, on the top a common network using technologies such as
-Software-Defined Networking and Network Function Chaining that allows network
-softwarization~\cite{ordonez2017network}. The notion of separated virtual
-networks deployed on the same infrastructure is not new, e.g. VPN, but it has
-some specifics that make it a novel idea. The concept of network slicing was
-first introduced in 2002 in\cite{peterson2003blueprint}, where a network 
-overlay that allows services to run continuously and to access the overlay
-resources across different slices was illustrated.
-Services operating over the overlay management have their own slice instead.
-This idea was lately refined in 2016, where the design of network slicing was
-based on a three-layers model~\cite{alliance2016description}, as depicted in 
-Figure~\ref{chap:background:img:network_slicing}.
+\section{Virtualization}
+Cloud computing is nowadays one of the cutting edge Internet technologies, and
+it is possible thanks to virtualization, that allows to isolate applications,
+optimizing the utilization of hardware resources and providing more flexibility.
+Virtualization, in computing, usually refers to the act of creating a virtual
+version of a certain asset, such as virtual computer hardware platform,
+operating system (OS), storage device, or computer network
+resources~\cite{liu2014research}. Conventional virtualization
+(hypervisor-based) uses virtual machines: it provides strong isolation and a
+complete operating system~\cite{eder2016hypervisor}. In hypervisor
+virtualization every pieces of hardware required to running software is
+emulated, and it is common that the hypervisor provides interfaces to access
+the real hardware, for instance to access physical devices or to communicate
+with the network. However all this functionalities comes to a resource
+overhead~\cite{scheepers2014virtualization}Container-based virtualization,
+instead, could be a more efficient in certain context, because it does not
+emulate the entire computer. A container is seen as an isolate process running
+on the host, to which the Linux kernel gives a set of capabilities.
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.2]{networkslicing}
-  \caption{The three layers model of network
-  slicing~\cite{alliance2016description}}
-  \label{chap:background:img:network_slicing}
-\end{figure}
-
-The first layer is the \emph{Service Instance Layer} used to represent the
-business or user services supported, the second one is the \emph{Network Slice
-Instance Layer}. This is a set of network functions that allows to
-satisfy certain requirements~\cite{kotulski2017end}. Network functions, in
-general, can be both physical, thus a combination of vendor-specific hardware
-and/or virtualized. In that case the function is implemented as software and it
-is decoupled from the hardware on which it is running on. Each instance must be
-isolated, in order to ensure that function running at the top of it will always
-provide the same Quality of Service, without degrading because of a change on
-another slice~\cite{richart2016resource}. It also allows to provide better
-security. In fact, in case of attack or fault of a certain slice, others must
-not be affected. Moreover, each slice must implement it own set of security
-function to preventing unauthorized access. Furthermore, isolation let to
-manage individually each slice~\cite{ordonez2017network}. Network slice
-instances are defined by a \emph{Network Slice Blueprint}: a complete
-description of the structure and data flows that allow the creation and the
-control of the Network Slice Instance during its whole lifecycle. The blueprint
-also refers to the resources needed to assemble the network slice and defines
-its characteristics (e.g. ultra-low latency, ultra-reliability, value-added
-services for enterprises, etc.). The last layer is the \emph{Resource Layer},
-containing both physical and logical resources, that involve all physical
-assets and resources for computation, storage or transport, including radio
-access.
+\subsection{Network Virtualization}
+Virtualization, in the networking context, refers to the act of combining
+hardware, software and functionalities into a virtual network. This abstraction
+runs on the top of a physical network in a hyper-visor, decoupling the logical
+network from the hardware one. Network virtualization allow multiple,
+heterogeneous networks to cohabit, increasing the flexibility and manageability.
+The idea of network virtualization came from the decoupling of the role of the
+traditional ISP into two different entities: who provides the infrastructure
+(InPs) and who provides the services(SPs). In that context it is possible to
+aggregate resources, even from different InPs, creating a virtual network,
+offering an end-to-end service~\cite{chowdhury2009network}. Most known
+instances of NV are \emph{VPNs}, dedicated networks that allows the
+communication among multiple sites, using
+private and secure tunnels, relying on the public network such as Internet.
+Other examples of network virtualization are \emph{overlay networks}. They are
+logical networks, build on the top of an existing physical network, typically
+implemented at the application layer. 
 
 \section{Software-defined networking}
 The SDN is an emerging approach to cloud computing and networking technology
@@ -152,42 +142,52 @@ set of tables to organized packet control and forwarding. These tables can be
 updated by higher-level application, usually an SDN application or controller,
 taking advantage of OpenFlow channels (called OF channels). 
 
-\section{Virtualization}
-Cloud computing is nowadays one of the cutting edge Internet technologies, and
-it is possible thanks to virtualization, that allows to isolate applications,
-optimizing the utilization of hardware resources and providing more flexibility.
-Virtualization, in computing, usually refers to the act of creating a virtual
-version of a certain asset, such as virtual computer hardware platform,
-operating system (OS), storage device, or computer network
-resources~\cite{liu2014research}. Conventional virtualization
-(hypervisor-based) uses virtual machines: it provides strong isolation and a
-complete operating system~\cite{eder2016hypervisor}. In hypervisor
-virtualization every pieces of hardware required to running software is
-emulated, and it is common that the hypervisor provides interfaces to access
-the real hardware, for instance to access physical devices or to communicate
-with the network. However all this functionalities comes to a resource
-overhead~\cite{scheepers2014virtualization}Container-based virtualization,
-instead, could be a more efficient in certain context, because it does not
-emulate the entire computer. A container is seen as an isolate process running
-on the host, to which the Linux kernel gives a set of capabilities.
+\section{Network slicing}
+A network slice can be defined as a logical virtual network, tailored for a
+given use case, on the top a common network using technologies such as
+Software-Defined Networking and Network Function Chaining that allows network
+softwarization~\cite{ordonez2017network}. The notion of separated virtual
+networks deployed on the same infrastructure is not new, e.g. VPN, but it has
+some specifics that make it a novel idea. The concept of network slicing was
+first introduced in 2002 in\cite{peterson2003blueprint}, where a network 
+overlay that allows services to run continuously and to access the overlay
+resources across different slices was illustrated.
+Services operating over the overlay management have their own slice instead.
+This idea was lately refined in 2016, where the design of network slicing was
+based on a three-layers model~\cite{alliance2016description}, as depicted in 
+Figure~\ref{chap:background:img:network_slicing}.
 
-\subsection{Network Virtualization}
-Virtualization, in the networking context, refers to the act of combining
-hardware, software and functionalities into a virtual network. This abstraction
-runs on the top of a physical network in a hyper-visor, decoupling the logical
-network from the hardware one. Network virtualization allow multiple,
-heterogeneous networks to cohabit, increasing the flexibility and manageability.
-The idea of network virtualization came from the decoupling of the role of the
-traditional ISP into two different entities: who provides the infrastructure
-(InPs) and who provides the services(SPs). In that context it is possible to
-aggregate resources, even from different InPs, creating a virtual network,
-offering an end-to-end service~\cite{chowdhury2009network}. Most known
-instances of NV are \emph{VPNs}, dedicated networks that allows the
-communication among multiple sites, using
-private and secure tunnels, relying on the public network such as Internet.
-Other examples of network virtualization are \emph{overlay networks}. They are
-logical networks, build on the top of an existing physical network, typically
-implemented at the application layer. 
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.2]{networkslicing}
+  \caption{The three layers model of network
+  slicing~\cite{alliance2016description}}
+  \label{chap:background:img:network_slicing}
+\end{figure}
+
+The first layer is the \emph{Service Instance Layer} used to represent the
+business or user services supported, the second one is the \emph{Network Slice
+Instance Layer}. This is a set of network functions that allows to
+satisfy certain requirements~\cite{kotulski2017end}. Network functions, in
+general, can be both physical, thus a combination of vendor-specific hardware
+and/or virtualized. In that case the function is implemented as software and it
+is decoupled from the hardware on which it is running on. Each instance must be
+isolated, in order to ensure that function running at the top of it will always
+provide the same Quality of Service, without degrading because of a change on
+another slice~\cite{richart2016resource}. It also allows to provide better
+security. In fact, in case of attack or fault of a certain slice, others must
+not be affected. Moreover, each slice must implement it own set of security
+function to preventing unauthorized access. Furthermore, isolation let to
+manage individually each slice~\cite{ordonez2017network}. Network slice
+instances are defined by a \emph{Network Slice Blueprint}: a complete
+description of the structure and data flows that allow the creation and the
+control of the Network Slice Instance during its whole lifecycle. The blueprint
+also refers to the resources needed to assemble the network slice and defines
+its characteristics (e.g. ultra-low latency, ultra-reliability, value-added
+services for enterprises, etc.). The last layer is the \emph{Resource Layer},
+containing both physical and logical resources, that involve all physical
+assets and resources for computation, storage or transport, including radio
+access.
 
 
 \subsection{Network Function Virtualization}
@@ -210,7 +210,6 @@ This detachment provides greater flexibility to scale VNF based on traffic and
 performances and also improve the automation of function deploy and update:
 removing dedicated hardware also will reduce costs machines and for
 maintenance. 
-
 
 The NFV technology is exploited in a framework, organized
 at least by three components~\cite{etsi2013gs}, as represented in
