@@ -336,12 +336,16 @@ in~\cite{halpern2015service} and refers to an ordered set of Service Functions
 flows. SF are the particular functions whose aim is the treatment of packets
 received. They can work on different levels of the network layer. These
 components can be implemented as virtual element or a combination of a physical
-network element and the software running on the top of it. There are no
-limitations on the number of SFs running on the same network element, so in
-general it is possible to have one or more functions running on the same
-element. SFs can be aware or not that are part of a certain chain, in the
-matter case they are called \emph{SFC aware} functions, in the latter one \emph
-SFC unaware}.
+network element and the software running on the top of it. 
+There are no limitations on the number of SFs running on the same network
+element, so in general it is possible to have one or more functions running on
+the same element. SFs can be aware or not that are part of a certain chain, in
+the matter case they are called \emph{SFC aware} functions, in the latter one
+\emph{SFC unaware}.
+
+The lifecycle management of the chain is enabled by two emerged technologies,
+software defined networking and network defined
+virtualization~\cite{medhat2017service}.
 
 \subsection{Architecture principles}
 The SFC technology was though to pursue some concept. One of the most important
@@ -389,12 +393,19 @@ example, traffic can pass both from \texttt{SF0} to \texttt{SF2} and from
 
 \subsection{SFC Encapsulation}
 In order to exchange packet and information in the SFC ecosystem, traffic is
-encapsulated. The so called SFC encapsulation carries data used by the framework
-to identify SFPs, but it differs from a transport encapsulation and it is
-independent from the transport one: as such any transport protocol can be
+encapsulated. The so called SFC encapsulation carries data used by the
+framework to identify SFPs, but it differs from a transport encapsulation and it
+is independent from the transport one: as such any transport protocol can be
 exploited to forward traffic.
 
-\todo{add sfc proxy}
+This encapsulation is neither supported from SFC unaware SF nor from legacy 
+SF\footnote{Legacy SF refers to network function created before SFC framework}
+so \emph{SFC Proxies} has to be included in this ecosystem. These components
+sits the SFF and the SFs. They accept packets from the SFF and remove the
+encapsulation before delivering the packet to the SFs. In a mirrored way, it
+receive the result of the SF and reapplies the SFC header, in order to be
+managed by the SFF and the overall system. The communication among SFFs and
+proxies is the same as the SFFs and SFC aware SF.
 
 The \emph{Network Service Header} (NSH), used by SFC environment for
 encapsulation is described in~\cite{rfc8300} and consider three main fields as
@@ -519,7 +530,17 @@ granularity is too coarse, can be repeated after the treatment of some SFs. The
 reclassification, also called branching, may result in a different SFP choice or
 only to a metadata change.
 
-\subsection{Considerations}
+\subsection{Other considerations}
+In this architecture the SFs are viewed are resource and managed by the control
+plane. Capabilities, availability and location are all accountable to the
+control part as their creation. It is also in charge of collecting information
+needed by the classifier to make proper decisions. The control plane could be
+either distributed or centralized and even a combination is possible. 
+
+SFC system add to the original packets information as a NSH, that both contains
+metadata and information on the path that it must traverse. It is possible that
+the size of the packet, in this manner, exceed the MTU on some link in the
+chain. Solution must take in account this problem and the cost to overcome it.
 
 
 \section{The upcoming connectivity standard: 5G}
