@@ -70,10 +70,8 @@ in range $0-1$.}
 \begin{tabular}{l|c|c}
                      & \textbf{Standard deviation (seconds)} & \textbf{Average 
 start up time (seconds)} \\ \hline
-\textbf{Docker}      & 0.009620874                           & 0,016            
-                        \\
-\textbf{Virtual Box} & 0.755                                 & 20,211           
-                      
+\textbf{Docker}      & 0.009620874                           & 0.016        \\
+\textbf{Virtual Box} & 0.755                                 & 20.211
 \end{tabular}%
 }
 \caption[Docker vs Virtual Box start up times comparison]{Docker vs Virtual Box
@@ -88,8 +86,7 @@ start up time (seconds)} \\ \hline
 
 % The overall time required by the traditional virtualization system is
 % approximately of 33 minutes, witch gives a significant insight of how much 
-time
-% is required to create and boot a virtualized environment.
+% time is required to create and boot a virtualized environment.
 
 
 \subsection{SFC chain deploy measurement}
@@ -147,18 +144,20 @@ elements, the average time required to deploy an SFC is equal, if not smaller,
 of the average time required to deploy a Virtual Box machine on an instance 
 with 32GB of RAM, 8 vCPU and 50GB of SSD storage.
 
+\newpage
+
 % TODO is it worth to keep it as a long table?
 \begin{longtable}[c]{c|c|c}
 \textbf{SFC length} & \textbf{Standard deviation (seconds)} & \textbf{Average 
 deploy time (seconds)} \\ \hline
 \endhead
 %
-\textbf{1}          & 2.560102                   & 13,291                     \\
-\textbf{2}          & 0.6301444                  & 14,207                     \\
-\textbf{3}          & 1.14903                    & 15,345                     \\
-\textbf{4}          & 3.592179                   & 16,453                     \\
-\textbf{5}          & 0.9728132                  & 16,634                     \\
-\textbf{6}          & 1.103802                   & 17,418                     \\
+\textbf{1}          & 2.560102                   & 13.291                     \\
+\textbf{2}          & 0.6301444                  & 14.207                     \\
+\textbf{3}          & 1.14903                    & 15.345                     \\
+\textbf{4}          & 3.592179                   & 16.453                     \\
+\textbf{5}          & 0.9728132                  & 16.634                     \\
+\textbf{6}          & 1.103802                   & 17.418                     \\
 \textbf{7}          & 2.944699                   & 17.984                     \\
 \textbf{8}          & 1.733722                   & 18.480                     \\
 \textbf{9}          & 1.746296                   & 18.607                     \\
@@ -169,6 +168,48 @@ deploy time (seconds)} \\ \hline
 \label{chap:tests:sec:sfclength:tab:sfcdata}\\
 \end{longtable}
 
+
+\paragraph*{Considerations on container start-up in Kubernetes}
+Regarding the start-up times in Kubernetes is possible to denote a considerable
+difference between the deployment of a SFC with only one element
+(\textit{de-facto} only one container) with a single container directly launched
+on Docker. The difference, of many seconds, can be easily explained: the
+creation of a Docker container, \textit{per se}, is quite fast compared to the
+scheduling job the Kubernetes cluster has to do before launching the pod. A
+Kubernetes deployment is indeed a rather complex operation than launching a
+simple container. When a new deployment is launched on Kubernetes, the operation
+initiate with the scheduling of a Pod. A Pod can have several lifecycle
+states~\cite{kubePodLifecycle}:
+\begin{description}
+\item[pending:] The Pod has been accepted by the Kubernetes system, but one or
+  more of the Container images has not been created. This includes time before
+  being scheduled as well as time spent downloading images over the network,
+  which could take a while;
+\item[running:] The Pod has been bound to a node, and all of the Containers have
+  been created. At least one Container is still running, or is in the process of
+  starting or restarting;
+\item[succeeded:] All Containers in the Pod have terminated in success, and will
+  not be restarted;
+\item[failed:] All Containers in the Pod have terminated, and at least one
+  Container has terminated in failure. That is, the Container either exited with
+  non-zero status or was terminated by the system;
+\item[unknown:] For some reason the state of the Pod could not be obtained,
+  typically due to an error in communicating with the host of the Pod.
+\end{description}
+
+On top of that, different conditions can affect a Pod:
+\begin{itemize}
+\item \verb!PodScheduled!: the Pod has been scheduled to a node;
+\item \verb!Ready!: the Pod is able to serve requests and should be added to the
+  load balancing pools of all matching Services;
+\item \verb!Initialized!: all ``Init Containers'' have started successfully;
+\item \verb!Unschedulable!: the scheduler cannot schedule the Pod right now, for
+  example due to lacking of resources or other constraints.
+\end{itemize}
+
+These additional operations implicate some time overhead, that cause the
+deployment of a single Pod with a single container to be way longer that the
+deployment of a simple container directly from Docker.
 
 \section{Final considerations}
 
