@@ -1,0 +1,176 @@
+\chapter{Related Work}
+\label{chap:rel_wk}
+
+
+The possibility to solve the increasing network capacity necessities and to make
+the network infrastructure lighter and faster to deploy has rouse the interests
+of many internet service providers (ISP).
+
+\section{NFV alternative implementations}
+
+In literacy, several NFV implementations and Network Slicing solutions have been
+proposed and some of them will be discussed in the following chapter. For
+example, an opportunity identified in~\cite{nogales2018nfv} shows that ETSI MANO
+implementations can be deployed inside Unmanned Aerial Vehicles (UAVs), giving
+the possibility to rapidly deploy network connectivity in areas where the common
+communication systems are temporarily unavailable. This can be very useful in
+places where natural disasters occurred and there is the necessity to restore
+the communications within a very short span of time. On top of that, this system
+is flexible enough to be able to provide different kind of services, in addition
+to simple broadband connectivity. The only downside of this approach are the
+constrained system sources: the authors had to install the VIM (in particular,
+Openstack) in a separated machine, located on the ground. A solution based only
+on containerization, instead, could lead to interesting results, since
+Kubernetes does not require too much resources \textit{per se} and in literature
+is possible to find solutions of Kubernetes installations performed on machines
+with the same hardware installed on the UAVs~\cite{pahl2016container}.
+
+One of the first proposal that take advantage of container in to take on network
+edges NFV is~\cite{cziva2017container}. The authors present the work, based on
+previous definition of the platform defined in~\cite{cziva2015container} to
+orchestrate the virtual function and to deploy it as close as possible to the
+data sender to classify traffic and choose the appropriate functions
+immediately.
+
+\section{EPC virtual implementations}
+
+A virtualized EPC implementation, designed to allow mobile broadband services in
+the UMTS/LTE world, has been described in~\cite{hawilo2014nfv}, showing how this
+implementation is able, thanks to entities grouping, to perform better than a
+traditional EPC installation. In~\cite{afolabi2017end} is possible to read
+another vEPC implementation, where the Wireless Network Virtualization (WNV),
+SDN and NFV (identified from the authors as key elements in order to implement
+the 5G architecture) are virtualized, and ported as a service (defined as
+EPCaaS) across multi-domains clouds. The realization of such framework is
+pursued thanks to end-to-end network slicing.
+
+EPC and ETSI MANO definitions are not the only solutions to have been explored
+at this time. An SDN/NFV-based end-to-end network slicing for 5G has been
+created in~\cite{chartsias2017sdn}, where the authors provided examples to
+demonstrate how end-to-end services can be provisioned using SDN networking, in
+particular with controllers like such as OpenDaylight, Pox, Ryu ONOD and
+Floodlight. The last one was studied by us too during the technologies analysis,
+and a description is available in
+Section~\ref{chap:prjan:sec:tech:sub:other:sub:floodlight}.
+%TODO section missing...write it down!!
+
+Compared to our solution, these implementations does not present an unified
+framework that gives the possibility orchestrate different network slices
+consistently. Adopting Kubernetes gives the advantage to use the Kubernetes
+Federation feature~\cite{kubeFederation}, enabling the possibility to simplify
+the management of multiple network slice in end-to-end services.
+
+\section{Network slicing security concerns}
+
+Another important aspect related to 5G networking and network slice is the one
+regarding security. Security in this context plays a fundamental role, since
+secure communications depends on the security of the overall system.
+In~\cite{kotulski2017end} the authors carry out a deep analysis about the
+network slice security, putting an emphasis on how this new element (the network
+slice) brings additional security questions and problems, especially about
+isolation. Moreover, slicing in 5G introduces the concept of shared services,
+that is contrary with the definition of isolation itself. In particular,
+resource isolation gives the possibility to avoid attacks such us slice
+resources exhaustion. Additionally, the authors give a critic regarding the ETSI
+NFV-MANO standard making too general assumptions regarding the whole system.
+Finally, a Service-Level Agreement (SLA) based orchestration criteria between
+network slices is proposed as a viable solution to solve the security problems
+about isolation. We tried to mitigate the security concern presented above using
+the integrated Role Base Access Control system (RBAC) and other security policy
+bundled in by default in Kubernetes.
+
+\section{Provision capabilities}
+We noted how, in some other NFV/ETSI-MANO proposals like~\cite{soares2015toward}
+and~\cite{abujoda2015midas}, the implementations relays on a static provision
+system, where the SFC paths are somehow defined at deploy time, and can't change
+without decommissioning, editing and deploying the chain again. Our proposal,
+instead, is able to support chain editing on-the-fly, allowing NFV to
+dynamically change the SFP.
+
+\vspace{1cm}
+
+\noindent It is interesting to note that, between all the possible and 
+alternative related works we have been able to find, none of these used an only
+container-based approach.
+
+\subsection{SFC implementation}
+Since the SFC technology was proposed many work came out proposing different
+implementation solutions. In this part there is an overview of some of them.
+
+\cite{GhaznaviSAB16} proposed an optimization model to calculate the optimal
+location of VNFs based on different metrics such as bandwidth, load balancing
+and routes. This decomposes the SFC on performance requirements eliminating the
+throughput bound of a chain to a single VNF or a single physical machine.
+Mathematical models developed was tested in a simulation environment. A critical
+enhancement to this work could be to test algorithm in a real environment, under
+different conditions of traffic load: if it efficient even in this scenario it
+can be useful to the orchestration and management part of the ecosystem because
+it can reduce resource waste.
+
+Other implementation tested in a simulated environment
+are~\cite{csoma2014escape} and~\cite{kim2016evaluations}. In both of them the
+network functions are deployed on Mininet. The former work provides a full
+implementation of the SFC environment, including SFC configuration, allocating
+VNFs into the physical resources, flow routing across the VNFs based on
+policies, and provisioning live management information on operating VNF
+instances, but no performance evaluation of the work is presented. In the latter
+case chains are identified by VLAN tag and the VNF chaining is created
+exploiting only using Floodlight controllers.
+
+Another noteworthy work is~\cite{xia2015optical} that discuss the packet
+delivery through function chaining in high capacity networks exploiting
+aggregate flow steering. The architecture proposed makes use of SDN and cloud
+platforms to deploy VMs that will host VNFs. Assumption are made about the SDN
+network elements: connection through optical circuit switching and use of Wave
+Selective Switching (WSS) to route (switch) signals between optical fibers on a
+per-wavelength basis. Thanks to the implementation of the SDN controller and the
+communication between the previous element and the VNFM, this architecture is
+able to provide good capabilities in terms of flexibility. Another element that
+helps the flexibility is the high performance link: in this way they get rid of
+problems in terms of connection time and bandwidth. However, in the paper
+authors assumes really specific hardware in the underlying infrastructure that
+connects the overall system: this is not suitable to be deployed in a general
+purpose infrastructure or using IaaS. It will be interesting to evaluate the
+same work on different instrumentation. A clashing aspect is the time to make a
+VM up and running compared to times of service chaining configuration/packet
+delivery. Using containers the instantiation of virtual functions should employ
+less time.
+
+A relevant work on function chaining in network is~\cite{trajkovska2017sdn}. In
+this work author efforts are concentrated on joining SDN and VNF technologies to
+create SFCs. They developed an SDN-driven SDK, a virtual traffic classifier to
+analyze traffic in real-time and decide the optimal chain for it and a VNF
+specialized on video transdecoding, used event to evaluate the performances of
+the whole system. Chaining is performed exploiting layer 2 connectivity, using
+OpenvSwitch as virtual network switches an OpenDayLight in order to route the
+traffic on a set of policies. However the solution does not provide any
+mechanism to perform an automatic deployment of chains and services: this can be
+an issue in particular in case of VNF fault. Orchestration and some mechanisms
+of fault tolerance are critical in particular in a real environment, enabling
+autoscaling on user demand or traffic load. Automated deployment also make
+possible the recreation of a virtual machine in case of fault. As a matter of
+fact that a virtual function can fail depending on an erroneous load balancing
+policy or too heavy computational load and it is critical in order to do not
+interrupt end-to-end communication to bring up the VNF as soon as possible. This
+recreation process can be slow due to the usage of VMs to deploy the functions,
+that could take minutes to startup.
+
+The paper~\cite{kriti2017dnfc} introduce the possibility using container in SFC
+deployment. The chain of container is created exploiting Openflow to create flow
+to route traffic to the containers, that have to be installed on the host
+machine. This work however does present any form of management or orchestration
+of the chain, neither an automatic deployment. Moreover it requires installation
+of part of the system on the host machine: in this way there is not a fully
+virtualized environment. The former issue has some implication: the VNF has a
+strong relation on the host on which is running and the system could not be
+simply be moved from one machine to another as it could be done only using
+containers. Finally this paper does not provide any form of system evaluation
+neither in terms of performances nor in terms of resilience. Fault recovering
+and autoscaling could be achieved only improving the system introducing other
+technologies, such as Docker Compose, Kubernetes or Docker Swarm.
+
+
+
+
+
+
