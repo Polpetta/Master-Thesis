@@ -303,3 +303,6 @@ nginx
 texttt
 Rackspace
 OpenVSwitch
+GlusterFs
+noindent
+glusterkube
