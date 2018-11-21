@@ -20,7 +20,7 @@ virtualization every pieces of hardware required to running software is
 emulated, and it is common that the hypervisor provides interfaces to access
 the real hardware, for instance to access physical devices or to communicate
 with the network. However all this functionalities comes to a resource
-overhead~\cite{scheepers2014virtualization}Container-based virtualization,
+overhead~\cite{scheepers2014virtualization}. Container-based virtualization,
 instead, could be a more efficient in certain context, because it does not
 emulate the entire computer. A container is seen as an isolate process running
 on the host, to which the Linux kernel gives a set of capabilities.
@@ -33,15 +33,14 @@ network from the hardware one. Network virtualization allow multiple,
 heterogeneous networks to cohabit, increasing the flexibility and manageability.
 The idea of network virtualization came from the decoupling of the role of the
 traditional ISP into two different entities: who provides the infrastructure
-(InPs) and who provides the services(SPs). In that context it is possible to
+(InPs) and who provides the services (SPs). In that context it is possible to
 aggregate resources, even from different InPs, creating a virtual network,
-offering an end-to-end service~\cite{chowdhury2009network}. Most known
-instances of NV are \emph{VPNs}, dedicated networks that allows the
-communication among multiple sites, using
-private and secure tunnels, relying on the public network such as Internet.
-Other examples of network virtualization are \emph{overlay networks}. They are
-logical networks, build on the top of an existing physical network, typically
-implemented at the application layer. 
+offering an end-to-end service~\cite{chowdhury2009network}. Most known instances
+of NV are \emph{VPNs}, dedicated networks that allows the communication among
+multiple sites, using private and secure tunnels, relying on the public network
+such as Internet. Other examples of network virtualization are \emph{overlay
+  networks}. They are logical networks, build on the top of an existing physical
+network, typically implemented at the application layer.
 
 \section{Software-defined networking}
 The SDN is an emerging approach to cloud computing and networking technology
@@ -52,10 +51,10 @@ network in a programmatically way, possibly enhancing monitoring and
 performances. One of the main principles of SDN architecture is to decouple the
 packet forwarding process, \emph{data plane}, from the routing one, the so
 called \emph{control plane}. The architecture also contemplate that network
-intelligence and state are logically centralized\cite{fundation2012software}. 
+intelligence and state are logically centralized~\cite{fundation2012software}. 
 
-It has some drawbacks in terms of
-security, scalability and elasticity, because of the centralized architecture.
+It has some drawbacks in terms of security, scalability and elasticity, because
+of the centralized architecture.
 
 \subsection{SDN stack}
 \begin{figure}[ht]
@@ -78,7 +77,7 @@ whose role is to set the behavior of the SDN controllers
 and manage its hardware resources and data through APIs, often called 
 \emph{northbound interfaces} (NBI). In order to do so they can also build an
 abstracted view of the network, using controllers information, in order to make
-the traffic analysis easier and to simplify the decision making process..
+the traffic analysis easier and to simplify the decision making process.
 These interfaces provide an additional abstraction layer that high-level 
 applications can consume, enabling the possibility to use a variety of 
 different vendors' controllers in the same way. Applications consists both of
@@ -88,14 +87,14 @@ previously defined NBIs.
 
 \subsubsection{Controller plane}
 
-\emph{SDN controllers}, are logically centralized components that
+\emph{SDN controllers} are logically centralized components that
 receive requests from SDN applications and either translate them 
 in a fashion that can be understood from the SDN Datapath, or collect 
 data as statics and events needed by the application to build an abstract view
 of the network. 
 Due to the variety of tasks a controller has to accomplish, its logical 
 subdivision is achieved with a three-layer architecture, in which every layer 
-exposes it's own interface, that can be consequently used by the upper 
+exposes its own interface, that can be consequently used by the upper 
 layers, up to the \emph{NBI agents}.
 NBI agent manages the communications with SDN applications, exposing interfaces
 to access network data and to the set of the controller functionalities.
@@ -111,13 +110,13 @@ them into a hierarchy.
 \subsubsection{Data plane}
 In the lowest plane we can find the \emph{SDN Datapath}, defined as a logical
 network device, which exposes the possibility to access and control to its
-forwarding and processing capabilities.It is composed by a CDPI agent and a set
-of one or  multiple traffic forwarding engines and of a zero or more traffic
-processing functions, that are, as a matter of fact, the devices logic.
-Datapath can be mapped either to a single physical device or multiple ones and
-the implementation of the its logic does not preclude neither the
-virtualization or the sharing of physical resources nor the interoperability
-with non-SDN networking.
+forwarding and processing capabilities. It is composed by a CDPI agent and a set
+of one or multiple traffic forwarding engines and of a zero or more traffic
+processing functions that are, as a matter of fact, the devices logic. Datapath
+can be mapped either to a single physical device or multiple ones and the
+implementation of the its logic does not preclude neither the virtualization or
+the sharing of physical resources nor the interoperability with non-SDN
+networking.
 
 \subsection{OpenFlow protocol}
 The SDN strategy is often associated with the OpenFlow protocol because it is
@@ -149,7 +148,7 @@ Software-Defined Networking and Network Function Chaining that allows network
 softwarization~\cite{ordonez2017network}. The notion of separated virtual
 networks deployed on the same infrastructure is not new, e.g. VPN, but it has
 some specifics that make it a novel idea. The concept of network slicing was
-first introduced in 2002 in\cite{peterson2003blueprint}, where a network 
+first introduced in 2002 in~\cite{peterson2003blueprint}, where a network 
 overlay that allows services to run continuously and to access the overlay
 resources across different slices was illustrated.
 Services operating over the overlay management have their own slice instead.
@@ -176,7 +175,7 @@ isolated, in order to ensure that function running at the top of it will always
 provide the same Quality of Service, without degrading because of a change on
 another slice~\cite{richart2016resource}. It also allows to provide better
 security. In fact, in case of attack or fault of a certain slice, others must
-not be affected. Moreover, each slice must implement it own set of security
+not be affected. Moreover, each slice must implement its own set of security
 function to preventing unauthorized access. Furthermore, isolation let to
 manage individually each slice~\cite{ordonez2017network}. Network slice
 instances are defined by a \emph{Network Slice Blueprint}: a complete
@@ -191,25 +190,23 @@ access.
 
 
 \subsection{Network Function Virtualization}
-The \emph{Network Function Virtualization} (NFV) concept refers to the use of 
-virtualization technologies to virtualize network nodes functions. This
-emerging technology focuses on the decoupling of function logic and hardware,
-allowing VNFs to run on the top of servers, switches, storage 
-devices or on cloud computing infrastructures. In other word the software logic
-is separated from the custom platform on which it runs, enabling the use of
-commodity hardware~\cite{gray2016network}.
-That approach worked well in the past, because of the need to follow rigorous 
-standards, providing at the same time high quality, but it led to long product 
-cycles and high specialized services that use a combination of software and
-hardware resources, typically vendor-specific, and only largely
-non-interoperable within other vendor solutions. New Internet scenarios, that 
-include IoT and the increasing number of services to spread multimedia data 
-(Skype, Netflix, Spotify, \dots), requires more flexible functions and faster 
-network deployments. 
-This detachment provides greater flexibility to scale VNF based on traffic and
-performances and also improve the automation of function deploy and update:
-removing dedicated hardware also will reduce costs machines and for
-maintenance. 
+The \emph{Network Function Virtualization} (NFV) concept refers to the use of
+virtualization technologies to virtualize network nodes functions. This emerging
+technology focuses on the decoupling of function logic and hardware, allowing
+VNFs to run on the top of servers, switches, storage devices or on cloud
+computing infrastructures. In other words the software logic is separated from
+the custom platform on which it runs, enabling the use of commodity
+hardware~\cite{gray2016network}. That approach worked well in the past, because
+of the need to follow rigorous standards, providing at the same time high
+quality, but it led to long product cycles and high specialized services that
+use a combination of software and hardware resources, typically vendor-specific,
+and only largely non-interoperable within other vendor solutions. New Internet
+scenarios, that include IoT and the increasing number of services to spread
+multimedia data (Skype, Netflix, Spotify, \dots), requires more flexible
+functions and faster network deployments. This detachment provides greater
+flexibility to scale VNF based on traffic and performances and also improve the
+automation of function deploy and update: removing dedicated hardware also will
+reduce costs machines and for maintenance.
 
 The NFV technology is exploited in a framework, organized
 at least by three components~\cite{etsi2013gs}, as represented in
@@ -308,18 +305,18 @@ and services instances during their lifetimes.
 \subsection{VNF challenges}
 This new concept open a plethora of challenges~\cite{han2015network}. Regarding
 performances, functions running on general purposes servers cloud affect
-throughput and latency, moreover the capacity of the virtualized function can
-be less than the hardware and software version. To reach comparable levels in
-terms of performances efficient algorithms are needed, as a excellent resource
+throughput and latency, moreover the capacity of the virtualized function can be
+less than the hardware and software version. To reach comparable levels in terms
+of performances efficient algorithms are needed, as a excellent resource
 management. Another problems is the VNF management. In case of hardware
 functions resources are almost equivalent, at the contrary, virtualized ones
-could have costs and values that differs significantly depending on the point
-of presence on which are deployed. On the other hand, since VNFs are software
-components, can elastically scale up and down, depending on the traffic loads
-and user demand. Another management challenge refers to keeping track where the
-VNF is running, that is of paramount importance in case of issues. Related to
-possible dysfunctions, software function must reach a certain level of
-reliability. Generally, purpose-build network equipment can ensure the
+could have costs and values that differs significantly depending on the point of
+presence on which are deployed. On the other hand, since VNFs are software
+components, they can elastically scale up and down, depending on the traffic
+loads and user demand. Another management challenge refers to keeping track
+where the VNF is running, that is of paramount importance in case of issues.
+Related to possible dysfunctions, software function must reach a certain level
+of reliability. Generally, purpose-build network equipment can ensure the
 five-nines reliability requirement, that is more challenging to follow in that
 scenario due to the higher number of possible points of failure, such as during
 the scaling operation or VNF migrating from a point of presence to another.
@@ -329,18 +326,17 @@ and management components must implement some sort of intrusion prevention and
 detection system and the sharing of resources can introduce security threads.
 
 \section{Service Function Chaining}
-The Service Function Chaining (SFC) concept was defined 
+The Service Function Chaining (SFC) concept was defined
 in~\cite{halpern2015service} and refers to an ordered set of Service Functions
 (SF) and the constraint, defined after a classification process, to packets and
 flows. SF are the particular functions whose aim is the treatment of packets
 received. They can work on different levels of the network layer. These
-components can be implemented as virtual element or a combination of a physical
-network element and the software running on the top of it. 
-There are no limitations on the number of SFs running on the same network
-element, so in general it is possible to have one or more functions running on
-the same element. SFs can be aware or not that are part of a certain chain, in
-the matter case they are called \emph{SFC aware} functions, in the latter one
-\emph{SFC unaware}.
+components can be implemented as virtual elements only or in a combination of a
+physical and software network elements. There are no limitations on the number
+of SFs running on the same network element, so in general it is possible to have
+one or more functions running on the same element. SFs can be aware or not that
+are part of a certain chain, in the matter case they are called \emph{SFC aware}
+functions, in the latter one \emph{SFC unaware}.
 
 The lifecycle management of the chain is enabled by two emerged technologies,
 software defined networking and network defined
@@ -349,33 +345,32 @@ virtualization~\cite{medhat2017service}.
 \subsection{Architecture principles}
 The SFC technology was though to pursue some concept. One of the most important
 principles is the \emph{decoupling}. Decoupling in terms on independence on the
-infrastructure and the network, so no change must be performed to the
-forwarding underlying topology to deploy SFCs, and in terms of separation
-between packet handling (by SFs) and forwarding. This decoupling refers even to
-architecture and functions: one must be independent from the other. Another
-main point is the possibility to dynamically set routes on the incoming traffic
-to decide the best treatment based on its typology. The classification can
-occur on different point of the chain and can be updated during the packet
-delivery. Finally creation, modification and deletion of a certain SFC must has
-To impact on the others.
+infrastructure and the network, so no change must be performed to the forwarding
+underlying topology to deploy SFCs, and in terms of separation between packet
+handling (by SFs) and forwarding. This decoupling refers even to architecture
+and functions: one must be independent from the other. Another main point is the
+possibility to dynamically set routes on the incoming traffic to decide the best
+treatment based on its typology. The classification can occur on different point
+of the chain and can be updated during the packet delivery. Finally creation,
+modification and deletion of a certain SFC must not impact on the others.
 
 \subsection{Graph view of an SFC}
-An SFC can be seen as a graph in which each node is an SF and edges are the
-path through which a packet have to pass through. Because of this definitions
-there are no limitation on possible cycles that can occur in the chain, in case
-that a certain SF have to be reapplied on the same packet, frame or flow. These
+An SFC can be seen as a graph in which each node is an SF and edges are the path
+through which a packet have to pass through. Because of this definitions there
+are no limitations on possible cycles that can occur in the chain, in case that
+a certain SF has to be reapplied on the same packet, frame or flow. These
 scenarios must be adequately managed to avoid endless loops. This enable even
 the possibility of branching on a certain node in order to define the treatment
 that has to be imposed from that point of the chain. Traffic path in the SFC
-graph are managed and described by the \emph{Service Function Forwarder} (SFF)
-and \emph{Service Function Path} (SFP) components. The matter is the element of
+graph is managed and described by the \emph{Service Function Forwarder} (SFF)
+and \emph{Service Function Path} (SFP) components. The latter is the element of
 the architecture responsible of traffic forwarding. The main goals are to
 redirect traffic according to the SFC specified for a specific packet flow,
 query the classifier if needed and manage traffic coming back from a SF. The
 SFP, instead, is an indirection layer between the fully abstract notion of SFC
 and the list of SF that the traffic has to traverse. It is used for dictate the
 constraint specification on the path of where packets assigned to a certain
-service function path must go. There are no limitation on how specific it must
+service function path must go. There are no limitations on how specific it must
 be: it can specify the exact locations, identifying both the SFF and the SF, or
 only give some recommendation or, for example, defining only the SFF and
 demanding to it the decision on the SF instance.
@@ -407,9 +402,9 @@ managed by the SFF and the overall system. The communication among SFFs and
 proxies is the same as the SFFs and SFC aware SF.
 
 The \emph{Network Service Header} (NSH), used by SFC environment for
-encapsulation is described in~\cite{rfc8300} and consider three main fields as
-represent in Figure~\ref{chap:background:img:nshformat}: Base Header, Service
-Path Header and Context Header.
+encapsulation is described in~\cite{rfc8300} and it consider three main fields
+as represented in Figure~\ref{chap:background:img:nshformat}: Base Header,
+Service Path Header and Context Header.
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.6]{nshformat}
@@ -418,8 +413,8 @@ Path Header and Context Header.
 \end{figure}
 
 \subsubsection{Base header}
-The Base Header utility is provide information about the service header and the
-payload protocol.
+The Base Header utility is to provide information about the service header and
+the payload protocol.
 
 \begin{figure}[H]
   \centering
@@ -619,7 +614,7 @@ APIs
   applications and services of the operator
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[t]
   \centering
   \includegraphics[scale=0.55]{5garchitecture}
   \caption{5G Architecture~\cite{alliance20155g}}
@@ -637,19 +632,19 @@ layers resources.
 The role of a \emph{network slice} in a 5G architecture is to specifically
 handle the Control-plane of a particular service (e.g. smartphones traffic,
 autonomous driving, massive IoT), deploying resources in a manner that assure
-the required latency, security and reliability. While some very peculiar legacy
-services could require specific hardware, the common resources between services
-could be shared in a virtualized way, providing auto-scaling capabilities in
-services that are under heavy network pressure.
+the required latency, security and reliability. While some very peculiar and
+legacy service could require specific hardware, the common resources between
+services could be shared in a virtualized way, providing auto-scaling
+capabilities in services that are under heavy network pressure.
 
 \section{The VIBES project}
-This thesis is part of the VIBES project~\cite{vibesesa}, whose main requirement
-is to enhance the performance of end-to-end IP based that involves satellite
-connections. To reach this goal, the project specifications suggest to exploit
-the 5G incoming technology and use the NFV-MANO architecture to perform first
-packets elaboration and performance improvement and finally TCP/IP satellite
-chunk optimization with the Performance Enhancing Proxy (PEP). The VIBES project
-proposed five technical requirements:
+This thesis started as a part of the VIBES project~\cite{vibesesa}, whose main
+requirement is to enhance the performance of end-to-end IP based that involves
+satellite connections. To reach this goal, the project specifications suggest to
+exploit the 5G incoming technology and use the NFV-MANO architecture to perform
+first packets elaboration and performance improvement and finally TCP/IP
+satellite chunk optimization with the Performance Enhancing Proxy (PEP). The
+VIBES project proposed five technical requirements:
 \begin{enumerate}
   \item Analysis of the applicability of current and new Internet protocols in
   the proposed VNF-PEP architecture
@@ -667,13 +662,13 @@ proposed five technical requirements:
 \end{figure}
 
 \subsection{VNF-PEP architecture and internet protocols}
-VNF-PEP are the softwarization of usual PEP technology. One of the sake of the
-project is to research and include this technology in the usual VNF ecosystem to
-include without change satellite communications to the SFC. The architecture of
-the systems will be based on clusters of containers whose management and
-orchestration will follows the ETSI MANO architecture and SDN principles. Thanks
-to VNF-PEP will be possible to dynamically take decisions on how to optimize a
-certain communication.
+VNF-PEP is the softwarization of the usual PEP technology. One of the goals of
+the project is to research and include this technology in the usual VNF
+ecosystem to include without change satellite communications to the SFC. The
+architecture of the systems will be based on clusters of containers whose
+management and orchestration will follows the ETSI MANO architecture and SDN
+principles. Thanks to VNF-PEP will be possible to dynamically take decisions on
+how to optimize a certain communication.
 
 %The analysis of this topic revealed to be trivial: since internet has many
 %different protocols that would become infeasible to support all of them at the
