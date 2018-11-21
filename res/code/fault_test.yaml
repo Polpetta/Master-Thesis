@@ -1,0 +1,243 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: irohide-ingress-deployment
+  namespace: default
+  labels:
+    k8s-app: ironhide-ingress-vnf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ironhide-ingress-vnf
+  template:
+    metadata:
+      labels:
+        k8s-app: ironhide-ingress-vnf
+        name: ironhide-ingress-vnf
+    spec:
+      containers:
+      - name: ironhide
+        image: augugrumi/ironhide:master
+        imagePullPolicy: Always
+        env:
+          - name: ROULETTE_SERVICE
+            value: roulette-service:80
+        ports:
+        - name: udp
+          containerPort: 8787
+          protocol: UDP
+        - name: tcp
+          containerPort: 8787
+          protocol: TCP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ironhide-ingress-service
+  namespace: default
+spec:
+  selector:
+    k8s-app: ironhide-ingress-vnf
+  ports:
+  - name: udp
+    port: 8787
+    protocol: UDP
+  - name: tcp
+    port: 8787
+    protocol: TCP
+  type: NodePort
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: irohide-egress-deployment
+  namespace: default
+  labels:
+    k8s-app: irohide-egress-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: irohide-egress-deployment
+  template:
+    metadata:
+      labels:
+        k8s-app: irohide-egress-deployment
+        name: irohide-egress-deployment
+    spec:
+      containers:
+      - name: ironhide
+        image: augugrumi/ironhide:master
+        args: ["-e"]
+        imagePullPolicy: Always
+        env:
+          - name: ROULETTE_SERVICE
+            value: roulette-service:80
+        ports:
+        - name: udp
+          containerPort: 8778
+          protocol: UDP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ironhide-egress-service
+  namespace: default
+spec:
+  selector:
+    k8s-app: irohide-egress-deployment
+  ports:
+  - name: udp
+    port: 8778
+    protocol: UDP
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vibes
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: ingress.vibes
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ironhide-ingress-service
+          servicePort: http
+  - host: roulette.vibes
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: roulette-service
+          servicePort: http
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: astaire0-deployment
+  namespace: default
+  labels:
+    k8s-app: astaire0-vnf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: astaire0-vnf
+  template:
+    metadata:
+      labels:
+        k8s-app: astaire0-vnf
+        name: astaire0-vnf
+    spec:
+      containers:
+        - name: astaire
+          image: augugrumi/astaire:latest
+          args: ["-u", "-r", "roulette-service:80"]
+          imagePullPolicy: Always
+          ports:
+            - name: udp
+              containerPort: 8767
+              protocol: UDP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: astaire0-service
+  namespace: default
+spec:
+  selector:
+    k8s-app: astaire0-vnf
+  ports:
+    - name: udp
+      port: 8767
+      protocol: UDP
+  type: NodePort
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: astaire1-deployment
+  namespace: default
+  labels:
+    k8s-app: astaire1-vnf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: astaire1-vnf
+  template:
+    metadata:
+      labels:
+        k8s-app: astaire1-vnf
+        name: astaire1-vnf
+    spec:
+      containers:
+        - name: astaire
+          image: augugrumi/astaire:latest
+          args: ["-u", "-r", "roulette-service:80"]
+          imagePullPolicy: Always
+          ports:
+            - name: udp
+              containerPort: 8767
+              protocol: UDP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: astaire1-service
+  namespace: default
+spec:
+  selector:
+    k8s-app: astaire1-vnf
+  ports:
+    - name: udp
+      port: 8767
+      protocol: UDP
+  type: NodePort
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: astaire2-deployment
+  namespace: default
+  labels:
+    k8s-app: astaire2-vnf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: astaire2-vnf
+  template:
+    metadata:
+      labels:
+        k8s-app: astaire2-vnf
+        name: astaire2-vnf
+    spec:
+      containers:
+        - name: astaire
+          image: augugrumi/astaire:latest
+          args: ["-u", "-r", "roulette-service:80"]
+          imagePullPolicy: Always
+          ports:
+            - name: udp
+              containerPort: 8767
+              protocol: UDP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: astaire2-service
+  namespace: default
+spec:
+  selector:
+    k8s-app: astaire2-vnf
+  ports:
+    - name: udp
+      port: 8767
+      protocol: UDP
+  type: NodePort

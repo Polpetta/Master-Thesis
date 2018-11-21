@@ -13,7 +13,7 @@ Regarding the overall system responsiveness, a metric we considered worth to
 test was the VNF start up time in a docker environment versus one virtualized 
 through a common virtual machine system (in this case Virtual Box was chosen). 
 To make this simulation as fair as possible, we used the same node (an 
-Openstack VM vith 32GB of RAM, 8 vCPU and solid state storage) and used the 
+Openstack VM with 32GB of RAM, 8 vCPU and solid state storage) and used the 
 same ``boot sequence'' for both the VNFs: first we launched the Astaire 
 framework, ensuring its availability to process data and then we notified the 
 test machine of the successful boot. The start-up time was measured from the 
@@ -75,7 +75,7 @@ start up time (seconds)} \\ \hline
 \end{tabular}%
 }
 \caption[Docker vs Virtual Box start up times comparison]{Docker vs Virtual Box
-  start up times comparison. Is possible to se how the overall time required to
+  start up times comparison. Is possible to see how the overall time required to
   start $100$ containers is less than the time to start one traditional virtual
   machine. The overall time required by the traditional virtualization system is
   approximately of 33 minutes, witch gives a significant insight of how much
@@ -166,13 +166,14 @@ deploy time (seconds)} \\ \hline
   time required for the SFC to go up increases with the length, reaching an
   average of 20 seconds for chain of eight, nine and ten elements.}
 \label{chap:tests:sec:sfclength:tab:sfcdata}\\
+
 \end{longtable}
 
 
 \paragraph*{Considerations on container start-up in Kubernetes}
 Regarding the start-up times in Kubernetes is possible to denote a considerable
 difference between the deployment of a SFC with only one element
-(\textit{de-facto} only one container) with a single container directly launched
+(\textit{de facto} only one container) with a single container directly launched
 on Docker. The difference, of many seconds, can be easily explained: the
 creation of a Docker container, \textit{per se}, is quite fast compared to the
 scheduling job the Kubernetes cluster has to do before launching the pod. A
@@ -210,17 +211,3 @@ On top of that, different conditions can affect a Pod:
 These additional operations implicate some time overhead, that cause the
 deployment of a single Pod with a single container to be way longer that the
 deployment of a simple container directly from Docker.
-
-\section{Final considerations}
-
-In these tests is possible to see one critical aspect concerning an architecture
-that follows the containerization approach: great flexibility in terms of
-deployments. This possibility to deploy services in the form of SFCs and VNFs in
-a very small amount of time is one of the key points required in the new 5G
-architecture, that the tests above demonstrated this project is able to adhere.
-Finally, the ability to rapidly redeploy software means smooth and easier
-software development lifecycle, where developers have the possibility to
-automatically push ``fresh'' software to production, letting the MANO and thus
-the container orchestrator handling all the difficult and delicate tasks to put
-software in a production environment, eliminating the possibility of human
-errors and assuring longer up-times.
