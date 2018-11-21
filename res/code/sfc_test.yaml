@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: test-deployment
+  labels:
+    k8s-app: astaire-vnf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: astaire-vnf
+  template:
+    metadata:
+      labels:
+        k8s-app: astaire-vnf
+        name: astaire-vnf
+    spec:
+      containers:
+        - name: astaire
+          image: augugrumi/test-stuff:sfc-startup
+          env:
+            - name: ACK_PORT
+              value: "16123"
+            - name: ACK_URL
+              value: "192.168.30.18"
+          args: ["-u", "-r", "roulette-service:80"]
+          imagePullPolicy: Always
+          ports:
+            - name: udp
+              containerPort: 8767
+              protocol: UDP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: astaire-service
+spec:
+  selector:
+    k8s-app: astaire-vnf
+  ports:
+    - name: udp
+      port: 8767
+      protocol: UDP
+  type: NodePort
