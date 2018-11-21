@@ -46,10 +46,9 @@ Function Virtualization (NFV) design should be composed as follows:
 In conventional virtualization systems these resources are usually separated
 from the host operating system, providing better isolation but worst
 performance. The ETSI infrastructure, instead, tries with container
-virtualization technology to push for a better NFV responsiveness\todo{Check
-  term - I don't think it actually exists}, removing the additional operating
-system (called ``guest'' OS) required by the usual hyper-visor-oriented 
-approach.
+virtualization technology to push for a better NFV responsiveness, removing the
+additional operating system (called ``guest'' OS) required by the usual
+hyper-visor-oriented approach.
 
 To realize the required components, specific tools were suggested in the VNF
 technical proposal: regarding the NFV (network infrastructure) domain
@@ -72,25 +71,21 @@ implementation can be found in chapter~\ref{chap:archimpl}.\todo{Include prof.
   case, no state is maintained, and every packet is treated without any
   particular assumption. Following the RFC 7665, the VNF are also called Service
   Function (SF)\footnote{From now on the two terminologies will be use in a
-    interchangeable way~\cite{medhat2017service}.}.
-  \todo{Add ref to chap about SFC?}
+    interchangeable way~\cite{medhat2017service}.}. Additional information can
+  be found in Section~\ref{chap:prjan:sfc}.
 
 \item \textbf{NFV Management and Orchestration (MANO)} also known as NFV
   Orchestrator (NFVO) is responsible for the end-to-end management and
   orchestration of network services (NS), also called SFC. The MANO has
   different responsibilities, such as managing the
-  creation/destruction/modification of the SFCs, that achieves interacting
-  with the VIM.\todo{CITE: SDN/NFV-Based Mobile Packet Core Network
-Architectures: A Survey}. Finally, the MANO can integrate with 
-Operational and Business Support Systems (OSS/BSS), \todo{Expand this part with 
-the following papers: https://www.tandfonline.com/doi/abs/10.1057/jors.1995.176 
-https://ieeexplore.ieee.org/abstract/document/6963800 
-https://www.computer.org/csdl/proceedings/ifcsta/2009/3930/01/3930a466-abs.html}
-
+  creation/destruction/modification of the SFCs, that achieves interacting with
+  the VIM~\cite{nguyen2017sdn}. Finally, the MANO can be integrated with
+  Operational and Business Support Systems (OSS/BSS).
 \end{itemize}
 
 
 \section{SFC}
+\label{chap:prjan:sfc}
 
 \todo{Here it's missing an introduction about SFC and its terminology, need to 
 include parts of RFC 7665}
@@ -192,11 +187,12 @@ analyzing the right framework for this component first.
 
 \subsubsection{Openstack}
 \label{chap:prjan:sec:openstack}
-Created in ??\todo{Find out Openstack date of creation}, Openstack allows
-on-premise cloud installations, using bare-metal resources to provide common
-cloud services as object storage, virtual machine deploy, virtual networking.
-Furthermore its modularity offers the possibility to add additional components,
-even proprietary, to achieve a complete cloud solution.
+Created in 2010 by a joint operation between Rackspace Hosting and
+NASA~\cite{openstackWebsite}, Openstack allows on-premise cloud installations,
+using bare-metal resources to provide common cloud services as object storage,
+virtual machine deploy, virtual networking. Furthermore its modularity offers
+the possibility to add additional components, even proprietary, to achieve a
+complete cloud solution.
 \begin{figure}[t]
  \centering \includegraphics[scale=0.58]{openstack_logo}
  \caption{Openstack logo}
@@ -207,14 +203,14 @@ even proprietary, to achieve a complete cloud solution.
 
 As already introduced before, Kubernetes is an open source software framework
 specialized in container management and orchestration. Developed by Google in
-??\todo{Find out the actual date} and written in Go, it allows different
-machines (called nodes from now on) to create an abstraction layer and to form a
-cluster where is possible to run Docker containers without bothering about
-hardware constraints. Nodes can have specific roles and specialization, all of
-them managed by one or many master nodes, that actually manage the
-orchestration. On top of that, Kubernetes is virtualization-agnostic, meaning
-that it offers the possibility to change the virtualization software in use
-(i.e. from Container-based technology to Virtual machine software).
+2014 and written in Go~\cite{k8sGit}, it allows different machines (called nodes
+from now on) to create an abstraction layer and to form a cluster where is
+possible to run Docker containers without bothering about hardware constraints.
+Nodes can have specific roles and specialization, all of them managed by one or
+many master nodes, that actually manage the orchestration. On top of that,
+Kubernetes is virtualization-agnostic, meaning that it offers the possibility to
+change the virtualization software in use (i.e. from Container-based technology
+to Virtual machine software).
 \begin{figure}[h]
  \centering \includegraphics[scale=0.35]{kubernetes_logo}
  \caption{Kubernetes Logo}
@@ -232,13 +228,12 @@ the medal, though, is that virtual machines require large amount of resources,
 especially memory, because solutions like copy-and-write of in-memory pages are
 not viable anymore (since the kernel gets duplicated too), leading to
 duplication of loaded libraries and assets in the memory of the host. For large
-deployment containing only simple services (e.g. a back-end application serving 
-a
-website or a database) this ends up in a waste of resources. \todo{Talk about
-  lxc containers and how Docker solved magically the problem.} It's here that,
-in ??\todo{Find Docker date of birth}, Docker was created, basing its solution
-on an already existing product: Linux Container (LXC). From this framework,
-Docker built an entire ecosystem, consisting in a client/server model giving the
+deployment containing only simple services (e.g. a back-end application serving
+a website or a database) this ends up in a waste of resources. \todo{Talk about
+  lxc containers and how Docker solved magically the problem.} It is here that,
+in 2013~\cite{dockerWebsite}, Docker was created, basing its solution on an
+already existing product: Linux Container (LXC). From this framework, Docker
+built an entire ecosystem, consisting in a client/server model giving the
 possibility for users to simply launch, scale and delete containers (locally or
 remotely with Docker-machine), a repository system where images, a layer-based
 ``core'' where containers start running from when they are launched, can be
@@ -375,38 +370,57 @@ itself they have become obsolete.
 
 \subsubsection{Docker Swarm}
 \label{chap:prjan:sec:tech:sub:other:sub:swarm}
-Introduced in ??\todo{Find Docker Swarm date of birth}, Docker Swarm allows 
-multiple Docker nodes to cluster together and be seen as one logical unit. This 
-layer completely makes the underlying infrastructure transparent: data 
-management, as network one, are totally managed by Docker. Recently, 
-Docker-compose support has been introduced, making this one-node tool available 
-for clustered systems. At the end of the day, on one hand Docker Swarm provides 
-an easy way to set up a cluster system with all the tools configured 
-out-of-the-box, without the necessity to set networking configurations or 
-installing ad-hoc storage solutions. On the other hand, though, it doesn't have 
-all the customization options that Kubernetes offers, thus making the product 
-less flexible. This fundamental characteristic, although, makes the two 
-solutions have different use cases leading to different market needs.
+Introduced in 2014~\cite{swarmGit}, Docker Swarm allows multiple Docker nodes to
+cluster together and be seen as one logical unit. This layer completely makes
+the underlying infrastructure transparent: data management, as network one, are
+totally managed by Docker. Recently, Docker-compose support has been introduced,
+making this one-node tool available for clustered systems. At the end of the
+day, on one hand Docker Swarm provides an easy way to set up a cluster system
+with all the tools configured out-of-the-box, without the necessity to set
+networking configurations or installing ad-hoc storage solutions. On the other
+hand, though, it doesn't have all the customization options that Kubernetes
+offers, thus making the product less flexible. This fundamental characteristic,
+although, makes the two solutions have different use cases leading to different
+market needs.
 
-\subsubsection{OpenvSwitch} \todo{Talk about OpenvSwitch!!}
+\subsubsection{OpenVSwitch}
+Started in 2009~\cite{ovsGit}, the OpenVSwitch project aims to create an
+open-source multi-layer virtual switch. It provides a switching stack for
+hardware virtualization environments, implementing several interfaces and
+protocols. It has also the possibility to run through Hypervisor virtualization
+but it can run under Docker too~\cite{ovsDocker}. OpenVSwitch can route packets
+from incoming connections following rules, that can be ``pushed'' in its routing
+table from software defined as \textit{controllers}. Additionally, it supports
+the OpenFlow communication protocol, in order to set previously cited routing
+definitions.
+
+\subsubsection{Floodlight}
+\label{chap:prjan:sec:tech:sub:other:sub:floodlight}
+Community-developed and open source, Floodlight is an OpenFlow Controller
+written in Java at the end of 2011~\cite{floodlightGit}. It allows various
+applications to run on top of it. Floodlight has the role of controlling and
+inquiring an OpenFlow network, querying the applications integrated with the
+purpose of solving different user needs over it. When instantiated, OpenVSwitch
+routers have to register to the controller in order to gain routing rules.
+
+
 \subsubsection{Openbaton}
 \label{chap:prjan:sec:tech:sub:other:sub:openbaton}
-Patronized by the Institute Fraunhofer, it's a open-source, customizable NFV 
-MANO-compliant framework, that offers many configurations options, and since 
-it's 
-written in Java, there is the possibility to add components (plug-ins) 
-dynamically. Openbaton can be installed as a normal computer program (they 
-offer packages for the most common distros) but it can be deployed on Docker 
-containers too. It's designed to work with cloud providers like Amazon or 
-Google Compute engine, but it offers compatibility with on-premise cloud 
-solutions like Openstack, where it deploys virtual machines using the API
-the platform offers. It can store VNF configurations saved as TOSCA
-YAML\todo{What does TOSCA mean? Find out} and it can handle multiple
-PoPs\todo{Write down PoP meaning}. It offers a VNF lifecycle management
-out-of-the-box, with the possibility to customize it based on the user needs.
-Its modular design allows developers to change parts of the codebase with custom
-ones, making the product really flexible to different platforms. Performing this
-operation requires a deep knowledge of the framework though.
+Patronized by the Institute Fraunhofer, it is an open-source, customizable NFV
+MANO-compliant framework, that offers many configurations options, and since
+it's written in Java, there is the possibility to add components (plug-ins)
+dynamically. Openbaton can be installed as a normal computer program (they offer
+packages for the most common distros) but it can be deployed on Docker
+containers too. It's designed to work with cloud providers like Amazon or Google
+Compute engine, but it offers compatibility with on-premise cloud solutions like
+Openstack, where it deploys virtual machines using the API the platform offers.
+It can store VNF configurations saved as Topology and Orchestration
+Specification for Cloud Applications (TOSCA) Yet Another Markup Language (YAML)
+and it can handle multiple Point of Presence (PoP). It offers a VNF lifecycle
+management out-of-the-box, with the possibility to customize it based on the
+user needs. Its modular design allows developers to change parts of the codebase
+with custom ones, making the product really flexible to different platforms.
+Performing this operation requires a deep knowledge of the framework though.
 \begin{figure}[h]
  \centering \includegraphics[scale=0.45]{openbaton_logo}
  \caption{Openbaton logo}
