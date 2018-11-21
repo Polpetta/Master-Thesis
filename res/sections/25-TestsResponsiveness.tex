@@ -13,7 +13,7 @@ Regarding the overall system responsiveness, a metric we considered worth to
 test was the VNF start up time in a docker environment versus one virtualized 
 through a common virtual machine system (in this case Virtual Box was chosen). 
 To make this simulation as fair as possible, we used the same node (an 
-Openstack VM vith 32GB of RAM, 8 vCPU and solid state storage) and used the 
+Openstack VM with 32GB of RAM, 8 vCPU and solid state storage) and used the 
 same ``boot sequence'' for both the VNFs: first we launched the Astaire 
 framework, ensuring its availability to process data and then we notified the 
 test machine of the successful boot. The start-up time was measured from the 
@@ -173,7 +173,7 @@ deploy time (seconds)} \\ \hline
 \paragraph*{Considerations on container start-up in Kubernetes}
 Regarding the start-up times in Kubernetes is possible to denote a considerable
 difference between the deployment of a SFC with only one element
-(\textit{de-facto} only one container) with a single container directly launched
+(\textit{de facto} only one container) with a single container directly launched
 on Docker. The difference, of many seconds, can be easily explained: the
 creation of a Docker container, \textit{per se}, is quite fast compared to the
 scheduling job the Kubernetes cluster has to do before launching the pod. A
