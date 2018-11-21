@@ -276,7 +276,7 @@ was created. This only calls another script and waits until all the machines
 are ready. The other script is \verb!bootstrap.sh!
 \footnote{\url{https://raw.githubusercontent.com/Augugrumi/vagrantfiles/oldversion/kubernetes/centos/bootstrap.sh}}
 whose aim is to configure the machine and to install all the necessary
-software. The boostrap script first \textbf{disables SELinux} on all machines 
+software. The bootsrap script first \textbf{disables SELinux} on all machines 
 (needed for Kubernetes networking):
 \begin{lstlisting}
 sudo setenforce 0
