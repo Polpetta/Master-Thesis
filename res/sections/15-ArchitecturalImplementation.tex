@@ -1,3 +1,15 @@
 \chapter{Architectural implementation}
 \label{chap:archimpl}
  
+In this chapter we will dig into the actual architectural implementation, 
+seeing all the problems related to it and how they were solved.
+
+\section{Adopting Openstack for container orchestration}
+
+Our first step was to try to use Openstack to create a container orchestration. 
+The reason behind this approach was simple: Openbaton, on paper, provides an 
+out-of-the-box support for Openstack. In fact, it natively supports Openstack 
+PoPs, giving to us a great possibility to reuse the two frameworks and to ease 
+the development phase of our software.
+\subsection{Openstack for developers: Devstack}
+% TODO talk about Devstack installation
