@@ -276,7 +276,7 @@ was created. This only calls another script and waits until all the machines
 are ready. The other script is \verb!bootstrap.sh!
 \footnote{\url{https://raw.githubusercontent.com/Augugrumi/vagrantfiles/oldversion/kubernetes/centos/bootstrap.sh}}
 whose aim is to configure the machine and to install all the necessary
-software. The bootsrap script first \textbf{disables SELinux} on all machines 
+software. The bootstrap script first \textbf{disables SELinux} on all machines 
 (needed for Kubernetes networking):
 \begin{lstlisting}
 sudo setenforce 0
@@ -355,7 +355,7 @@ Then is necessary to wait for all Pods to be ready
 
 The next step is to install 
 Flannel\footnote{\url{https://github.com/coreos/flannel}}
-in order to get the networking working. Some time is necessay until the 
+in order to get the networking working. Some time is necessary until the 
 networking is up:
 \begin{lstlisting}
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
