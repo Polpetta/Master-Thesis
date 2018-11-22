@@ -6,6 +6,57 @@ upcoming 5G standard, talking about the Virtual Network Functions (VNFs) and
 how first experiments with this new technology already begun. Finally we are 
 going to briefly introduce and explain the technologies involved and their role.
 
+\section{Virtualization}
+It is remarkable how cloud computing has surged in the recent years. This is due
+the numerous features it carries, such as a great way to isolate processes and
+mitigate possible attacks from malicious users. On top of that, it allows to run
+``virtual'' machines with different configurations, without apporting any
+changes to the host machine. Indeed, the virtualization concepts refer to the
+property of a machine to be virtualized. To achieve this, the components that
+forms a common computer need to be virtualized too. Thus, these assets are
+recreated in this virtualized manner, e.g. Storage devices and computer network
+resources~\cite{liu2014research}. At the time writing, there are two common
+virtualization options: the virtualization through Hypervisor (defined also as
+hypervisor-based) and the container virtualization.
+
+\paragraph*{Hypervisor}
+The first one is known for providing a very good isolation from the host
+machine~\cite{eder2016hypervisor}, even if studies found possibilties for an
+attacker to escape from the a virtual machine and operate on the host
+machine\footnote{An example can be found in
+  \url{https://github.com/MorteNoir1/virtualbox_e1000_0day}}. Even though every
+component in a hypervisor environment is virtualized, there are possibilties for
+the ``guest'' OS (the virtualized one), to access to physical devices (like USB
+keys attacched on the ``host'' OS).
+
+\paragraph*{Container-based}
+Container-based virtualization uses a differnt approach to reach isolation.
+Instead of creating a whole new stack, it applies very strict policies to the
+programs running on the ``host'' machine. This concept has its roots back to the
+jail environments, where group of process where isolated by the main OS, that
+provided a virtualized filesystem~\cite{canonico2007virtualization}. In this
+context, a container-based applications can be seen as a jailed application with
+policies aimed to protect the host machine.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{docker_vs_hypervisor}
+  \caption[Container-based emulation vs hypervisor emulation]{Container-based
+    emulation, such as Docker vs hypervisor-based emulation~\cite{hung2016guidock}}
+\end{figure}
+
+\subsection{Network Virtulization}
+
+Virtualization assumes another context when referred to networking: virtualized
+networking allow multiple, heterogeneous networks to cohabit, increasing the
+flexibility and manageability. This network separation creates two different
+entities, that becomes decouples: who provides the infrastructure (commonly
+called InPs) and who provides the services (SPs). A virtual network can be
+create aggregating one or more InPs, thus creating a virtual network end-to-end
+service~\cite{chowdhury2009network}. An example of this are the Virtual Private
+Networks (VPNs), that are able to cross public networks, giving access to
+content that otherwise would not be available locally.
+
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
 creation of a new standard, the 5G, which is estimated to arrive to the market
@@ -14,10 +65,10 @@ Network (NGMN) alliance, a group composed by the major players in the field of
 mobile connectivity, the 5G aims to offer not only at the end-user a new way to
 browse the web, download and watch interactive content but also to create an
 ad-hoc solution for Machine-to-Machine (M2M) data traffic, which is increasing
-more than ever thanks to the spreading of IoT devices, which sensors need to 
+more than ever thanks to the spreading of IoT devices, which sensors need to
 continuously send data to servers/data-centers. Relatively to \emph{Long Term
-Evolution} (LTE), 5G points to have data rates $10$ times better, with $10$
-times smaller end-to-end latency and an increased connection density by $100$ 
+  Evolution} (LTE), 5G points to have data rates $10$ times better, with $10$
+times smaller end-to-end latency and an increased connection density by $100$
 times~\cite{alliance20155g}.
 
 \begin{table}[t]
