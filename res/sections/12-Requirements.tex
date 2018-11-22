@@ -1,0 +1,27 @@
+\section{Requirements}\label{chap:prjan:sec:req}
+In the following section are described the main requirements of this projects.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{longtable}[c]{p{0.3\textwidth}p{0.7\textwidth}}
+\hline
+\multicolumn{1}{c}{\textbf{Requirement}}                                & \multicolumn{1}{c}{\textbf{Description}}                                                                                                                                                       \\ \hline
+\endhead
+%
+\hline
+\endfoot
+%
+\endlastfoot
+%
+1. Automatic creation and configuration of NFVI                         & It must be possible to create the environment on which SFC will be deployed in an automatic manner. The system must support Docker container and exploit Kubernetes as container orchestrator. \\
+2. Implementation of chain orchestration and management tools           & The final work must be comprehensive of a minimal software implementation that allows the deployment and the management and the orchestration of VNF and their lifecycle.                      \\
+3. Automatic configuration of chain orchestration and managements tools & Software instrumentation for VNF and SFC management must be configured automatically, at startup.                                                                                              \\
+4. Developing software for manual SFC deployment                        & Instrumentation to deploy a chain of containers in which VNF can run must be develop. These containers must be able to communicate each others.                                                \\
+5. VNF fault management                                                 & The system must be able to recover after a container fault automatically.                                                                                                                      \\
+6. VNF scalability                                                      & The system must be able to scale the number of container implementing a function, both augmenting and decrementing the replicas.                                                               \\
+7. SFC definition saving                                                & The system must be able to save a definition of a chain                                                                                                                                        \\
+8. Deployment/stop/update of a chain from definition                    & The system must be able to allow the deployment of a chain from a saved definition, stop a running SFC and update it.                                                                          \\ \hline
+\caption{Table of requirements}
+\label{chap:prjan:tab:req}\\
+\end{longtable}
