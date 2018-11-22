@@ -57,6 +57,85 @@ service~\cite{chowdhury2009network}. An example of this are the Virtual Private
 Networks (VPNs), that are able to cross public networks, giving access to
 content that otherwise would not be available locally.
 
+\section{Software-defined networking}
+The concept of Software-defined networking (SDN) is not new: starting from
+1996~\cite{sezer2013we} it aims to provide user-controlled management of
+forwarding in network nodes. This means to have the possibility to control the
+forwarding procedures. A close examples of SDN implementations are Ethane and
+OpenFlow, respectively created in 2007 and 2008. In an SDN architecture, there
+is the decoupling of data and control plane\todo{ref}, but there is a
+centralization of the networking logic and state~\cite{fundation2012software}.
+The use of an SDN network is estimated to reduce the Capital Expenditure (CapEX)
+and Operational Expenditure (OpEX) costs~\cite{benzekki2016software}.
+
+\subsection{SDN stack}
+\begin{figure}[ht]
+ \centering
+ \includegraphics[scale=1.3]{sdn_architecture}
+ \caption[SDN architecture schema]{SDN architecture schema. Is possible to 
+denote the three layer logic: the Application plane, the Controller plane and 
+the Data plane~\cite{fundation2013software}.}
+ \label{chap:background:img:sdn_architecture}
+\end{figure}
+
+As the Figure~\ref{chap:background:img:sdn_architecture} illustrats, the SDN
+architecture is formed by three layers, defined as planes, that accomplish
+determinated tasks~\cite{fundation2012software} as
+in~\cite{fundation2013software}. Below we will perform a brief exaplanation of
+each plane.
+
+\subsubsection{Application plane}
+In general, this layer is responsible of abstracting the SDN network control
+management~\cite{benzekki2016software}. The application plane holds SDN
+applications, programs that have the possibility to change the way the SDN
+network forwards the data. These applications have the possibility to access
+hardware capabilities through specific API, that are called \emph{northbound}
+interfaces (NBI). These interfaces usually, acts like a bridge between the SDN
+applications and the SDN controllers and are usually implemented in an open and
+vedor-neutral way~\cite{fundation2013software}.
+
+\subsubsection{Control plane}
+The SDN controllers, as just said in the previously, receives requests from the
+SND applications. Since the controller is centralized, it can therefore exploit
+the complete knowledge of the network. This gives the possibility to apply
+networking optimizations like flow management~\cite{sezer2013we}. The controller
+abstracts from the network complexity, and it can collect informations about the
+network performing requests to the \emph{southbound} interfaces. The control
+plane can have multiple controllers, that are in turn federated thanks to the
+\emph{eastbound} and \emph{westbound} (e.g.
+HyperFlow)~\cite{benzekki2016software}, that allow several existing controller
+written with different languages to coexists.
+
+\subsubsection{Data Plane}
+The data plane is the lowest plane, and it provides the aforementioned
+\emph{southbound} API. This kind of API can be deployed in two different kind of
+scenarios: for in-band communications and for out-of-band
+communications~\cite{benzekki2016software}. The data plane gives access to the
+physical and virtual switches, routers and access-points, and it gives the
+possibility to perform programmatic forwarding operations, but it is also able
+to provide statistic reportings and it supports event notifications.
+
+\subsection{OpenFlow protocol}
+OpenFlow is an open communication protocols that enables the possibility to
+actually program networks, offering the possibility to change the flow-tables
+for layer 3 switches and for routers~\cite{mckeown2008openflow}. In other words,
+the OpenFlow protocol gives the possibility for controller to access at these
+components. Routes can be changed on the typology of the packet, or on the state
+of the network (i.e. if a network is under heavy load, certain packages can be
+discarded).
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.65]{openflow}
+ \caption{OpenFlow protocol communication graph}
+ \label{chap:background:img:openflow_protocol}
+\end{figure}
+
+In the Figure~\ref{chap:background:img:openflow_protocol} we have a
+schematization of what we said before: every switch has a flow table that gets
+updated thanks the OpenFlow protocol by the SDN controller, that is the one
+managing the whole network.
+
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
 creation of a new standard, the 5G, which is estimated to arrive to the market
