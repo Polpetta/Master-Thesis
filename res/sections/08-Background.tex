@@ -136,6 +136,58 @@ schematization of what we said before: every switch has a flow table that gets
 updated thanks the OpenFlow protocol by the SDN controller, that is the one
 managing the whole network.
 
+\section{Network slicing}
+Internet Service Providers (ISP) provides networking services to a wide range of
+users, that have different necessities between them, and that can require
+different kind of characteristics, e.g. a network connectivity in a train has
+different networking requirements from the one regarding a company. It is with
+these presuppositions that emerges the necessity of service optimization based
+on the necessities of the users. To solve this problem in the recent years the
+concept of Networks Slice (NS) has been introducted~\cite{alliance20155g}. The
+NS aims to logically separate this set of services that present different
+use-cases, and to achieve this it expoits the SDN and Network Function Chaining
+(NFC) that allows network softwarization~\cite{ordonez2017network}.
+
+Even if the first idea of NS goes back to 2002~\cite{peterson2003blueprint}, NSs
+ancestor can be found in VLANs, that allows different hosts with no physical
+connectivity to be in the same network. The NS concept has attracted a lot of
+interest escpecially from the Industries, that is trying to introduce them in
+the next mobile network standard, the 5G. More details are provided in
+Section~\ref{chap:background:sec:5g:sub:ns}.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.2]{networkslicing}
+  \caption[The three layers model of network slicing]{The three layers model of
+    network slicing~\cite{alliance2016description}}
+  \label{chap:background:img:network_slicing}
+\end{figure}
+
+As is possible to see from the Figure~\ref{chap:background:img:network_slicing},
+a network slice is divided in multiple layers, namely the Service Istance Layer,
+the Network Slice Instance Layer and the Resource Layer.
+
+\subsection{Service Instance Layer}
+The first layer we presented, the \emph{Service Instance Layer}, represents the
+business or user services supported. These services are achieved thanks to the
+Network Functions (NF)~\cite{kotulski2017end}.
+
+\subsection{Network Slice Instance Layer}
+Instead, the \emph{Network Slice Instance Layer} as is possible to see it
+contains multiple sub-network instances, tahtn can be virtualized or
+non-virtualized.
+
+\paragraph*{Network Functions}
+The concept behind NF is to usually elaborate incoming data and forward it to
+destination. NF can be physical of virtualized: in the first case is commonly a
+set of harware, in the second case instead it can be a software implementation,
+decoupled from the hardware where its running.
+
+\vspace{0.5cm}
+
+Every NF should be isolated, so that it only has the possibility to consumed a
+defined set of resources.
+
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
 creation of a new standard, the 5G, which is estimated to arrive to the market
@@ -228,6 +280,7 @@ single centralized business application deployment that manage all the other
 layers resources.
 
 \subsubsection{Network slicing}
+\label{chap:background:sec:5g:sub:ns}
 The role of a \emph{network slice} in a 5G architecture is to specifically
 handle the Control-plane of a particular service (e.g. smartphones traffic,
 autonomous driving, massive IoT), deploying resources in a manner that assure
