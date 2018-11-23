@@ -15,5 +15,35 @@ the development phase of our software.
 Openstack is composed by modules, giving the possibility to the user who wants 
 to install it to choose only the components it really needs. So the first thing 
 we decided was to perform a selection of these modules between the 33 available 
-in the installation page.
-% TODO talk about Devstack installation
+in the installation page. The installation of this components span between 
+multiple machines (nodes), therefore creating a whole cluster of resources. 
+Since we considered too time-consuming to install Openstack in a distribuited 
+manner, we considered to test first the developer version, called 
+\emph{Devstack}. Devstack offers the possibility to install a subset of modules 
+in the local machine, and to leverage a Openstack environment able to perform 
+the same operations of the production-grade installation. Thus, we starting 
+configurating the Devstack installation, installing first of all the Nova 
+module, that is required to perform computer operations such as the launch of 
+virtual machines, and lately we installed Taker too.\todo{exaplain Taker 
+functionalities}
+
+\paragraph*{Devstack configuration}
+The Openstack installation is not an easy one, particularly for newcomers, that 
+have to deal with a great set of tools and not-always-clear instructions. Here 
+we will describe how we managed to get a single-node deployment up and running.
+
+First of all, Devstack needs a machine with at least 16GB of ram and 50GB of HD 
+space.
+We decided to install these components:
+\begin{itemize}
+ \item Keystone (for identity management)
+ \item Object storage
+ \item Compute
+ \item Tacker (we tested this module to see is Openstack was a suitable VIM too)
+\end{itemize}
+
+Using Devstack is a simple operation, but the time required to reach a correct 
+configuration is very high. In particular, it required from 20 minutes to 1 
+hour to install Devstack we a particular configuration, without knowing if the 
+final installation was working or not. This trial-and-error approach consumed a 
+considerable amount of time, but it was the only possibility we had.
