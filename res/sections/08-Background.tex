@@ -10,7 +10,7 @@ going to briefly introduce and explain the technologies involved and their role.
 It is remarkable how cloud computing has surged in the recent years. This is due
 the numerous features it carries, such as a great way to isolate processes and
 mitigate possible attacks from malicious users. On top of that, it allows to run
-``virtual'' machines with different configurations, without apporting any
+``virtual'' machines with different configurations, without bringing any
 changes to the host machine. Indeed, the virtualization concepts refer to the
 property of a machine to be virtualized. To achieve this, the components that
 forms a common computer need to be virtualized too. Thus, these assets are
@@ -21,20 +21,20 @@ hypervisor-based) and the container virtualization.
 
 \paragraph*{Hypervisor}
 The first one is known for providing a very good isolation from the host
-machine~\cite{eder2016hypervisor}, even if studies found possibilties for an
+machine~\cite{eder2016hypervisor}, even if studies found possibilities for an
 attacker to escape from the a virtual machine and operate on the host
 machine\footnote{An example can be found in
   \url{https://github.com/MorteNoir1/virtualbox_e1000_0day}}. Even though every
-component in a hypervisor environment is virtualized, there are possibilties for
+component in a hypervisor environment is virtualized, there are possibilities for
 the ``guest'' OS (the virtualized one), to access to physical devices (like USB
-keys attacched on the ``host'' OS).
+keys attached on the ``host'' OS).
 
 \paragraph*{Container-based}
-Container-based virtualization uses a differnt approach to reach isolation.
+Container-based virtualization uses a different approach to reach isolation.
 Instead of creating a whole new stack, it applies very strict policies to the
 programs running on the ``host'' machine. This concept has its roots back to the
 jail environments, where group of process where isolated by the main OS, that
-provided a virtualized filesystem~\cite{canonico2007virtualization}. In this
+provided a virtualized file-system~\cite{canonico2007virtualization}. In this
 context, a container-based applications can be seen as a jailed application with
 policies aimed to protect the host machine.
 
@@ -45,7 +45,7 @@ policies aimed to protect the host machine.
     emulation, such as Docker vs hypervisor-based emulation~\cite{hung2016guidock}}
 \end{figure}
 
-\subsection{Network Virtulization}
+\subsection{Network Virtualization}
 
 Virtualization assumes another context when referred to networking: virtualized
 networking allow multiple, heterogeneous networks to cohabit, increasing the
@@ -78,10 +78,10 @@ the Data plane~\cite{fundation2013software}.}
  \label{chap:background:img:sdn_architecture}
 \end{figure}
 
-As the Figure~\ref{chap:background:img:sdn_architecture} illustrats, the SDN
+As the Figure~\ref{chap:background:img:sdn_architecture} illustrates, the SDN
 architecture is formed by three layers, defined as planes, that accomplish
-determinated tasks~\cite{fundation2012software} as
-in~\cite{fundation2013software}. Below we will perform a brief exaplanation of
+specific tasks~\cite{fundation2012software} as
+in~\cite{fundation2013software}. Below we will perform a brief explanation of
 each plane.
 
 \subsubsection{Application plane}
@@ -92,14 +92,14 @@ network forwards the data. These applications have the possibility to access
 hardware capabilities through specific API, that are called \emph{northbound}
 interfaces (NBI). These interfaces usually, acts like a bridge between the SDN
 applications and the SDN controllers and are usually implemented in an open and
-vedor-neutral way~\cite{fundation2013software}.
+vendor-neutral way~\cite{fundation2013software}.
 
 \subsubsection{Control plane}
 The SDN controllers, as just said in the previously, receives requests from the
-SND applications. Since the controller is centralized, it can therefore exploit
+SDN applications. Since the controller is centralized, it can therefore exploit
 the complete knowledge of the network. This gives the possibility to apply
-networking optimizations like flow management~\cite{sezer2013we}. The controller
-abstracts from the network complexity, and it can collect informations about the
+networking optimization like flow management~\cite{sezer2013we}. The controller
+abstracts from the network complexity, and it can collect information about the
 network performing requests to the \emph{southbound} interfaces. The control
 plane can have multiple controllers, that are in turn federated thanks to the
 \emph{eastbound} and \emph{westbound} (e.g.
@@ -113,7 +113,7 @@ scenarios: for in-band communications and for out-of-band
 communications~\cite{benzekki2016software}. The data plane gives access to the
 physical and virtual switches, routers and access-points, and it gives the
 possibility to perform programmatic forwarding operations, but it is also able
-to provide statistic reportings and it supports event notifications.
+to provide statistic reporting and it supports event notifications.
 
 \subsection{OpenFlow protocol}
 OpenFlow is an open communication protocols that enables the possibility to
@@ -131,10 +131,10 @@ discarded).
  \label{chap:background:img:openflow_protocol}
 \end{figure}
 
-In the Figure~\ref{chap:background:img:openflow_protocol} we have a
-schematization of what we said before: every switch has a flow table that gets
-updated thanks the OpenFlow protocol by the SDN controller, that is the one
-managing the whole network.
+In the Figure~\ref{chap:background:img:openflow_protocol} we have a schema of
+what we said before: every switch has a flow table that gets updated thanks the
+OpenFlow protocol by the SDN controller, that is the one managing the whole
+network.
 
 \section{Network slicing}
 Internet Service Providers (ISP) provides networking services to a wide range of
@@ -143,9 +143,9 @@ different kind of characteristics, e.g. a network connectivity in a train has
 different networking requirements from the one regarding a company. It is with
 these presuppositions that emerges the necessity of service optimization based
 on the necessities of the users. To solve this problem in the recent years the
-concept of Networks Slice (NS) has been introducted~\cite{alliance20155g}. The
+concept of Networks Slice (NS) has been introduced~\cite{alliance20155g}. The
 NS aims to logically separate this set of services that present different
-use-cases, and to achieve this it expoits the SDN and Network Function Chaining
+use-cases, and to achieve this it exploits the SDN and Network Function Chaining
 (NFC) that allows network softwarization~\cite{ordonez2017network}.
 
 \subsection{Network slice layers}
@@ -153,7 +153,7 @@ use-cases, and to achieve this it expoits the SDN and Network Function Chaining
 Even if the first idea of NS goes back to 2002~\cite{peterson2003blueprint}, NSs
 ancestor can be found in VLANs, that allows different hosts with no physical
 connectivity to be in the same network. The NS concept has attracted a lot of
-interest escpecially from the Industries, that is trying to introduce them in
+interest especially from the Industries, that is trying to introduce them in
 the next mobile network standard, the 5G. More details are provided in
 Section~\ref{chap:background:sec:5g:sub:ns}.
 
@@ -166,8 +166,8 @@ Section~\ref{chap:background:sec:5g:sub:ns}.
 \end{figure}
 
 As is possible to see from the Figure~\ref{chap:background:img:network_slicing},
-a network slice is divided in multiple layers, namely the Service Istance Layer,
-the Network Slice Instance Layer and the Resource Layer.
+a network slice is divided in multiple layers, namely the Service Instance
+Layer, the Network Slice Instance Layer and the Resource Layer.
 
 \subsubsection{Service Instance Layer}
 The first layer we presented, the \emph{Service Instance Layer}, represents the
@@ -176,13 +176,13 @@ Network Functions (NF)~\cite{kotulski2017end}.
 
 \subsubsection{Network Slice Instance Layer}
 Instead, the \emph{Network Slice Instance Layer} as is possible to see it
-contains multiple sub-network instances, tahtn can be virtualized or
+contains multiple sub-network instances, that can be virtualized or
 non-virtualized.
 
 \paragraph*{Network Functions}
 The concept behind NF is to usually elaborate incoming data and forward it to
 destination. NF can be physical of virtualized: in the first case is commonly a
-set of harware, in the second case instead it can be a software implementation,
+set of hardware, in the second case instead it can be a software implementation,
 decoupled from the hardware where its running. The Virtualized Network Functions
 (VNFs), that are recently emerging propose a multitude of challenges, especially
 regarding their latency, reliability and efficiency due their virtualized nature
@@ -195,10 +195,10 @@ consume a defined set of resources, otherwise the functions running on top of it
 could suffer performance degradation~\cite{richart2016resource}. Isolation has
 the benefits of offering more security and the possibility to individually
 manage the slice~\cite{ordonez2017network}. Slices have to respond to a defined
-set o requisites, first of all the possibilty to being created by a template,
+set o requisites, first of all the possibility to being created by a template,
 defined as Network Slice Template (NST). After the NS and the related resources
-are created, a NS should be activable. Obviously, for a NS there should be the
-possibility to apport changes on-the-fly, and to decommission or deactivate it,
+are created, a NS should be activated. Obviously, for a NS there should be the
+possibility to bring changes on-the-fly, and to decommission or deactivate it,
 freeing all the occupied resources~\cite{slice20183gpp}.
 
 \subsubsection{Resource Layer}
@@ -210,10 +210,10 @@ computational and storage resources.
 Concept recently developed in 2012 by the ETSI organization, the Network
 Function Virtualization (NFV), is a network architecture concept that aims, with
 the virtualization technologies available in the market, to virtualize network
-nodes. It is belived tht NFV will trasform the wat the global communications
+nodes. It is believed that NFV will transform the way the global communications
 will work, thanks to its disruptive trend in the networking
 industry~\cite{gray2016network}. Essentially, a NFV, working in harmony with the
-NS aims to provide sufficient packet processing efficency, especially in
+NS aims to provide sufficient packet processing efficiency, especially in
 environment such as the cloud one.
 
 \begin{figure}[t]
@@ -226,10 +226,10 @@ environment such as the cloud one.
 
 \noindent The NFV has its own architecture, divided in three main components:
 \begin{description}
-\item[Virtualised Network Function] that is a software implementation able to fun
+\item[Virtualized Network Function] that is a software implementation able to fun
   a network function over a NFVI;
-\item[NFVI Infrastructure (NFVI)] that includes different physical resuources
-  and thei respective virtualization, that have to support the execution of the
+\item[NFVI Infrastructure (NFVI)] that includes different physical resources
+  and their respective virtualization, that have to support the execution of the
   aforementioned VNFs;
 \item[NFV Management and Orchestrator] that has the main role to orchestrate the
   lifecycle of the available resources and of the network functions running on
@@ -278,7 +278,7 @@ and manage the VNFs lifecycle~\cite{mijumbi2016management}.
 \paragraph{VIM}
 As we can see from the Figure~\ref{chap:background:img:etsimano}, it is possible
 to denote the position of this component in the schema. The VIM has the role to
-communicate with the NFV infrstructure, and to control its physical and virtual
+communicate with the NFV infrastructure, and to control its physical and virtual
 resources. A VIM should has the possibility to control one or more of NFVI. In
 general a VIM can be in charge of control a defined set of
 NFVI~\cite{mijumbi2016management}
@@ -286,21 +286,21 @@ NFVI~\cite{mijumbi2016management}
 \paragraph{VNFM}
 The VNFM, as we can see from the schema, interacts with the Data repositories,
 the NFVO and with the VNFs. Its role is to manage the lifecycle of VNFs. The
-VNFM can handle one or multiple VNF istances.
+VNFM can handle one or multiple VNF instances.
 
 \paragraph{NFVO}
-We can see how the NFVO is the component with the most connections in the whiole
+We can see how the NFVO is the component with the most connections in the whole
 architecture, and its able to interact with the OSS/BSS, the data repositories,
 the VNFM and the VIM. The aim of the NFVO is thus to orchestrate both the
 resources and the services.
 
 \paragraph{Data Repositories}
-Data repositories can be seen as a sort of databases, holding informations about
-the VNF definitions, the VNF instances with the rispective lifecycle status, and
+Data repositories can be seen as a sort of databases, holding information about
+the VNF definitions, the VNF instances with the respective lifecycle status, and
 list of the Network Services defined and the resources available and occupied of
 the NFVI.
 
-\section{Service Function Caining (SFC)}
+\section{Service Function Chaining (SFC)}
 Another important component we have to talk about is the SFC, defined as a
 concept that it collocates logically above the NFVs. As said in~\cite{rfc7665}:
 \begin{displayquote}
@@ -319,11 +319,11 @@ the contrary, SFC aware.
 \paragraph*{Architectural view}
 About the architectural view of SFCs, proposal defines several assumptions on
 them, starting from considering every element of the chain an opaque processing
-unit. Another important assumpion is that there is no global or standard SF
+unit. Another important assumption is that there is no global or standard SF
 chaining logic~\cite{rfc7665}. SFC can be easily seen as a graph, because some
 SF can have multiple address to forward the elaborated data, thus creating what
-is defined as \emph{fork} that ends up forming differen branchs. This coulds
-leeds to loops, that must be treated consequently.
+is defined as \emph{fork} that ends up forming different branches. This could
+lead to loops, that must be treated consequently.
 
 \paragraph*{Forwarding strategies}
 At high level, SFC proposes an abstracted view of a service, with a defined set
@@ -342,8 +342,8 @@ share information about the SFP to follow. Data gets continuously encapsulated
 and decapsulated between SFs, to give them the possibility to elaborate the
 payload contained.
 
-\subparagraph*{Network Serivce Header (NSH)}
-The encapsulation has an header that is well defined and descripted in detail
+\subparagraph*{Network Service Header (NSH)}
+The encapsulation has an header that is well defined and described in detail
 in~\cite{rfc8300}. This header is composed by a 4-byte base header, and a 4-byte
 Service Path Header (SPH). The base header provides information about the services
 header and the kind of protocol contained as the payload, while the service path
@@ -352,7 +352,7 @@ header provides path identification and location within a define Service Path
 
 To further digging in the rabbit hole, the base header has several fields,
 identifying the NSH version, the total Time To Live (TTL) of a packet, the
-lenght of it, an additional metadata field and at the end it has a field to
+length of it, an additional metadata field and at the end it has a field to
 identify the protocol of the encapsulated data.
 
 The SPH contains, more than the 24-bit Service Path Identifier (SPI), a Service
@@ -362,7 +362,7 @@ Index (SI), that provides the location within the SFP.
 There are two kind of context header definition: one with a fixed context header
 length (16-Byte) and one with a dynamic context header length.
 
-\noindent Regarding this field, the standard does not make any assuption about
+\noindent Regarding this field, the standard does not make any assumption about
 the content, and it is left free to be filled with custom metadata. The only
 requirement is to set this filed with zero when is not used.
 
