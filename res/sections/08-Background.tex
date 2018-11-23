@@ -148,6 +148,8 @@ NS aims to logically separate this set of services that present different
 use-cases, and to achieve this it expoits the SDN and Network Function Chaining
 (NFC) that allows network softwarization~\cite{ordonez2017network}.
 
+\subsection{Network slice layers}
+
 Even if the first idea of NS goes back to 2002~\cite{peterson2003blueprint}, NSs
 ancestor can be found in VLANs, that allows different hosts with no physical
 connectivity to be in the same network. The NS concept has attracted a lot of
@@ -167,12 +169,12 @@ As is possible to see from the Figure~\ref{chap:background:img:network_slicing},
 a network slice is divided in multiple layers, namely the Service Istance Layer,
 the Network Slice Instance Layer and the Resource Layer.
 
-\subsection{Service Instance Layer}
+\subsubsection{Service Instance Layer}
 The first layer we presented, the \emph{Service Instance Layer}, represents the
 business or user services supported. These services are achieved thanks to the
 Network Functions (NF)~\cite{kotulski2017end}.
 
-\subsection{Network Slice Instance Layer}
+\subsubsection{Network Slice Instance Layer}
 Instead, the \emph{Network Slice Instance Layer} as is possible to see it
 contains multiple sub-network instances, tahtn can be virtualized or
 non-virtualized.
@@ -181,12 +183,122 @@ non-virtualized.
 The concept behind NF is to usually elaborate incoming data and forward it to
 destination. NF can be physical of virtualized: in the first case is commonly a
 set of harware, in the second case instead it can be a software implementation,
-decoupled from the hardware where its running.
+decoupled from the hardware where its running. The Virtualized Network Functions
+(VNFs), that are recently emerging propose a multitude of challenges, especially
+regarding their latency, reliability and efficiency due their virtualized nature
+of network function.
 
 \vspace{0.5cm}
 
-Every NF should be isolated, so that it only has the possibility to consumed a
-defined set of resources.
+\noindent Every NF should be isolated, so that it only has the possibility to
+consume a defined set of resources, otherwise the functions running on top of it
+could suffer performance degradation~\cite{richart2016resource}. Isolation has
+the benefits of offering more security and the possibility to individually
+manage the slice~\cite{ordonez2017network}. Slices have to respond to a defined
+set o requisites, first of all the possibilty to being created by a template,
+defined as Network Slice Template (NST). After the NS and the related resources
+are created, a NS should be activable. Obviously, for a NS there should be the
+possibility to apport changes on-the-fly, and to decommission or deactivate it,
+freeing all the occupied resources~\cite{slice20183gpp}.
+
+\subsubsection{Resource Layer}
+This layer contains all the physical and virtualized resources, that are needed
+to the network slice to properly function. The resources are divided in
+computational and storage resources.
+
+\subsection{Network Function Virtualization}
+Concept recently developed in 2012 by the ETSI organization, the Network
+Function Virtualization (NFV), is a network architecture concept that aims, with
+the virtualization technologies available in the market, to virtualize network
+nodes. It is belived tht NFV will trasform the wat the global communications
+will work, thanks to its disruptive trend in the networking
+industry~\cite{gray2016network}. Essentially, a NFV, working in harmony with the
+NS aims to provide sufficient packet processing efficency, especially in
+environment such as the cloud one.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=2]{etsi_arch}
+  \caption[Network Function Virtualization reference architecture]{Network
+    Function Virtualization reference architecture~\cite{etsi2013gs}}
+  \label{chap:background:img:etsi_arch}
+\end{figure}
+
+\noindent The NFV has its own architecture, divided in three main components:
+\begin{description}
+\item[Virtualised Network Function] that is a software implementation able to fun
+  a network function over a NFVI;
+\item[NFVI Infrastructure (NFVI)] that includes different physical resuources
+  and thei respective virtualization, that have to support the execution of the
+  aforementioned VNFs;
+\item[NFV Management and Orchestrator] that has the main role to orchestrate the
+  lifecycle of the available resources and of the network functions running on
+  top of them.
+\end{description}
+
+In the next section we are going to dig a little bit about the component that
+have not been explained yet.
+
+\subsubsection{Network Function Virtualized Infrastructure}
+With the term NFVI we mean the totality of all the hardware and software
+components where NFVs run~\cite{etsi2013gs}. The NFVI does not have to be
+centralized, but it can span across multiple locations, even though the
+resources should be virtualized in a manner from the VNF point of view that they
+look like coming form a single entity. The computing hardware that composes the
+NFVI can be either Commercial-of-the-shelf (COTS) hardware or a specialized one,
+while for the storage there is the possibility to have a Network Attached
+Storage (NAS) o a ``local'' storage directly on the server~\cite{etsi2013gs}.
+Finally, network resources, composed by switches, routers and links (both wired
+and wireless) can span between different domain, that can be of two typologies:
+\begin{itemize}
+\item NFVI-PoP
+\item Transport network
+\end{itemize}
+
+\subsubsection{NFV MANagement and Orchestration}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.7]{etsimano}
+  \caption[ETSI NFV MANO framework]{ETSI NFV MANO
+    framework~\cite{mijumbi2016management}}
+  \label{chap:background:img:etsimano}
+\end{figure}
+
+The MANagement and Orchestration (MANO) architecture is divided in turn in three
+main components, such as the Virtual Infrastructure Manager (VIM), the VNF
+Manager (VNFM) and the NFV Orchestrator (NFVO). The MANO organize and holds
+important data, regarding the Network Service (NS) catalog, the list of the VNFs
+definition (VNF catalog) and the current NFV instances and the NFVI resources.
+
+It is important to note how the mano is a critical aspect in ensuring
+cooperation between the NFVI and the VNFs. On top of that, is able to provide
+and manage the VNFs lifecycle~\cite{mijumbi2016management}.
+
+\paragraph{VIM}
+As we can see from the Figure~\ref{chap:background:img:etsimano}, it is possible
+to denote the position of this component in the schema. The VIM has the role to
+communicate with the NFV infrstructure, and to control its physical and virtual
+resources. A VIM should has the possibility to control one or more of NFVI. In
+general a VIM can be in charge of control a defined set of
+NFVI~\cite{mijumbi2016management}
+
+\paragraph{VNFM}
+The VNFM, as we can see from the schema, interacts with the Data repositories,
+the NFVO and with the VNFs. Its role is to manage the lifecycle of VNFs. The
+VNFM can handle one or multiple VNF istances.
+
+\paragraph{NFVO}
+We can see how the NFVO is the component with the most connections in the whiole
+architecture, and its able to interact with the OSS/BSS, the data repositories,
+the VNFM and the VIM. The aim of the NFVO is thus to orchestrate both the
+resources and the services.
+
+\paragraph{Data Repositories}
+Data repositories can be seen as a sort of databases, holding informations about
+the VNF definitions, the VNF instances with the rispective lifecycle status, and
+list of the Network Services defined and the resources available and occupied of
+the NFVI.
 
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
