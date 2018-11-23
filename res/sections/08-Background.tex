@@ -300,6 +300,81 @@ the VNF definitions, the VNF instances with the rispective lifecycle status, and
 list of the Network Services defined and the resources available and occupied of
 the NFVI.
 
+\section{Service Function Caining (SFC)}
+Another important component we have to talk about is the SFC, defined as a
+concept that it collocates logically above the NFVs. As said in~\cite{rfc7665}:
+\begin{displayquote}
+The definition and instantiation of an ordered set of service functions and
+subsequent ``steering'' of traffic through them is termed Service Function
+Chaining (SFC).
+\end{displayquote}
+
+\paragraph*{Service Function}
+A single element of an SFC is called Service Function (SF), and its duty is to
+elaborate the packets incoming and to forward them to the next receiver. SFs, as
+for NFs, can be virtualized or be a set of hardware functions. SF does not
+necessary know its part of a chain, and this defines it as SFC unaware or, on
+the contrary, SFC aware.
+
+\paragraph*{Architectural view}
+About the architectural view of SFCs, proposal defines several assumptions on
+them, starting from considering every element of the chain an opaque processing
+unit. Another important assumpion is that there is no global or standard SF
+chaining logic~\cite{rfc7665}. SFC can be easily seen as a graph, because some
+SF can have multiple address to forward the elaborated data, thus creating what
+is defined as \emph{fork} that ends up forming differen branchs. This coulds
+leeds to loops, that must be treated consequently.
+
+\paragraph*{Forwarding strategies}
+At high level, SFC proposes an abstracted view of a service, with a defined set
+of required SFs that must be executed in a particular order. These services can
+be unidirectional if they support data coming only from one direction, thus
+following the chain from the first SF to the last one, or they can be
+bidirectional, when they supports data coming from both directions, and thus the
+first SF can be the last one~\cite{rfc7665}. The forwarding logic has to be
+managed by the Service Function Forwarder (SFF), that forwards the data
+following the Service Function Path (SFP) defined.
+
+\paragraph*{Data encapsulation}
+The data passing inside an SFC must be encapsulated to ensure its integrity.
+Data encapsulation enables the possibility of sharing metadata/content, and to
+share information about the SFP to follow. Data gets continuously encapsulated
+and decapsulated between SFs, to give them the possibility to elaborate the
+payload contained.
+
+\subparagraph*{Network Serivce Header (NSH)}
+The encapsulation has an header that is well defined and descripted in detail
+in~\cite{rfc8300}. This header is composed by a 4-byte base header, and a 4-byte
+Service Path Header (SPH). The base header provides information about the services
+header and the kind of protocol contained as the payload, while the service path
+header provides path identification and location within a define Service Path
+(SP). Finally, the Context Header carries metadata.
+
+To further digging in the rabbit hole, the base header has several fields,
+identifying the NSH version, the total Time To Live (TTL) of a packet, the
+lenght of it, an additional metadata field and at the end it has a field to
+identify the protocol of the encapsulated data.
+
+The SPH contains, more than the 24-bit Service Path Identifier (SPI), a Service
+Index (SI), that provides the location within the SFP.
+
+\subparagraph*{Context header}
+There are two kind of context header definition: one with a fixed context header
+length (16-Byte) and one with a dynamic context header length.
+
+\noindent Regarding this field, the standard does not make any assuption about
+the content, and it is left free to be filled with custom metadata. The only
+requirement is to set this filed with zero when is not used.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.6]{nshtype1}
+  \caption[NSH MD Type \texttt{0x1}]{NSH MD Type \texttt{0x1}~\cite{rfc8300}.
+    The context header in this NSH has a fixed length. There is another possible
+    context header that has a variable length.}
+  \label{chap:background:img:nshtype1}
+\end{figure}
+
 \section{The upcoming connectivity standard: 5G}
 The continuous innovation in the mobile network connectivity is leading to the
 creation of a new standard, the 5G, which is estimated to arrive to the market
