@@ -3,37 +3,36 @@
 
 Through the history of Internet, many factors changed and new innovations came,
 but at the end of the day a fundamental key remains: connection performances
-are, indeed, what the users really want.
-Today, connectivity plays an important role in everyone's life. Several decades 
-brought solutions with enhanced wired and wireless connectivity, like 
-Ethernet, Fast Ethernet, 2G, 3G, LTE, and better communication protocols such 
-as a whole plethora of TCP standards in order to keep up with the continuous 
-surging of network traffic. Internet Service Providers to be able to 
-efficiently process the whole quantity of packets passing through the network, 
-applies several optimizations along the packet path. Until this day, these 
-optimizations have mostly been based on costly, in hardware solutions. In 
-particular, these Network Functions are able to perform only generic packet 
-elaboration, since they do not know the Quality of Service required by every 
-connection. It is in this context that 5G proposes a new way to approach 
-networking, suggesting the virtualization of this Network Functions, making 
-their deployments faster and cheaper. On top of that, it proposes specific 
-services for determined kind of data. If in the past a train running a 
-300km/h had to use the same network services of an IoT device sending data 
-updates every hour, now 5G proposes two different and efficient solutions for 
-this completely different services. This separation is performed through the 
-creation of determined network components called Network Slices. This new 
-possibility of offering the network with specialized class of services, 
-combined with emerging virtualization technologies like cloud computing, 
-hypervisor-virtualized machine or container-based solutions enables the 
-deployment of Virtualized Network Functions within seconds running on generic 
-purpose or custom hardware. While there may be some performances degreadations, 
-it has been demonstrated that their time-to-deploy and the possibility of 
-automation they offers are unprecedented~\cite{nguyen2017sdn}. On top of 
-that, specialized software acts as a MANager and Orchestrator (MANO) for this 
-VNFs, regulating their lifecycle. While most of the current proposals are based 
-on hypervisor on cloud solutions, in this thesis we are going to see a 
-proof-of-concept of a part of a Network Slice, equipped with a custom MANO 
-solution, based on the new container-based technology, called Docker, on a 
+are, indeed, what the users really want. Today, connectivity plays an important
+role in everyone's life. Several decades brought solutions with enhanced wired
+and wireless connectivity, like Ethernet, Fast Ethernet, 2G, 3G, LTE, and better
+communication protocols such as a whole plethora of TCP standards in order to
+keep up with the continuous surging of network traffic. Internet Service
+Providers to be able to efficiently process the whole quantity of packets
+passing through the network, applies several optimization along the packet path.
+Until this day, these optimization have mostly been based on costly, in hardware
+solutions. In particular, these Network Functions are able to perform only
+generic packet elaboration, since they do not know the Quality of Service
+required by every connection. It is in this context that 5G proposes a new way
+to approach networking, suggesting the virtualization of this Network Functions,
+making their deployments faster and cheaper. On top of that, it proposes
+specific services for determined kind of data. If in the past a train running a
+300km/h had to use the same network services of an IoT device sending data
+updates every hour, now 5G proposes two different and efficient solutions for
+this completely different services. This separation is performed through the
+creation of determined network components called Network Slices. This new
+possibility of offering the network with specialized class of services, combined
+with emerging virtualization technologies like cloud computing,
+hypervisor-virtualized machine or container-based solutions enables the
+deployment of Virtualized Network Functions within seconds running on generic
+purpose or custom hardware. While there may be some performances degreadation,
+it has been demonstrated that their time-to-deploy and the possibility of
+automation they offers are unprecedented~\cite{nguyen2017sdn}. On top of that,
+specialized software acts as a MANager and Orchestrator (MANO) for this VNFs,
+regulating their lifecycle. While most of the current proposals are based on
+hypervisor on cloud solutions, in this thesis we are going to see a
+proof-of-concept of a part of a Network Slice, equipped with a custom MANO
+solution, based on the new container-based technology, called Docker, on a
 recent orchestrator framework: Kubernetes.
  
 \section*{Document organization}
