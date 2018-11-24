@@ -306,6 +306,17 @@ OpenVSwitch
 GlusterFs
 noindent
 glusterkube
+CapEX
+OpEX
+HyperFlo
+VLANs
+NST
+NFVs
+NAS
+mano
+NFs
+SPH
+HyperFlow
 timeline
 decrementing
 MANager
