@@ -1,17 +1,24 @@
 \chapter{Architectural implementation}
 \label{chap:archimpl}
  
-In this chapter we will dig into the actual architectural implementation, 
-seeing all the problems related to it and how they were solved.
+In this chapter we will dig into the actual architectural implementation, seeing
+all the problems related to it and how they were solved. We will show all the
+various attemps made, and we will discussion about the technological issue and
+changes we had to perform.
 
-\section{Adopting Openstack for container orchestration}
+\section{First attempt}
+
+In our first attempt we started building our infrastructure on top of Ubuntu
+16.04 (for Openstack) and Ubuntu 18.04 (for Openbaton).
+
+\subsection{Adopting Openstack for container orchestration}
 
 Our first step was to try to use Openstack to create a container orchestration. 
 The reason behind this approach was simple: Openbaton, on paper, comes with an 
 out-of-the-box support for Openstack. In fact, it natively supports Openstack 
 PoPs, giving to us a great possibility to reuse the two frameworks and to ease 
 the development phase of our software.
-\subsection{Openstack for developers: Devstack}
+\subsubsection{Openstack for developers: Devstack}
 Openstack is composed by modules, giving the possibility to the user who wants 
 to install it to choose only the components it really needs. So the first thing 
 we decided was to perform a selection of these modules between the 33 available 
@@ -24,8 +31,29 @@ in the local machine, and to leverage a Openstack environment able to perform
 the same operations of the production-grade installation. Thus, we starting 
 configurating the Devstack installation, installing first of all the Nova 
 module, that is required to perform computer operations such as the launch of 
-virtual machines, and lately we installed Taker too.\todo{exaplain Taker 
-functionalities}
+virtual machines, and lately we installed Tacker too.
+
+\paragraph*{Taker}
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.3]{tacker_architecture}
+  \caption[Taker architecture schema]{Taker architecture
+    schema~\cite{tackerOpenstackwiki}}
+\end{figure}
+Tacker is a VNFM and a NFVO. It is an official Openstack module, and it has the
+ability to deploy, edit, stop and do periodic health checks VNF directly on it.
+The develpers claim it has the possbility to make deployments to platforms
+compatible with Openstack too. It supports VNF definition through the TOSCA
+standard, and a proposal for SFC integration has been proposed in
+2015~\cite{tackerOpenstackwiki}.
+
+We sperimented Tacker to see if its functionalities were good enough to be
+adopted in our testbed instead of Openbaton. Its complete integration with
+Openstack, indeed, was the main reason for its testing. We felt like the product
+was not fully ready to be used in a real deployment though, since it lacked of
+options like SFC management and the fact that it only officially supported
+Openstack and not other cloud platforms was another reason to prefer Openbaton
+eventually.
 
 \paragraph*{Devstack configuration}
 The Openstack installation is not an easy one, particularly for newcomers, that 
@@ -47,3 +75,28 @@ configuration is very high. In particular, it required from 20 minutes to 1
 hour to install Devstack we a particular configuration, without knowing if the 
 final installation was working or not. This trial-and-error approach consumed a 
 considerable amount of time, but it was the only possibility we had.
+
+For testing purposes, and in order to better understanding the Openstack
+functionalities, we configured a first version with Virtual Machine support
+only.
+
+\paragraph*{Openbaton configuration}
+With Devstack ready to be used as NFVI, we started working on Openbaton.
+Openbaton currently offers three ways to be deployed:
+\begin{itemize}
+  \item Normal installation. Openbaton offers official Ubuntu repositories that,
+    added into the system, offer a very smooth installation via the
+    \verb!aptitude! command line utility, with the only cons of having to wait
+    for the automatic Openbaton download, installation and configuration;
+  \item Using Vagrant. Vagrant is a software that helps the deployment of
+    software, and it offers drivers to deploy virtual virtual machines too;
+  \item Docker Compose. At the time of our study, the Docker Compose had three
+    different configurations, based on the necessity of the user. A minimal,
+    standard and full deployment were offered.
+\end{itemize}
+
+\subparagraph*{Installation via repository}
+
+\subparagraph*{Deployment via Vagrant}
+
+\subparagraph*{Deployment via Docker Compose}
