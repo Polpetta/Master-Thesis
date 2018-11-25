@@ -162,14 +162,52 @@ completed, we started tinkering Openstack for using Docker containers instead of
 traditional hypervisor instances. When we started developing this solution, we
 adopted the Zun module, that aims to smoothly integrate Docker in Openstack.
 Unfortunately, we were not able to make it properly work, in particular, it was
-not possible to open selected desired ports on the Docker containers. This lead
-to the impossibility to perform packet forwarding between VNFs. On top of that,
-we found difficulties regarding the integration of Docker images in TOSCA
+not possible to open desired ports on the Docker containers. This lead to the
+impossibility to perform packet forwarding between VNFs. On top of that, we
+found difficulties regarding the integration of Docker images in TOSCA
 definitions and Openstack. These two issues are related: the TOSCA definition
 does not have any keyword to specificate in any way that the image used for the
 VNF definition is a Docker image, and Openstack, with the Zun plugin, at the
 time of the implementation did not performed the image pull from any Docker
-registry. The impossibility to easily set the containers port and the lack of
+registry. The impossibility to easily set the containers ports and the lack of
 some support in between the TOSCA definition and the Openstack Zun plugin pushed
 us to drop Openstack as a possible solution and to start looking for another
 valid VIM component.
+
+\section{Second attempt}
+
+After the failure to find a viable setting for Openstack, we decided to look
+around for other solutions. We started studing proper Docker container
+orchestrators, that could offer all the features we needed: container lifecycle
+management, scaling, healing and monitoring. We decided to pick two of the most
+mature and famous ones: Docker Swarm and Kubenetes. The decision to study only
+these two relies on their big community supporting them and the possibility to
+easily found projects that used the forementioned frameworks.
+
+\subsection{Docker Swarm}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.35]{swarm_diagram}
+  \caption[Docker Swarm schema]{Docker Swarm schema~\cite{dockerSwarmWiki}.}
+  \label{chap:archimpl:sec:secondattempt:img:dockerswarm}
+\end{figure}
+
+First we started playing with Docker Swarm. Docker Swarm is a product directly
+made by the Docker Inc., so it seamlessly integrates with other Docker tools
+such as Docker Compose. The installation and set-up is pretty straightforward,
+and the configuration is almost automatically handed by Docker itself. The
+minimum number of nodes in order to create a proper Docker Swarm cluster is of
+free nodes, where one must be a manager node (designed to orchestrate the other
+nodes in the cluster), while the other can be simple workers. Multiple managers
+can coexist in the same cluster, as long as only one effectively operates. The
+others act like backup manager in case the one orchestrating goes down for some
+reason. The networking is given out-of-the box, and the same holds for
+distributed persistence. While this for most of the uses cases can be considered
+a pro, in our specific situation the impossibility to tweak the network
+configuration was a cons, since it was important for us to have the full control
+over the network, especially regarding the SFC implementation, explained better
+in Chapter~\ref{chap:vnf_ns_impl}.
+
+\subsection{Kubernetes}
+
