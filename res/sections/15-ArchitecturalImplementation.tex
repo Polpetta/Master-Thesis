@@ -133,10 +133,43 @@ deployment uses a hyperviso virtualization system (based on Virtual Box), in
 contrast with our goal to build a fully container-based system.
 
 \subparagraph*{Deployment via Docker Compose}
-The deployment with Docker Compose tourned out to be best of the three
-possibilities. Docker Compose configuration offered an unprecedented
+The deployment with Docker Compose turned out to be best of the three
+possibilities. The Docker Compose configuration offered an unprecedented
 configuration flexibility, with the possibility to deploy only selected modules.
 On top of that, this method let us manage the Openbaton version freely, having
 more control on update especially during the development of our components.
-Finally, a Docker based solution seemed to be the best approach since all of our
-components were meant to be put inside a Docker container.
+Additionally, using this Docker Compose configuration allowed us to seamlessly
+integrate the monitoring tools Zabbix, in order to have the possibility to
+graphically see the data fetch from Openbaton about the system state. Finally, a
+Docker based solution seemed to be the best approach since all of our components
+were meant to be put inside a Docker container.
+
+\subsection{Docker integration in Openstack}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{dockeropenstackmodule}
+  \caption[Docker module for Openstack working schema]{Docker module for Openstack
+    working schema~\cite{openstackDockerModule}}
+  \label{chap:archimpl:sec:fistattempt:img:dockeropnestackmodule}
+\end{figure}
+
+After the initial Openstack and Openbaton configuration we started making the
+components talking to each other. First, we tried a simple \verb!iperf! data
+transmission with two VNFs deployed by Openbaton as a common hypervisor-based
+Openstack instances, as explained in~\cite{openbatonIperf}. With this test
+completed, we started tinkering Openstack for using Docker containers instead of
+traditional hypervisor instances. When we started developing this solution, we
+adopted the Zun module, that aims to smoothly integrate Docker in Openstack.
+Unfortunately, we were not able to make it properly work, in particular, it was
+not possible to open selected desired ports on the Docker containers. This lead
+to the impossibility to perform packet forwarding between VNFs. On top of that,
+we found difficulties regarding the integration of Docker images in TOSCA
+definitions and Openstack. These two issues are related: the TOSCA definition
+does not have any keyword to specificate in any way that the image used for the
+VNF definition is a Docker image, and Openstack, with the Zun plugin, at the
+time of the implementation did not performed the image pull from any Docker
+registry. The impossibility to easily set the containers port and the lack of
+some support in between the TOSCA definition and the Openstack Zun plugin pushed
+us to drop Openstack as a possible solution and to start looking for another
+valid VIM component.
