@@ -9,7 +9,26 @@ changes we had to perform.
 \section{First attempt}
 
 In our first attempt we started building our infrastructure on top of Ubuntu
-16.04 (for Openstack) and Ubuntu 18.04 (for Openbaton).
+16.04 (for Openstack) and Ubuntu 18.04 (for Openbaton). Our main goal was to set
+up Openstack as our VIM while setting Openbaton as our MANO. Then, Openbaton
+would have Openstack registered as PoP, where TOSCA definition would be launched
+on Openstack that, instead of deploying hypervisor based virtual machines, it
+would have deployed container instances. The VNF lifecycles would have been
+controller through an Element Management System (EMS), transmitting the various
+VNF states via the message broker RabbitMQ. Is possible to see the interactions
+between elements in a minimum schema available in
+Figure~\ref{chap:archimpl:sec:fistattempt:img:schema1}.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{Attempt1}
+  \caption[Fist attempt components organization schema]{Fist attempt components
+    organization schema. We can see how the main Openstack role is to deploy and
+    manage the resources, while Openbaton has the role of maangement and
+    orchestration. Finally, RabbitMQ sends and receives status update from the
+    EMS for every VNF deployed.}
+  \label{chap:archimpl:sec:fistattempt:img:schema1}
+\end{figure}
 
 \subsection{Adopting Openstack for container orchestration}
 
@@ -34,7 +53,7 @@ module, that is required to perform computer operations such as the launch of
 virtual machines, and lately we installed Tacker too.
 
 \paragraph*{Taker}
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
   \includegraphics[scale=0.3]{tacker_architecture}
   \caption[Taker architecture schema]{Taker architecture
@@ -80,6 +99,7 @@ For testing purposes, and in order to better understanding the Openstack
 functionalities, we configured a first version with Virtual Machine support
 only.
 
+\subsubsection{Openbaton installation}
 \paragraph*{Openbaton configuration}
 With Devstack ready to be used as NFVI, we started working on Openbaton.
 Openbaton currently offers three ways to be deployed:
@@ -95,8 +115,28 @@ Openbaton currently offers three ways to be deployed:
     standard and full deployment were offered.
 \end{itemize}
 
+Now we are going to do a short description about every installation/deploy method.
+
 \subparagraph*{Installation via repository}
+The installation via repositories granted us the possibility to select only the
+necessary parts we needed. The back of the medal of this approach was the
+impossibility to automate it: in fact, during the installation proces user
+interaction was required, that we were not able to write down in a scripted
+fashion.
 
 \subparagraph*{Deployment via Vagrant}
+The deployment via Vagrant confirmed our expectations because it revealed to be
+was always smooth. The downside of this approach was the lack of customization
+and of component management. The possibility to remove or add Openbaton Modules
+dynamically later become fundamental to us. On top of that, the Vagrant
+deployment uses a hyperviso virtualization system (based on Virtual Box), in
+contrast with our goal to build a fully container-based system.
 
 \subparagraph*{Deployment via Docker Compose}
+The deployment with Docker Compose tourned out to be best of the three
+possibilities. Docker Compose configuration offered an unprecedented
+configuration flexibility, with the possibility to deploy only selected modules.
+On top of that, this method let us manage the Openbaton version freely, having
+more control on update especially during the development of our components.
+Finally, a Docker based solution seemed to be the best approach since all of our
+components were meant to be put inside a Docker container.
