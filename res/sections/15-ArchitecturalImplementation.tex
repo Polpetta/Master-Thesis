@@ -355,9 +355,61 @@ definition in a suitable YAML for Kubernetes, that had in turn to elaborate it
 and schedule to one minion in the cluster. The monitoring and management would
 remain untouched, as we planned to create an image with the integrated EMS tools
 that provided a seamless integration with Docker container. With this setting,
-the only thing remained was to solve the issue of converting TOSCA definitions in
-YAML one.
-The first thing we started thinking about was how to perform the conversion.
+the only thing remained was to solve the issue of converting TOSCA definitions
+in YAML one. The first thing we started thinking about was how to perform the
+conversion. This topic was quite important because the TOSCA definition does not
+really consider the possibility to have an alternative virtualization system
+apart from the hypervisor one. This causes the TOSCA definition to be, in our
+opinion, too much focused on the resources usage and regarding granularity
+aspects such the deployment flavour and the kind of virtual link (concept that
+does not really exsits in container based systems) to instatiate. Nonetheless,
+we performed a mapping between most of the TOSCA keywords with some of the YAML
+definition, in a way that a TOSCA configuration file was able to generate a
+valid YAML deployment. After that, we started thinking instead who, in the
+current architecture, had the task to perform this operation. Initially we
+though that Kubernetes itself could have been a perfect candidate. From a
+received TOSCA, a Kubernetes component should have validated and translated the
+TOSCA definition to generate a YAML suitable to be finally submitted to the
+Kubernetes API Server. Another feasible approach could have been to create a
+Openbaton plugin in order to take the TOSCA to deploy and convert it before
+submitting it to Kubernetes. This solution had great advantages in terms of
+responsability separation: in this way only the MANO had to know, for a VIM
+based on Kubernetes, that a conversion needed to be performed. From a Kuberentes
+point-of-view, nothing would have changed, since all the configuration
+conversion would have been performed by Openbaton.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.7]{OpenbatonMANO}
+  \caption[Openbaton architecture components]{Openbaton architecture components,
+    taken from~\cite{openbatondocumentation}.}
+  \label{chap:archimpl:sec:secondattempt:img:openbatonMANO}
+\end{figure}
+
+We started inspecting the Openbaton framework, to identify possible modules
+where the conversion should have taken place. We identified first the VIM
+driver, that is the component that directly interacts with the VIM, and then the
+VNFM, because we discovered there were programmatic dipendences between the two
+Openbaton standard components. After we identified the VIM driver and the VNFM
+as components to be rewritten and to be adapted to the Kubernetes VIM, we
+studied the original components code. We discovered that regarding these
+components the documentation was very poor, especially regarding the code. On
+top of that, the program interfaces given by the develpers did not match our
+expectations: we thought to find interfaces indipendent from the type of the
+virtualization technology, instead, we found that they were strictly coupled
+with frameworks like Openstack or cloud vendors like Google Compute engine or
+Amazon AWS. These reasons, with the fact that after two weeks we were not able
+to get any working prototype of VIM driver or VNFM we gave up, searching for
+another solution.
+
+\section{Second attempt - revision one}
+
+The impossibility to develop a custom VIM driver and VNFM manager lead us to
+search for an alternative solution. Then, we started work directly on the VIM.
+The base approach was to create an API Server which in future an Openbaton
+plugin could contact and simply deploy TOSCA definitions, interacting with a set
+of RESTful API.
+
 % TODO talk about the problems of mapping the TOSCA definition from Openbaton
 % with the Kubernetes elements (which we actually solved), and talk about how we
 % weren't able to develop a VNFM plugin for Openbaton, and describe how Harbor
