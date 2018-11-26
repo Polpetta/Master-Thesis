@@ -5,13 +5,13 @@
 %**************************************************************
 % Frontespizio
 %**************************************************************
-\newcommand{\myName}{Name Surname}                                    % autore
-\newcommand{\myTitle}{A thesis}                                 % tipo di tesi
-\newcommand{\mySupervisor}{Name Surname}                        % relatore
+\newcommand{\myName}{Davide Polonio}                                    % autore
+\newcommand{\myTitle}{5G as a Service: an ETSI-NFV compliant architecture proposal}                                 % tipo di tesi
+\newcommand{\mySupervisor}{Armir Bujari}                        % relatore
 \newcommand{\myCoSupervisor}{Name Surname}                      % co-relatore
 % decomment line 12 or 13
 \newbool{ifCoSupervisor}
-\booltrue{ifCoSupervisor}
+\boolfalse{ifCoSupervisor}
 % \boolfalse{ifCoSupervisor}
 \newcommand{\myDegree}{Tesi di laurea magistrale}                
 \newcommand{\myUni}{Università degli Studi di Padova}           % università
@@ -139,23 +139,89 @@
 %**************************************************************
 % Impostazioni di listings
 %**************************************************************
-\lstset{
-    language=[LaTeX]Tex,%C++,
-    keywordstyle=\color{RoyalBlue}, %\bfseries,
-    basicstyle=\small\ttfamily,
-    %identifierstyle=\color{NavyBlue},
-    commentstyle=\color{Green}\ttfamily,
-    stringstyle=\rmfamily,
-    extendedchars=true,
-    numbers=left,%
-    numberstyle=\tiny,
-    stepnumber=1,
-    numbersep=8pt,
-    showstringspaces=false,
-    breaklines=true,
-    frameround=ftff,
-    frame=single
+%\lstset{
+%    language=[LaTeX]Tex,%C++,
+%    keywordstyle=\color{RoyalBlue}, %\bfseries,
+%    basicstyle=\small\ttfamily,
+%    %identifierstyle=\color{NavyBlue},
+%    commentstyle=\color{Green}\ttfamily,
+%    stringstyle=\rmfamily,
+%    extendedchars=true,
+%    numbers=left,%
+%    numberstyle=\tiny,
+%    stepnumber=1,
+%    numbersep=8pt,
+%    showstringspaces=false,
+%    breaklines=true,
+%    frameround=ftff,
+%    frame=single
+%}
+\definecolor{codegreen}{RGB}{0,153,0}
+\definecolor{codegray}{RGB}{96,96,96}
+\definecolor{codered}{RGB}{204,0,0}
+\definecolor{codeblue}{RGB}{0,0,153}
+\definecolor{codelightblue}{RGB}{0,204,204}
+\definecolor{codepurple}{RGB}{0.58,0,0.82}
+\definecolor{backcolour}{RGB}{235,235,235}
+
+\newcommand\YAMLcolonstyle{\color{black}\footnotesize}
+\newcommand\YAMLkeystyle{\color{blue}\footnotesize}
+\newcommand\YAMLvaluestyle{\color{black}\footnotesize}
+
+\makeatletter
+
+% here is a macro expanding to the name of the language
+% (handy if you decide to change it further down the road)
+\newcommand\language@yaml{yaml}
+
+\expandafter\expandafter\expandafter\lstdefinelanguage
+\expandafter{\language@yaml}
+{
+  keywords={true,false,null,y,n},
+  keywordstyle=\color{codeblue}\bfseries,
+  basicstyle=\YAMLkeystyle\ttfamily,                                 % assuming a key comes first
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{codegrey}\ttfamily,
+  stringstyle=\YAMLvaluestyle\ttfamily,
+  moredelim=[l][\color{codered}]{\&},
+  moredelim=[l][\color{codered}]{*},
+  moredelim=**[il][\YAMLcolonstyle{:}\YAMLvaluestyle]{:},   % switch to value style at :
+  morestring=[b]',
+  morestring=[b]",
+  literate =    {---}{{\ProcessThreeDashes}}3
+                {>}{{\textcolor{codered}\textgreater}}1     
+                {|}{{\textcolor{codered}\textbar}}1 
+                {\ -\ }{{\ -\ }}3,
 }
+
+% switch to key style at EOL
+\lst@AddToHook{EveryLine}{\ifx\lst@language\language@yaml\YAMLkeystyle\fi}
+\makeatother
+
+\newcommand\ProcessThreeDashes{\hspace*{0.4cm}\llap{\color{codered}\footnotesize-{-}-}}
+
+\lstdefinestyle{mystyle}{
+    basicstyle={\footnotesize\ttfamily},
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegray},
+    keywordstyle=\color{codeblue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codegreen},
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
 
 
 %**************************************************************

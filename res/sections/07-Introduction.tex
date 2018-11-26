@@ -1,48 +1,85 @@
- % This is just a draft, nothing suitable for the final product: sources are in
- % form of a todo
- 
- % --- INTRODUCTION ---
 \chapter{Introduction}
 \label{chap:intro}
 
- Through the history of internet, many factors changed and new innovations came,
- but at the end of the day a fundamental key remains: connection performances
- are, indeed, what the users really want. With the arrival of mobile
- connectivity, wireless networks started to have an important role in everyone's
- life. In this context network efficiency is a decisive factor in the
- development of new connectivity standards (e.g 2G, 3G, LTE) and in the creation
- of ad-hoc transmission protocols (i.e. TCP versions specialized to exploit the
- characteristic of wireless networks, such as Hybla and Vegas). It is for this
- reason that, beside improved radio communications, back-end infrastructure
- began to be refined too. During their communication to the destination packets
- are elaborated, compressed and processed in order to make their transmission as
- fast as possible. On top of that, mobile traffic is continuously surging every
- year, with the backbones having more and more data to deliver, making
- in-hardware backbone solutions less efficient. Their time-to-deploy, in fact,
- is very high compared to the requirements of the network. With this trend,
- in-hardware solutions will not be able to keep up. Is with this considerations
- that a software approach is being proposed to become the new way to deploy
- network components. While less efficient, they are faster to bring them up,
- offering an unprecedented flexibility~\cite{nguyen2017sdn}. Furthermore, new
- virtualization technologies such as Cloud computing and Docker are becoming
- more and more mature for being employed in large-scale production environments,
- where new frameworks, called orchestrators (e.g. Kubernetes, Docker Swarm),
- allow to easily manage the application lifecycle, i.e. deployment, scale
- up/down and finally, removal.
+Through its history, the Internet has undergone many, rather slow, innovation
+cycles, each bringing into the light its unique and important role in human
+societal evolution. The Internet has effectively become a utility, embedded into
+our everyday fabric which is more than often taken for granted. Connectivity
+plays an important role and service continuity and performance is what the users
+really strive for.
 
- \newpage
+Several decades of research and engineering effort have broadened the
+possibilities with which users access the network i.e., enhanced wired and
+wireless connectivity, like Ethernet, Fast Ethernet, 2G, 3G, LTE, while enjoying
+their preferred services. This pace of innovation is matched by a similar
+evolution of the TCP/IP protocol standards, trying to keep up with the
+continuous surge of network traffic. On their side, Internet Service Providers
+(ISPs) rely on ad-hoc optimizations of the end-to-end service delivery path. To
+this date, optimization is made in terms of physically placing middlebox
+devices, carrying out specialized network functions, on the delivery path. Deep
+packet inspection, firewalling, ad-hoc transport optimization are some examples
+of such functionalities deployed either at aggregation or core-network points.
+
+This modus operandi, however, is neither scalable nor cost-effective.
+Maintenance operational costs, careful planning and dedicated costly hardware
+are some of the side-effects. Yet, another more subtle symptom is that of
+coupling software lifecycle to the hardware (middlebox) hindering innovation.
+Thanks to recent developments, new possibilities have arisen. In particular, the
+trend in virtualization and softwarization techniques have open the door to the
+so-called network softwarization, allowing for a potentially faster pace of
+innovation in the network-side by exploiting the software as a driving force.
+
+The fifth-generation public mobile network architecture, commonly referred to as
+5G, has been designed to support highly reliable high-performance communications
+to satisfy the different requirements of all kinds of applications and services.
+To achieve such flexibility, 5G assigns a central role to “network
+softwarization”, i.e. the ability of the network to operate according to rules
+and policies that may be controlled by software entities. By leveraging on
+Software Defined Networking (SDN) and Network Function Virtualization (NFV), the
+5G architecture heavily relies on software entities whose behaviour may be
+easily customized to adapt to the requirements of different applications and
+tenants. The 5G vision is centered around the idea of building tenant- or
+service-specific networks on top of a collection of heterogeneous shared
+physical infrastructures. This concept is referred to as network slicing.
+Slicing is a key enabler for making the network able to support applications
+with a wide range of different requirements, including:
+\begin{enumerate*}[label=(\roman*)]
+\item enhanced mobile broadband (eMBB);
+\item ultra-reliable and low-latency communications (URLLC) and
+\item massive machine-type communications (mMTC).
+\end{enumerate*}
+
+This new possibility of provisioning a network with specialized, heterogeneous
+classes of services, combined with emerging virtualization technologies like
+cloud computing, hypervisor-virtualized machine or container-based solutions,
+enables the deployment of Virtualized Network Functions (VNFs) within seconds
+running on generic purpose or custom hardware. While there may be some
+performances degradation, it has been demonstrated that their time-to-deploy and
+the possibility of automation they offer are unprecedented~\cite{nguyen2017sdn}.
+On top of that, a specialized software entity acts as a MANager and Orchestrator
+(MANO) for these VNFs, managing their lifecycle. While most of the current
+proposals are based on a hypervisor solution, in this thesis we set the
+objective of providing a proof-of-concept implementation of an Infrastructure
+Management and Orchestration plane based on the new container-based technology,
+called Docker, on a recent orchestrator framework: Kubernetes. Moreover,
+building on recent published results of the 3GPP Release 15, we outline a
+software architecture capable of end-to-end service orchestration exploiting
+container-technology.
  
- \section{Document organization}
+\section*{Document organization}
  
- This thesis is organized as follows:
- \begin{itemize}
-  \item Chapter~\ref{chap:background} describes background information about 5G 
-and the technologies used to build an ETSI compliant architecture
-  \item Chapter~\ref{chap:rel_wk} gives an insight of correlated works on this 
-field
-  \item Chapter~\ref{chap:prjan} explains the analysis performed on the 
-requirements provided and the design choices performed.
-  \item Chapter~\ref{chap:archimpl} provides an in-depth view of the 
-high-level architectural implementation.
-  \item Chapter~\ref{chap:conclusions} wraps up the overall project experience.
- \end{itemize}
+This thesis is organized as follows:
+\begin{itemize}
+ \item Chapter~\ref{chap:background} describes background information about 5G
+   and the technologies used to build an ETSI compliant architecture;
+ \item Chapter~\ref{chap:rel_wk} gives an insight of correlated works on this
+   field;
+ \item Chapter~\ref{chap:prjan} explains the analysis performed on the
+   requirements provided and the design choices performed;
+ \item Chapter~\ref{chap:archimpl} provides an in-depth view of the high-level
+   architectural implementation;
+ \item Chapter~\ref{chap:vnf_ns_impl} gives a brief explanation of the VNF and NS
+   implementation;
+ \item Chapter~\ref{chap:test} describes the tests done on the platform;
+ \item Chapter~\ref{chap:conclusions} wraps up the overall project experience.
+\end{itemize}

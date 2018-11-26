@@ -98,77 +98,7 @@ system that is flexible enough to allow dynamic packet routing, support
 scalability and provide methods to recovery from failures. With this challenges 
 packet transmission revealed to be a fundamental point to choose carefully.
 
-\subsection{Packet transmission strategies}
-
-When a packets are sent from a sender $S$, to a receiver $R$, they start
-travelling to the backbone receiving appropriate in-hardware packet processing
-before being received by $R$. During this elaboration, it is important to
-maintain the transparency of the connection, so that the network users are not
-aware of the packets elaboration at all. To perform that, many solutions are
-available: TUN/TAP packet encapsulation, IP Encapsulation within IP or TCP
-session recreation (know also as TCP split).
-
-TUN/TAP and IP Encapsulation within IP (initially defined in RFC 2003 with the
-aim to deliver IP packets over Mobile IP for mobile networks) maintain the
-connection transparency encapsulating the packet in another one.
-\begin{figure}[t]
-  \centering \includegraphics[scale=0.5]{IPoverIP}
-  \caption[IP Encapsulation within IP packet schema]{A schema of IP
-    Encapsulation within IP. Is noticeable how the original packet becomes the
-    payload of a new one, thus being encapsulated. All the information
-    regarding the original packet remains untouched: when this kind of packet
-    gets send from a machine to another, the OS will remove the new packet
-    header and will present to the user-space program receiving the data its
-    payload: a IP packet. Packets encapsulation can be applied with higher
-    layers too, thus allowing for TCP and UDP packet encapsulation.}
-  \label{chap:prjan:img:ip_over_ip}
-\end{figure}
-
-
-In this way, the original packet remains preserved and it becomes the new packet
-payload, that can be elaborated and modified accordingly, until it gets
-decapsulated and sent to $R$ eventually. When $R$ receives the packet, it is not
-be aware of the packet elaboration, since all the original headers were
-preserved (or slightly modified). In particular, IP Encapsulation within IP
-allow the packets to make intermediate destinations that otherwise would not be
-selected. TCP session recreation, instead, ``split'' the TCP session in two
-endpoints: an Ingress, that manage the connection with the client and an Egress,
-that communicate with the packet receiver creating a multi-overlay-hop path
-where for each hop there is an possible independent TCP connection. In order to
-achieve that, a session table needs to be established and continuously updated,
-while TCP headers need to be accordingly modified to allow data transmission
-through the Ingress and Egress points. Nonetheless, care should be given to
-packets path: in order to avoid ill-calculated congestion windows, the incoming
-packets need to follow the same (or an equivalent one) path for the same
-instantiated connection. This phenomenon is based on the intermediate proxies
-that create the route: it is the case, for example, when an intermediate node
-sends back a spoofed ACK before the original packet is delivered to the real
-consignee. In this scenario, the sender, unaware of the proxy, will miscalculate
-the sending window based on the too low RTT. Other problems of TCP splitting are
-reliability and security, especially because the end to end TCP logic is no
-longer maintained: a server failure may cause to an unaware client to believe
-that all the packets have reached the destination. TCP session recreation seems
-burdensome and it doesn't seem to add any significant benefit at the first
-sight, but it offers the flexibility to perform extensive packet manipulation:
-since the packet its recreated every time at the Ingress and Egress points,
-while in the Network Function Virtualization Infrastructure (NFVI), the original
-packet can be stripped of its headers (that could be saved in the session table)
-to slightly improve internal packet transmission. \todo{Insert TCP session
-  recreation schema} On top of that, it offers the possibility to use different
-TCP flavours, hence increasing the communication speed in heterogeneous networks
-(e.g. in case of satellite connections TCP Hybla can be employed, while it is
-known that HighSpeed TCP gives best results when applied in optical fiber-based
-connections).
-
-During the test-bed development we first tried the TUN/TAP solution, that
-revealed to be not completely transparent and with major performance drawbacks
-(i.e. packet transmission in a LAN connection reached latencies of 50ms)
-\todo{Explain the constraint of point-to-point connections, while we need
-  dynamic SFC)}, so we choose to opt for a TCP session recreation solution,
-implementing a little back-end with the aim of saving in a persistent storage
-the SFC the packet has to perform and additional metadata.
-
-\section{Available technologies in the market}
+\section{Available technologies in the market} \todo{Add images}
 \label{chap:prjan:sec:tech}
 
 Before starting any effective work on the project it has been decided to 
