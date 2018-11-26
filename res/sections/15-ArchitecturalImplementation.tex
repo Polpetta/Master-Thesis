@@ -178,7 +178,7 @@ valid VIM component.
 
 After the failure to find a viable setting for Openstack, we decided to look
 around for other solutions. We started studing proper Docker container
-orchestrators, that could offer all the features we needed: container lifecycle
+orchestrators that could offer all the features we needed: container lifecycle
 management, scaling, healing and monitoring. We decided to pick two of the most
 mature and famous ones: Docker Swarm and Kubenetes. The decision to study only
 these two relies on their big community supporting them and the possibility to
@@ -210,4 +210,21 @@ over the network, especially regarding the SFC implementation, explained better
 in Chapter~\ref{chap:vnf_ns_impl}.
 
 \subsection{Kubernetes}
+Kubenetes, as already described in the technology section, is a orchestrator 
+created by Google able to create a software abstraction from the underlying 
+virtualization technology. This enables Kubernetes to create an integration 
+with the Docker technology. Kubernetes has a architecture based on plug-ins, 
+giving  the possibility to the users to change part of Kubernetes itself, such 
+as the networking routing strategy or the persistence layer. With this 
+flexibility Kubernetes offered to us what Docker Swarm was not able to give. 
+Additionally, we had the possibility to set custom Domain Name System (DNS) 
+lookups and distribute other internal components in order to avoid requests 
+bottleneck.
 
+\subsection{Kubernetes configuration}
+Kubernetes does not have a minimum number of nodes in order to properly 
+function. Nonetheless, we decided to use a four node cluster configured in the 
+following way: three slaves node (also known as \emph{minions}) and one master 
+node. The Kubernetes version installed was the 1.11, enabling us to exploit new 
+features like a reworked DNS lookup system, a better intergrated\todo{find our 
+1.11 new features}.
