@@ -222,9 +222,143 @@ lookups and distribute other internal components in order to avoid requests
 bottleneck.
 
 \subsection{Kubernetes configuration}
-Kubernetes does not have a minimum number of nodes in order to properly 
-function. Nonetheless, we decided to use a four node cluster configured in the 
-following way: three slaves node (also known as \emph{minions}) and one master 
-node. The Kubernetes version installed was the 1.11, enabling us to exploit new 
-features like a reworked DNS lookup system, a better intergrated\todo{find our 
-1.11 new features}.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.25]{kubernetes-control-plane}
+  \caption[Kubernetes control plane schema]{Kubernetes control plane
+    schema~\cite{k8scp}. It is possible to denothe important components in the
+    Kubernetes Control plane. In this high-level component architecture the
+    master keeps an internal database, \emph{etcd}, the entry point for the API
+    Server and the Pod scheduler. The nodes instead contain the kubelet daemon,
+    the container runtime and the networking configuration.}
+  \label{chap:archimpl:sec:secondattempt:img:k8scp}
+\end{figure}
+
+Kubernetes does not have a minimum number of nodes in order to properly work.
+Nonetheless, we decided to use a four node cluster configured in the following
+way: three slaves nodes (also known as \emph{minions}) and one master node. The
+Kubernetes version installed was the 1.11, enabling us to exploit new features
+like a reworked DNS lookup system and new storage features\footnote{A full
+  kubernetes log release can be found at:
+  \url{https://kubernetes.io/blog/2018/06/27/kubernetes-1.11-release-announcement/}}.
+We initially deployed from the internal Openstack of the University four nodes
+with 4GB of RAM, 10 GB of SSD storage and 2 vCPUs on Ubuntu 16.04 machines. We
+performed the installation using the official Kubernetes Repositories. After the
+initial installation, we obtained a configuration similar to the one illustrated
+in Figure~\ref{chap:archimpl:sec:secondattempt:img:k8scp}. In this figure is
+possible to denote different components on the master node and on the minions,
+which will be described.
+
+\subsubsection{Master architecture}
+\begin{description}
+\item[API Server] Fist of all, the User interacts with an API Server located in
+  the master node. This APIs are developed using the Swagger tools, ensuring
+  consistency and uniformity. From the image, is possible to see that the API
+  Server communicates with all the main components of the architecture.
+\item[etcd] The \verb!etcd! component communicates via the gRCP protocol, a
+  efficient Remote Procedure Call (RPC) protocol to serve data to the API
+  Server. This component is a distributed key-value storage, and allows data to
+  be shared in a reliable way across different machines~\cite{etcddatamodel}.
+\item[Controller Manager] The Controller Manager is the main Kubernetes control
+  loop, and its role is to periodically check the system health and integrity.
+  It communicates with the API Server via the Protobuf protocol, a
+  language-neutral, platform-neutral and extensible data serialization
+  mechanism.
+\item[Scheduler] The Scheduler regulates the Pods distribution in the minions,
+  having a knowlege of the current cluster typologies and of the current
+  resources available. On top of that, is able to handle hardware constraints,
+  defined policy, and defined class of QoS.
+\end{description}
+
+All of the previously descripted components are hide beghind the API server,
+which is the only components the final user can really interact with. The
+protocol between the API server and the final user used is a common JSON data
+object interchange. To make the Kubernetes more human-friendly, Kubernetes comes
+with a command line interface (CLI) tool, called \verb!kubectl!, that allows to
+easily perform deployments and admin operations on the cluster without having a
+full knowlege of the official API.
+
+\subsubsection{Minions architecture}
+
+As referred in Figure~\ref{chap:archimpl:sec:secondattempt:img:k8scp}, the API
+server interacts with the components located in the minion nodes. In the image
+we can denote different modules.
+\begin{description}
+\item[Kubelet] The \verb!kubelet! daemon is the core component that runs in
+  every minion, and \emph{de facto} acts like a local manager. It receives YAML
+  or JSON definition from the API Server of Pod specifications (PodSpec) that
+  have to be deployed in the node where is running. Then, its role is to ensure
+  that the Pod deployed are up and healthy. This excludes possible
+  intereferences with other virtualized deployments.
+\item[Container Runtime] This runtime does not have to necessarily be based on
+  Docker or a container-based technology, but it can be based on an hypervisor
+  one, e.g. the KuberVirt project\footnote{Additional information about this
+    project can be found at the following link: \url{https://kubevirt.io/}}. The
+  container runtime performs the real Pods deployments.
+
+  Communications between the container runtime and the Kubelet component are
+  performed by the Container Runtime Interface (CRI), that consists of a series
+  of specifications/requirements built on top of the Protobuf protocol API.
+  Additionally, the Container Runtime has to communicate with the underlying OS,
+  and this operation is performed using the Open Container Initiative (OCI)
+  specification, which seeks to provide a standard on how to interact and run
+  the container images on the OS.
+\item[Networking] This part aims to provide to che container runtime network
+  connectivity. The role of the networking module is to provide, over than the
+  standard Internet connectivity, the possibility for Pods to see each other as
+  a part of the same network, even if Pods could be dislocated in other minions
+  working between different subnets or completely different networks. On top of
+  that, dynamic port allocation has to be kept in consideration too. The
+  Kubernetes networking model focus on three fundamental
+  requirements~\cite{k8snetworkingwiki}:
+  \begin{itemize}
+  \item all containers have to communicate with all the other containers without
+    NAT;
+  \item all nodes have the possibility to communicate with all containers (and
+    vice-versa) without NAT;
+  \item the IP that a container sees itself as is the same IP that others see it
+    as.
+  \end{itemize}
+  It is important to note that the IP addresses are at the Pod scope and not at
+  the container one. Every Pod has in fact its own networking space. Containers
+  inside a Pod can reach each other using the \verb!localhost! address. In
+  Kubernetes, several networking implementation exists, like Flannel, Google
+  Copmute Engine (GCE), Kube-route, Project Calico~\cite{k8snetworkingwiki}. For
+  our deployment, we decided to use Flannel, that demonstrated to work without
+  any particular configuration and to be mature enough to handle big workloads.
+
+  The communications between this component and the Kubelet one is carried
+  through the Cloud Native Interface (CNI) protocol, that consists of a set
+  of specification and libraries for writing plugins to configure network
+  interfaces in linux containers~\cite{cnigithub}.
+\end{description}
+
+\subsection{Openbaton integration}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{Attempt2v1}
+  \caption[Second attempt components organization schema]{Second attempt
+    components organization schema. It is possible to see, differently from the
+    first attempt, how now Kubernetes covers the old Openstack role and act as
+    VIM, receiving YAML definitions in to the master node that will schedule the
+    VNF in one of its minions.}
+  \label{chap:archimpl:sec:secondattempt:img:schema1}
+\end{figure}
+
+After the Kubernetes configuration and installation, we started working for a
+viable intergation between Kubernetes and Openbaton. Our first idea is the one
+illustrated in Figure~\ref{chap:archimpl:sec:secondattempt:img:schema1}:
+Openbaton, that had the TOSCA definitions, had to somehow convert these
+definition in a suitable YAML for Kubernetes, that had in turn to elaborate it
+and schedule to one minion in the cluster. The monitoring and management would
+remain untouched, as we planned to create an image with the integrated EMS tools
+that provided a seamless integration with Docker container. With this setting,
+the only thing remained was to solve the issue of converting TOSCA definitions in
+YAML one.
+The first thing we started thinking about was how to perform the conversion.
+% TODO talk about the problems of mapping the TOSCA definition from Openbaton
+% with the Kubernetes elements (which we actually solved), and talk about how we
+% weren't able to develop a VNFM plugin for Openbaton, and describe how Harbor
+% born from it.
