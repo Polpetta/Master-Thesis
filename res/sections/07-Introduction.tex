@@ -1,39 +1,70 @@
 \chapter{Introduction}
 \label{chap:intro}
 
-Through the history of Internet, many factors changed and new innovations came,
-but at the end of the day a fundamental key remains: connection performances
-are, indeed, what the users really want. Today, connectivity plays an important
-role in everyone's life. Several decades brought solutions with enhanced wired
-and wireless connectivity, like Ethernet, Fast Ethernet, 2G, 3G, LTE, and better
-communication protocols such as a whole plethora of TCP standards in order to
-keep up with the continuous surging of network traffic. Internet Service
-Providers to be able to efficiently process the whole quantity of packets
-passing through the network, applies several optimization along the packet path.
-Until this day, these optimization have mostly been based on costly, in hardware
-solutions. In particular, these Network Functions are able to perform only
-generic packet elaboration, since they do not know the Quality of Service
-required by every connection. It is in this context that 5G proposes a new way
-to approach networking, suggesting the virtualization of this Network Functions,
-making their deployments faster and cheaper. On top of that, it proposes
-specific services for determined kind of data. If in the past a train running a
-300km/h had to use the same network services of an IoT device sending data
-updates every hour, now 5G proposes two different and efficient solutions for
-this completely different services. This separation is performed through the
-creation of determined network components called Network Slices. This new
-possibility of offering the network with specialized class of services, combined
-with emerging virtualization technologies like cloud computing,
-hypervisor-virtualized machine or container-based solutions enables the
-deployment of Virtualized Network Functions within seconds running on generic
-purpose or custom hardware. While there may be some performances degradation,
-it has been demonstrated that their time-to-deploy and the possibility of
-automation they offers are unprecedented~\cite{nguyen2017sdn}. On top of that,
-specialized software acts as a MANager and Orchestrator (MANO) for this VNFs,
-regulating their lifecycle. While most of the current proposals are based on
-hypervisor on cloud solutions, in this thesis we are going to see a
-proof-of-concept of a part of a Network Slice, equipped with a custom MANO
-solution, based on the new container-based technology, called Docker, on a
-recent orchestrator framework: Kubernetes.
+Through its history, the Internet has undergone many, rather slow, innovation
+cycles, each bringing into the light its unique and important role in human
+societal evolution. The Internet has effectively become a utility, embedded into
+our everyday fabric which is more than often taken for granted. Connectivity
+plays an important role and service continuity and performance is what the users
+really strive for.
+
+Several decades of research and engineering effort have broadened the
+possibilities with which users access the network i.e., enhanced wired and
+wireless connectivity, like Ethernet, Fast Ethernet, 2G, 3G, LTE, while enjoying
+their preferred services. This pace of innovation is matched by a similar
+evolution of the TCP/IP protocol standards, trying to keep up with the
+continuous surge of network traffic. On their side, Internet Service Providers
+(ISPs) rely on ad-hoc optimizations of the end-to-end service delivery path. To
+this date, optimization is made in terms of physically placing middlebox
+devices, carrying out specialized network functions, on the delivery path. Deep
+packet inspection, firewalling, ad-hoc transport optimization are some examples
+of such functionalities deployed either at aggregation or core-network points.
+
+This modus operandi, however, is neither scalable nor cost-effective.
+Maintenance operational costs, careful planning and dedicated costly hardware
+are some of the side-effects. Yet, another more subtle symptom is that of
+coupling software lifecycle to the hardware (middlebox) hindering innovation.
+Thanks to recent developments, new possibilities have arisen. In particular, the
+trend in virtualization and softwarization techniques have open the door to the
+so-called network softwarization, allowing for a potentially faster pace of
+innovation in the network-side by exploiting the software as a driving force.
+
+The fifth-generation public mobile network architecture, commonly referred to as
+5G, has been designed to support highly reliable high-performance communications
+to satisfy the different requirements of all kinds of applications and services.
+To achieve such flexibility, 5G assigns a central role to “network
+softwarization”, i.e. the ability of the network to operate according to rules
+and policies that may be controlled by software entities. By leveraging on
+Software Defined Networking (SDN) and Network Function Virtualization (NFV), the
+5G architecture heavily relies on software entities whose behaviour may be
+easily customized to adapt to the requirements of different applications and
+tenants. The 5G vision is centered around the idea of building tenant- or
+service-specific networks on top of a collection of heterogeneous shared
+physical infrastructures. This concept is referred to as network slicing.
+Slicing is a key enabler for making the network able to support applications
+with a wide range of different requirements, including:
+\begin{enumerate*}[label=(\roman*)]
+\item enhanced mobile broadband (eMBB);
+\item ultra-reliable and low-latency communications (URLLC) and
+\item massive machine-type communications (mMTC).
+\end{enumerate*}
+
+This new possibility of provisioning a network with specialized, heterogeneous
+classes of services, combined with emerging virtualization technologies like
+cloud computing, hypervisor-virtualized machine or container-based solutions,
+enables the deployment of Virtualized Network Functions (VNFs) within seconds
+running on generic purpose or custom hardware. While there may be some
+performances degradation, it has been demonstrated that their time-to-deploy and
+the possibility of automation they offer are unprecedented~\cite{nguyen2017sdn}.
+On top of that, a specialized software entity acts as a MANager and Orchestrator
+(MANO) for these VNFs, managing their lifecycle. While most of the current
+proposals are based on a hypervisor solution, in this thesis we set the
+objective of providing a proof-of-concept implementation of an Infrastructure
+Management and Orchestration plane based on the new container-based technology,
+called Docker, on a recent orchestrator framework: Kubernetes. Moreover,
+building on recent published results of the 3GPP Release 15, we outline a
+software architecture capable of end-to-end service orchestration exploiting
+container-technology.
  
 \section*{Document organization}
  
