@@ -358,3 +358,6 @@ versa
 DNSMasq
 DaemonSets
 specificate
+AMQP
+VNFMs
+middleware

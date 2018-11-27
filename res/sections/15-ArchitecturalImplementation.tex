@@ -6,6 +6,11 @@ all the problems related to it and how they were solved. We will show all the
 various attempts made, and we will discussion about the technological issue and
 changes we had to perform.
 
+\section{Architecture introduction}
+Before describing the real implementation, we are going to briefly introduce
+some of its functional components and the way they work.
+
+\subsection{A two-level orchestration framework}
 \begin{figure}[t]
   \centering
   \includegraphics[scale=0.5]{Architecture}
@@ -14,7 +19,64 @@ changes we had to perform.
     It is possible to see how Openbaton interacts with the various components in
     the architecture, and how RabbitMQ is used as a message broker between the
     different parts to enable message exchanging.}
+  \label{chap:archimpl:sec:fistattempt:img:architecture}
 \end{figure}
+
+It is important to keep in consideration that the ETSI NFV architectural
+framework is to be considered service and/or application agnostic. This excludes
+this framework from the burden of being application aware for NS configuration
+and management and for the VNF application layer configuration and management.
+
+The lack of these two management requires a service aware software, that has the
+task to perform service lifecycle management and monitoring via the API offered
+by the ETSI MANO. In this context, is possible to identify two different type of
+orchestrator, as represented in
+Figure~\ref{chap:archimpl:sec:fistattempt:img:architecture}:
+\begin{itemize}
+\item a high layer, service-aware;
+\item a low layer, service-unaware.
+\end{itemize}
+Both the layer would use Openbaton. The messages would be exchanged through
+RabbitMQ, using the Advance Message Queuing Protocol (AMQP).
+
+\paragraph*{Low-layer orchestrator}
+The low-layer orchestrator jobs corresponds to the one defined in the ETSI MANO
+definition, with the role of managing and orchestrating VNFs and NSs. The
+low-layer MANO holds different data repositories where VNF and NS definitions
+are stored, various monitoring tools and logs and the network services
+repository. The low layer MANO exposes a set of APIs to the upper layer (related
+to handling services) MANO, that is able to configure and manage the services.
+In other words, the service MANO has the possibility to configure and launch
+services to the low-layer orchestrator, providing the necessary information.
+
+\subsection{Low-layer functional components}
+In the following section we are going to briefly talk about the role of the most
+peculiar components in the defined architecture. A description of the tasks that
+the components have to abide in the ETSI MANO architecture is available in
+Section~\ref{chap:archimpl:sec:secondattempt:sec:k8s}.
+\begin{description}
+\item[VNFM] As is possible to see from the
+  Figure~\ref{chap:archimpl:sec:fistattempt:img:architecture}, the following
+  architecture envisages the possibility of multiple VNFM components, required
+  for the control and management of different virtualized functions. In
+  particular, the use of different and specialized VNFMs allows to control and
+  manage different functional aspects of the control/data plan.
+\item[Network service management] in this architectural proposal, it corresponds
+  the the brain of the infrastructure MANO, where service instantiation and
+  lifecycle management happens. This part interacts with the VNFM/VIM and with
+  the RabbitMQ middleware. In this context, the NFVO is involved in chaining the
+  required VNFs in order to create the service delivery path. Inside this
+  component is possible to identify the Service Lifecycle Management, that
+  listens to status report coming from the VNFM and thus generating logs and
+  monitoring information.
+\item[Monitoring and Information Management] this block gathers data from the
+  data layers (identified in the image as the repository), which can be object
+  of consultation from other applications.
+\end{description}
+
+From now on we are going to describe out attempt in implementing the
+aforementioned architectural proposal, and we will describe the challenges and
+the issue we encountered.
 
 \section{First attempt}
 
@@ -29,7 +91,7 @@ VNF states via the message broker RabbitMQ. Is possible to see the interactions
 between elements in a minimum schema available in
 Figure~\ref{chap:archimpl:sec:fistattempt:img:schema1}.
 
-\begin{figure}[h]
+\begin{figure}[t]
   \centering
   \includegraphics[scale=0.5]{Attempt1}
   \caption[Fist attempt components organization schema]{Fist attempt components
@@ -231,7 +293,7 @@ we had the possibility to set custom Domain Name System (DNS) lookups and
 distribute other internal components in order to avoid requests bottleneck.
 
 \subsection{Kubernetes configuration}
-
+\label{chap:archimpl:sec:secondattempt:sec:k8s}
 \begin{figure}[t]
   \centering
   \includegraphics[scale=0.25]{kubernetes-control-plane}
