@@ -10,111 +10,6 @@ project has been developed with the cloud provided by the University of Padua,
 Openstack (which a product analysis can be found later
 in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 
-\section{Architecture overview}
-
-During the test-bed development the software architecture diverged from the
-original one, experiencing different evolutions and modifications.
-
-\subsection{VIBES architectural description}
-
-In the original VIBES architectural design, based on leveraging virtualization
-technologies, is possible to identify different macro-components, each of these
-specialized in fulfilling a specific goal. For the ETSI standards, the Network
-Function Virtualization (NFV) design should be composed as follows:
-\begin{figure}[t]
- \centering \includegraphics[scale=2]{etsi_arch}
- \caption{A schematic image representing the high level NFV architecture
-   proposed by ESA.}
- \label{chap:prjan:img:etsi_arch}
-\end{figure}
-
-\begin{itemize}
- \item \textbf{Network Function Virtualization Infrastructure (NFVI)}: it's the
-   heart of the whole computation component, and here three sub-domains can be
-   identified: \todo{Expand this section}
-\begin{itemize} 
- \item \textbf{Hyper-visor domain} that is composed of the Virtual Compute, the
-   Virtual Storage, and the Virtualization Layer. These components are used to
-   virtualize the computational and storage resources, providing a layer for
-   accessing it.
- \item \textbf{Compute domain} composed by the Physical Compute and the Physical
-   Storage. These are the real resources which are virtualized via software.
- \item \textbf{Infrastructure domain} which has the Physical Network, and its
-   virtualized counterpart as made available by the Virtualization Layer.
-\end{itemize}
-
-In conventional virtualization systems these resources are usually separated
-from the host operating system, providing better isolation but worst
-performance. The ETSI infrastructure, instead, tries with container
-virtualization technology to push for a better NFV responsiveness, removing the
-additional operating system (called ``guest'' OS) required by the usual
-hyper-visor-oriented approach.
-
-To realize the required components, specific tools were suggested in the VNF
-technical proposal: regarding the NFV (network infrastructure) domain
-Docker-Compose was proposed as a viable solution, while to store PEP instances
-docker swarm was described as a possible candidate.
-
-We performed an accurate analysis of the tools chosen based on their maturity,
-on the community and on the technical support offered (e.g. user manuals,
-developer documentation), which, at the end, committed us to choose different
-tools from the suggested ones. A detailed description of the architectural
-implementation can be found in chapter~\ref{chap:archimpl}.\todo{Include prof.
-  survey about community components here}
-
-\item \textbf{VNFs} this are the core components that perform packets
-  manipulation. This components are design to be lightweight services able to
-  elaborate a great amount of packets per seconds. Manipulation can be of two
-  typologies: stateful or stateless. In the first case, a state is maintained,
-  and the VNF can perform heuristics about data coming through it (especially
-  useful to detect patterns in the data flow, e.g. DDos attacks). In the second
-  case, no state is maintained, and every packet is treated without any
-  particular assumption. Following the RFC 7665, the VNF are also called Service
-  Function (SF)\footnote{From now on the two terminologies will be use in a
-    interchangeable way~\cite{medhat2017service}.}. Additional information can
-  be found in Section~\ref{chap:prjan:sfc}.
-
-\item \textbf{NFV Management and Orchestration (MANO)} also known as NFV
-  Orchestrator (NFVO) is responsible for the end-to-end management and
-  orchestration of network services (NS), also called SFC. The MANO has
-  different responsibilities, such as managing the
-  creation/destruction/modification of the SFCs, that achieves interacting with
-  the VIM~\cite{nguyen2017sdn}. Finally, the MANO can be integrated with
-  Operational and Business Support Systems (OSS/BSS).
-\end{itemize}
-
-
-\section{SFC}
-\label{chap:prjan:sfc}
-
-\todo{Here it's missing an introduction about SFC and its terminology, need to 
-include parts of RFC 7665}
-
-Even though SFCs and VNFs are part of the ETSI architecture, the complexity 
-behind was so high to require particular care and a separated study. Indeed, 
-the  SFCs are the core of the whole project: packet transmission and 
-elaboration is made here. Challenges regarding this topic are building a 
-system that is flexible enough to allow dynamic packet routing, support 
-scalability and provide methods to recovery from failures. With this challenges 
-packet transmission revealed to be a fundamental point to choose carefully.
-
-\section{Available technologies in the market} \todo{Add images}
-\label{chap:prjan:sec:tech}
-
-Before starting any effective work on the project it has been decided to 
-perform an analysis of the possible technologies available in the market, 
-performing a choice between them and exploiting their possible ``weak 
-points''. Proceeding with a top-down approach, the frameworks were chosen from 
-the one that had the biggest role in the test-bed to conclude with the 
-less-important components.
-
-\subsection{NFVI}
-
-A critical component, as the MANO one, is the NFVI. Without it, network 
-resources can't be allocated, and since our project was focused on dynamically 
-allocating containerized applications on cloud platforms, we decided to start 
-analyzing the right framework for this component first.
-
 \subsubsection{Openstack}
 \label{chap:prjan:sec:openstack}
 Created in 2010 by a joint operation between Rackspace Hosting and
@@ -197,76 +92,12 @@ Since this was a strong project requisite that could not be easily changed, it
 has been decided to opt for the creation of a smaller and simpler clone that 
 offered a full integration with Docker and Kubernetes.
 
-\subsubsection{Harbor}
-\label{chap:prjan:sec:tech:sub:MANO:sub:harbor}
-Started as a VNFM (Virtual Network Function Virtualization Manager) to offer a
-bridge for Openbaton to interact with Kubernetes, during the project it has been
-expanded to become a complete replacement of the original product, adding the
-possibility to manage Network Services and to update the routing tables
-contained in the Roulette Controller (the tool description can be found below
-in~\ref{chap:prjan:sec:tech:sub:SFC:sub:roulette}). Harbor doesn't have a web
-interface, but it has a RESTful API that allows users to interact with it using
-CRUD operations. It offers functionalities similar to Openbaton: possibility to
-save and retrieve VNF and NS definitions (basically, Kubernetes YAML
-deployments). When an NS is saved, a consistency check is performed to assure
-that all the VNFs have already been defined in Harbor. On an NS deployment, with
-a mechanism similar to the Openbaton one, all the associated VNFs are set up
-too, making the whole operation of launching a NS atomic from the user
-point-of-view. What Openbaton doesn't do is a smart resource utilization:
-Harbor, in fact, during a NS deletion, it checks if any related VNF remains
-orphan (which means without any NS using it). In that case the VNF will enter in
-a state of pruning: after five minutes, if the VNF has not be re-utilized by any
-other NS it will be deleted. This mechanism assure faster deployments in
-environments where NSs are continuously taken up and down. \todo{I've made an
-  Harbor implementation schema, I dunno if its useful to put it here}
-
 \subsection{SFC}
 The tools analysis revealed little about already existent VNF or NS
 implementations, so it was necessary to fill the gap. Since this one of our
 thesis goals, we developed a complete solution to create a complete SFCs, trying
 to standardize our vocabulary as much as possible, and giving basic
 documentation when possible.
-
-\subsubsection{Roulette Controller}
-\label{chap:prjan:sec:tech:sub:SFC:sub:roulette}
-Dynamic communications between VNFs would not be possible without a third
-component acting as a route controller. Roulette fulfills this role, providing a
-back-end where the single VNF can ask the next packet hop. Indeed, routes must 
-be
-submitted by another component, that we identified as Harbor (component
-description available above in
-sub-section~\ref{chap:prjan:sec:tech:sub:MANO:sub:harbor}). After a NS
-deployment, Roulette gets instructed with a new route describing a NS. Every NS
-has a proper ID (called \verb!sfid!), and thus when the classifier checks a
-packet typology, it labels that packet with the specific NS ID (for a detailed
-description about the SFC header see Section~\todo{Add section/chapter/paragraph
-  ref!}). Finally, thanks to this label, every VNF knows the packet's chain and
-it will correctly forward the it to the next VNF.
-
-\subsubsection{Astaire}
-As is possible to denote, a VNF doesn't only process the incoming packets, 
-but it has to manage the communications and the related forward operations. To 
-possibly ease part of the transmission problem and to make it easier to create 
-a 
-VNF without requiring the whole knowledge about SFC, it has been decided to 
-build a framework, Astaire, that could keep the SFC related details decoupled 
-from the core of the VNF, in other words, the entity that actually elaborates 
-the packet. Built using an event-based pattern, it presents hooks that allow 
-other software written in different languages from the Astaire one (e.g. Java), 
-to be called dynamically at runtime in order to process the packet. The result 
-of this elaboration gets returned to Astaire, that performs the beforehand 
-cited operations of VNFs communications and forwarding.
-
-\subsubsection{Ironhide}
-As described in chapter~\ref{chap:archimpl}, the whole framework need to have 
-and entry and an exit point. These, defined as \textit{Ingress} and 
-\textit{Egress} points, are performed by Ironhide. Ironhide acts like a proxy, 
-hiding the whole packet processing to the sender $S$ and the receiver $R$. When 
-a client $S$ performs a request to $R$, the packet actually goes through 
-Ironhide, who has an internal classifier that it is able to recognize the type 
-of connection and to choose the right NS the packet has to go through. This 
-process in fundamental since it keeps the connection between $S$ and $R$ up, 
-for both TCP and UDP based communications.
 
 \subsection{Technologies used during development}
 
