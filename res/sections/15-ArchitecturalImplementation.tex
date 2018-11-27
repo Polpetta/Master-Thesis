@@ -6,6 +6,16 @@ all the problems related to it and how they were solved. We will show all the
 various attemps made, and we will discussion about the technological issue and
 changes we had to perform.
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{Architecture}
+  \caption[Architecture schema depicting the expected
+    implementation]{Architecture schema depicting the expected implementation.
+    It is possible to see how Openbaton interacts with the various components in
+    the architecture, and how RabbitMQ is used as a message broker between the
+    different parts to enable message exchanging.}
+\end{figure}
+
 \section{First attempt}
 
 In our first attempt we started building our infrastructure on top of Ubuntu
@@ -19,7 +29,7 @@ VNF states via the message broker RabbitMQ. Is possible to see the interactions
 between elements in a minimum schema available in
 Figure~\ref{chap:archimpl:sec:fistattempt:img:schema1}.
 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
   \includegraphics[scale=0.5]{Attempt1}
   \caption[Fist attempt components organization schema]{Fist attempt components
@@ -53,7 +63,7 @@ module, that is required to perform computer operations such as the launch of
 virtual machines, and lately we installed Tacker too.
 
 \paragraph*{Taker}
-\begin{figure}[h]
+\begin{figure}[t]
   \centering
   \includegraphics[scale=0.3]{tacker_architecture}
   \caption[Taker architecture schema]{Taker architecture
@@ -476,9 +486,9 @@ identified the following challenges:
 \subsubsection{Scalability considerations}
 When adopting Kubernetes, we realized the possibility to make every component
 easily scalable. Indeed, all the following components can be described in
-Kubernetes as a \verb!Service!. For a \verb!Service! a \verb!ReplicaSet! and a
-consequent \verb!Deployment! can be associated, giving the possibility for it to
-scale under heavy workloads. The introduction of scalability meant that was not
+Kubernetes as a \verb!Service!. For a \verb!Service! a consequent
+\verb!Deployment! can be associated, giving the possibility for it to scale
+under heavy workloads. The introduction of scalability meant that was not
 possible to refer to the components based on their IP, but we had to refer to
 their service name. As it will be explained later, this introduced challenges
 especially for the ingress and egress points of our network, that have to keep a
