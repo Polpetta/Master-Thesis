@@ -7,85 +7,17 @@ Network Slice (NS) concept and how first experiments with these new innovations
 already begun. Finally we are going to briefly introduce and explain the
 technologies involved and their role.
 
-\section{The VIBeS project}
-This thesis started as a part of the VIBES project~\cite{vibesesa}, whose main
-requirement is to enhance the performance of end-to-end IP based that involves
-satellite connections. To reach this goal, the project specifications suggest to
-exploit the 5G incoming technology and use the NFV-MANO architecture to perform
-first packets elaboration and performance improvement and finally TCP/IP
-satellite chunk optimization with the Performance Enhancing Proxy (PEP). The
-VIBES project proposed five technical requirements:
-\begin{enumerate}
-  \item Analysis of the applicability of current and new Internet protocols in
-  the proposed VNF-PEP architecture
-  \item Implementation of a VNF-PEP prototype
-  \item Building of a PoC test platform
-  \item VNF-PEP validation and performance tests on 5G use-cases
-  \item Demonstration test-bed management
-\end{enumerate}
+\section{The 5G connectivity standard}
 
 \begin{figure}[t]
- \centering
- \includegraphics[scale=1]{vibes_logo}
- \caption{ViBeS project logo}
- \label{chap:background:img:vibes_logo}
+  \centering
+  \includegraphics[scale=0.8]{5GEnablers}
+  \caption[5G enablers]{5G enablers. It is possible to see that the NFV/SDN
+    approach is considered an enabler for the challenge regarding a massive
+    number of connections~\cite{agyapong2014design}.}
+  \label{chap:background:sec:5G:img:enablers}
 \end{figure}
 
-\subsection{VNF-PEP architecture and internet protocols}
-VNF-PEP is the softwarization of the usual PEP technology. One of the goals of
-the project is to research and include this technology in the usual VNF
-ecosystem to include without change satellite communications to the SFC. The
-architecture of the systems will be based on clusters of containers whose
-management and orchestration will follows the ETSI MANO architecture and SDN
-principles. Thanks to VNF-PEP will be possible to dynamically take decisions on
-how to optimize a certain communication.
-
-%The analysis of this topic revealed to be trivial: since internet has many
-%different protocols that would become infeasible to support all of them at the
-%same time, packet encapsulation present itself as the only feasible solution:
-%every packet incoming in the VNFs has already been encapsulated by a generic
-%packet encapsulator/decapsulator,
-%\todo{Also I think that the main purpose of UDP encapsulation is not to hide 
-%the protocol used on the edges but 1) use a ``quick protocol to exchange data 
-%among VNFs and 2) we are hiding the path not the protocol itself. As we were 
-%discussing, we are creating some sort of proxy, so the aim will be the same 
-%even if we support a plethora of protocols.''} making the whole architecture 
-%independent from the protocol a particular flux of data. To achieve this, 
-%several solutions have been studied, and at the end packet encapsulation with 
-%TCP split (for TCP sessions) have been chosen. The rationale that guided us on 
-%this choice is described in Chapter~\ref{chap:vnf_ns_impl}. \todo{Update 
-%reference with the section of the explanation}
-%
-%\subsection{VNF-PEP prototype}
-%
-%Since the requirement for the whole system (MANO+PEP) were too challenging, the 
-%goal shifted into creating a MANO test-bed and a working NFVI, excluding PEP. 
-%The VNF architecture was shaped following the container orchestrator we decided 
-%to use. An more detailed architectural implementation can be found at 
-%Chapter~\ref{chap:archimpl}.
-%
-%\vspace{0.5cm}
-%
-%Starting with the first step of creating a MANO able to process incoming data
-%packets through VNF functions, we encountered that many networking tools already
-%present in the market required some tweaking and some integration, shifting our
-%goal to create a complete European Telecommunications Standards Institutes
-%(ETSI) Management and orchestrator (MANO) test-bed instead, following the
-%specifications suggested in the RFC 7665, thus implementing only the first three
-%requisites, without digging in the satellite data flow optimization. In
-%particular, we discovered how, these tools, were suitable to create ETSI MANO
-%and VNFs using virtual machine or exploiting cloud technologies, while they were
-%not designed with enough flexibility an integration with Docker. In the next
-%chapter we are going to take a deep analysis of the cited technologies 
-%(Section~\ref{chap:prjan:sec:tech}, in order to provide to the reader enough 
-%context to be able to understand our design choices we are going to describe 
-%later.
-%
-%\noindent With this in mind, we performed a requirements analysis described in
-%the next chapter.\todo{This should be put at the end of the introduction.}
-% 
-
-\section{5G}
 The continuous innovations in the mobile network connectivity is leading to the
 creation of a new standard, the 5G, which is estimated to arrive to the market
 consumer in 2020~\cite{iwamura2015ngmn}. Lead by the Next Generation Mobile
@@ -185,6 +117,84 @@ the required latency, security and reliability. While some very peculiar and
 legacy service could require specific hardware, the common resources between
 services could be shared in a virtualized way, providing auto-scaling
 capabilities in services that are under heavy network pressure.
+
+\section{The VIBeS project}
+This thesis started as a part of the VIBES project~\cite{vibesesa}, whose main
+requirement is to enhance the performance of end-to-end IP based that involves
+satellite connections. To reach this goal, the project specifications suggest to
+exploit the 5G incoming technology and use the NFV-MANO architecture to perform
+first packets elaboration and performance improvement and finally TCP/IP
+satellite chunk optimization with the Performance Enhancing Proxy (PEP). The
+VIBES project proposed five technical requirements:
+\begin{enumerate}
+  \item Analysis of the applicability of current and new Internet protocols in
+  the proposed VNF-PEP architecture
+  \item Implementation of a VNF-PEP prototype
+  \item Building of a PoC test platform
+  \item VNF-PEP validation and performance tests on 5G use-cases
+  \item Demonstration test-bed management
+\end{enumerate}
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=1]{vibes_logo}
+ \caption{ViBeS project logo}
+ \label{chap:background:img:vibes_logo}
+\end{figure}
+
+\subsection{VNF-PEP architecture and internet protocols}
+VNF-PEP is the softwarization of the usual PEP technology. One of the goals of
+the project is to research and include this technology in the usual VNF
+ecosystem to include without change satellite communications to the SFC. The
+architecture of the systems will be based on clusters of containers whose
+management and orchestration will follows the ETSI MANO architecture and SDN
+principles. Thanks to VNF-PEP will be possible to dynamically take decisions on
+how to optimize a certain communication.
+
+%The analysis of this topic revealed to be trivial: since internet has many
+%different protocols that would become infeasible to support all of them at the
+%same time, packet encapsulation present itself as the only feasible solution:
+%every packet incoming in the VNFs has already been encapsulated by a generic
+%packet encapsulator/decapsulator,
+%\todo{Also I think that the main purpose of UDP encapsulation is not to hide 
+%the protocol used on the edges but 1) use a ``quick protocol to exchange data 
+%among VNFs and 2) we are hiding the path not the protocol itself. As we were 
+%discussing, we are creating some sort of proxy, so the aim will be the same 
+%even if we support a plethora of protocols.''} making the whole architecture 
+%independent from the protocol a particular flux of data. To achieve this, 
+%several solutions have been studied, and at the end packet encapsulation with 
+%TCP split (for TCP sessions) have been chosen. The rationale that guided us on 
+%this choice is described in Chapter~\ref{chap:vnf_ns_impl}. \todo{Update 
+%reference with the section of the explanation}
+%
+%\subsection{VNF-PEP prototype}
+%
+%Since the requirement for the whole system (MANO+PEP) were too challenging, the 
+%goal shifted into creating a MANO test-bed and a working NFVI, excluding PEP. 
+%The VNF architecture was shaped following the container orchestrator we decided 
+%to use. An more detailed architectural implementation can be found at 
+%Chapter~\ref{chap:archimpl}.
+%
+%\vspace{0.5cm}
+%
+%Starting with the first step of creating a MANO able to process incoming data
+%packets through VNF functions, we encountered that many networking tools already
+%present in the market required some tweaking and some integration, shifting our
+%goal to create a complete European Telecommunications Standards Institutes
+%(ETSI) Management and orchestrator (MANO) test-bed instead, following the
+%specifications suggested in the RFC 7665, thus implementing only the first three
+%requisites, without digging in the satellite data flow optimization. In
+%particular, we discovered how, these tools, were suitable to create ETSI MANO
+%and VNFs using virtual machine or exploiting cloud technologies, while they were
+%not designed with enough flexibility an integration with Docker. In the next
+%chapter we are going to take a deep analysis of the cited technologies 
+%(Section~\ref{chap:prjan:sec:tech}, in order to provide to the reader enough 
+%context to be able to understand our design choices we are going to describe 
+%later.
+%
+%\noindent With this in mind, we performed a requirements analysis described in
+%the next chapter.\todo{This should be put at the end of the introduction.}
+% 
 
 \section{Virtualization}
 It is remarkable how cloud computing has surged in the recent years. This is due
