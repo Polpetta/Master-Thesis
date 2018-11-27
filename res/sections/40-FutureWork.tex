@@ -1,0 +1,42 @@
+\chapter{Future Work}
+\label{chap:fw}
+
+The realization of this architecture proposal is not finished yet. Indeed, a lot
+of functionalities could be implemented and new components coul be added. We are
+now going to see possible future additions to improve the system.
+
+\section{Security concerns}
+
+One of the aspects that is usually not really given the required attention is
+the one regarding security. In this context, the security we talk is the one
+about the whole system, and not the single VNFs implementations. Fortunatly,
+Kubernetes is equipped with out-of-the-box access management options. A good way
+to manage user authentication in the system should be integrate the Role Based
+Access model provided by Kubernetes directly in Harbor. In fact, Harbor does not
+come with security features, and the exposed APIs are usable by everyone. This
+could lead to possible Denial of Service (DoS) attack of the disruption of NS
+services by a malicious attacker.
+
+Another security aspect which is important to provide is the isolation between
+the network slices. This isolation, in our implementation, should be achieved
+clearly identifing sets of nodes (the different slices) and restricting their
+possibility to talk and interact with the other sets. This kind of restrinction
+should be achieved using different group Policy through Kubernetes.
+
+\section{Kubernetes federation}
+
+A single Kubernetes cluster presents limitations in terms of number of nodes
+available on a single cluster and regarding the geographical position of this
+nodes. Indeed, nodes in a cluster should be located or in the same network or
+geographically closer to each other, in order to ensure show latences between
+data exchange and Pods communications. An available solution, introduced in
+version 1.9 of Kubernetes, is the possibility to create federated Kubernetes
+cluster. This solution ensures a proper division between groups of nodes, and
+the possibility to ensure better performances creating cluster with nodes closer
+to each other. Unfortunatly, we werent able to create a proper Kubernetes
+federation. On of the reason was related the current immaturity of the project,
+that could have created and instable cluster federation.
+
+\section{Dynamic chain update}
+
+The importance of having NS services updated as smooth as possible.
