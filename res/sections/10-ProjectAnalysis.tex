@@ -10,6 +10,20 @@ project has been developed with the cloud provided by the University of Padua,
 Openstack (which a product analysis can be found later
 in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 
+\section{Available technologies in the market} \todo{Add images}
+\label{chap:prjan:sec:tech}
+Before starting any effective work on the project it has been decided to 
+perform an analysis of the possible technologies available in the market, 
+performing a choice between them and exploiting their possible ``weak 
+points''. Proceeding with a top-down approach, the frameworks were chosen from 
+the one that had the biggest role in the test-bed to conclude with the 
+less-important components.
+\subsection{VIM}
+A critical component, as the MANO one, is the VIM. Without it, network 
+resources can't be managed, and since our project was focused on dynamically 
+allocating containerized applications on cloud platforms, we decided to start 
+analyzing the right framework for this component first.
+
 \subsubsection{Openstack}
 \label{chap:prjan:sec:openstack}
 Created in 2010 by a joint operation between Rackspace Hosting and
@@ -71,7 +85,7 @@ respectively, orchestrate containers in a single or a clustered system.
  \label{chap:intro:img:docker_logo}
 \end{figure}
 
-\vspace{0.5cm}
+% \vspace{0.5cm}
 
 % The development of the ETSI MANO test-bed involved the use of several 
 % tecnhologies already in the market, and in some cases the creation of ad-hoc 
@@ -81,16 +95,15 @@ respectively, orchestrate containers in a single or a clustered system.
 
 \subsection{MANO}
 
-Another fundamental component in the architecture is the MANO, that has to 
-manage the Network Services and the deployment of new VNFs. In coordination 
-with Kubernetes, it composes the core of the test-bed architecture. Initially 
-identified with Openbaton (the component is described later 
-in~\ref{chap:prjan:sec:tech:sub:other:sub:openbaton}), afterword it has been 
-discovered to be not flexible enough to support other kinds of virtualization 
-techniques than pure or in-cloud virtual machines\todo{Rewrite this}. 
-Since this was a strong project requisite that could not be easily changed, it 
-has been decided to opt for the creation of a smaller and simpler clone that 
-offered a full integration with Docker and Kubernetes.
+Another fundamental component in the architecture is the MANO, that has to
+manage the Network Services and the deployment of new VNFs. Initially identified
+with Openbaton (the component is described later
+in~\ref{chap:prjan:sec:tech:sub:other:sub:openbaton}), afterword it has been
+discovered to be not flexible enough to support other kinds of virtualization
+techniques than pure or in-cloud virtual machines. Since this was a strong
+project requisite that could not be easily changed, it has been decided to opt
+for the creation of a smaller and simpler clone that offered a full integration
+with Docker and Kubernetes.
 
 \subsection{SFC}
 The tools analysis revealed little about already existent VNF or NS
@@ -106,21 +119,18 @@ modularity, the implementation of the single components has been done with the
 help of additional tools, illustrated below
 
 \subsubsection{Docker-compose} 
-Docker-compose is a tool that allows services orchestration. It automates most 
-of the tasks that should be performed by hand when launching one or multiple 
-docker containers. It's particularly useful when more containers have to 
-interact 
-together, because\todo{Write down docker-compose functionalities and describe 
-the product a little bit} all the services rules are described in a simple 
-YAML file. With the birth of Docker Swarm, work has started to port this tool 
-to 
-the Swarm framework. At the time of this writing, the procedure to port a 
-Docker-compose configuration in Docker Swarm (which a description of the 
-product can be found in 
-sub-section~\ref{chap:prjan:sec:tech:sub:other:sub:swarm}) is still not 
-completely transparent, and it requires a sort of compilation, where 
-Docker-compose bundles all the necessaries resources into a binary file that 
-Docker Swarm will use to allocate the necessary resources.
+Docker-compose is a tool that allows services orchestration. It automates most
+of the tasks that should be performed by hand when launching one or multiple
+docker containers. It's particularly useful when more containers have to
+interact together, because all the services rules are described in a simple YAML
+file. On top of that, it is possible to restart/stop/destroy selected services,
+while keeping the other up. Additionally, it supports containers scaling and it
+offers the possibility to simply get logs, interact of inspect with the defined
+services. With the birth of Docker Swarm, work has started to port this tool to
+the Swarm framework. At the time of this writing, the procedure to port a
+Docker-compose configuration in Docker Swarm (which a description of the product
+can be found in sub-section~\ref{chap:prjan:sec:tech:sub:other:sub:swarm}) it
+has become completely transparent, bundling all the necessaries resources.
 
 \subsection{Other technologies evaluated}
 
@@ -139,12 +149,17 @@ making this one-node tool available for clustered systems. At the end of the
 day, on one hand Docker Swarm provides an easy way to set up a cluster system
 with all the tools configured out-of-the-box, without the necessity to set
 networking configurations or installing ad-hoc storage solutions. On the other
-hand, though, it doesn't have all the customization options that Kubernetes
+hand, though, it does not have all the customization options that Kubernetes
 offers, thus making the product less flexible. This fundamental characteristic,
 although, makes the two solutions have different use cases leading to different
 market needs.
 
 \subsubsection{OpenVSwitch}
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{ovs}
+  \caption[OpenVSwitch logo]{OpenVSwitch logo}
+\end{figure}
 Started in 2009~\cite{ovsGit}, the OpenVSwitch project aims to create an
 open-source multi-layer virtual switch. It provides a switching stack for
 hardware virtualization environments, implementing several interfaces and
