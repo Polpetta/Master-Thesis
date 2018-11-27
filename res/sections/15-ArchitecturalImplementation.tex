@@ -410,27 +410,24 @@ VIM. The base approach was to create an API Server which in future an Openbaton
 plugin could contact and simply deploy TOSCA definitions, interacting with a set
 of RESTful APIs. We called this simple backend \emph{Harbor}.
 
-\subsubsection{Harbor}
+\subsection{Harbor}
 \label{chap:archimpl:sec:secondattempt:sub:harbor}
-Started to offer a bridge between Openbaton and Kubernetes, during the project 
-it has been expanded to become a complete replacement of the original product, 
-adding the possibility to manage Network Services and to update the routing 
-tables contained in the Roulette Controller (the tool description can be found 
-in~\ref{chap:prjan:sec:tech:sub:SFC:sub:roulette}). Harbor doesn't have a web 
-interface, but as already written it has a RESTful API that allows users to 
-interact with it using CRUD operations. It offers functionalities similar to 
-Openbaton: possibility to save and retrieve VNF and SFC definitions (basically, 
-Kubernetes YAML deployments). When an SFC is saved, a consistency check is 
-performed to assure that all the VNFs have already been defined in Harbor. On 
-an SFC deployment, with a mechanism similar to the Openbaton one, all the 
-associated VNFs are set up too, making the whole operation of launching a SFC 
-atomic from the user point-of-view. What Openbaton doesn't do is a smart 
-resource utilization: Harbor, in fact, during an SFC deletion, it checks if any 
-related VNF remains orphan (which means without any SFC using it). In that case 
-the VNF will enter in a state of pruning: after five minutes, if the VNF has 
-not be re-utilized by any other SFC it will be deleted. This mechanism assure 
-faster deployments in environments where NSs are continuously taken up and 
-down.
+Harbor grew considerably during the project development, as it revealed to be a
+key component of our architecture. Harbor does not have a web interface, but as
+already written it has a RESTful API that allows users to interact with it using
+CRUD operations. It offers functionalities similar to Openbaton: possibility to
+save and retrieve VNFs and SFCs definitions. When an SFC is saved, a consistency
+check is performed to assure that all the VNFs have already been defined in
+Harbor. On an SFC deployment, with a mechanism similar to the Openbaton one, all
+the associated VNFs are set up too, making the whole operation of launching a
+SFC atomic from the user point-of-view. Since this architecture component grew
+until it became a Kubernetes MANO, we added a feature that, in our opinion,
+Openbaton lacks: smart resource utilization. Harbor, in fact, during an SFC
+deletion, it checks if any related VNF remains orphan (which means without any
+SFC using it). In that case the VNF will enter in a state of pruning: after five
+minutes, if the VNF has not be re-utilized by any other SFC it will be deleted.
+This mechanism assure faster deployments in environments where NSs are
+continuously taken up and down.
 
 \begin{figure}[t]
  \centering
@@ -439,9 +436,130 @@ down.
  \label{chap:archimpl:sec:secondattempt:img:harborarchitecture}
 \end{figure}
 
+\subsection{The need for additional components}
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{Attempt2v1Harbor}
+  \caption[Second attempt revision one schema]{Second attempt revision one
+    schema. It is possible to see how Harbor completely substituted Openbaton.
+    Additionally, Harbor now operates directly with the Kubernetes API,
+    retrieving informations about the VNFs status from it. This causes the VNFs
+    to be lighter because they don't have to include any reporting tools, like
+    the EMS, in it.}
+  \label{chap:archimple:sec:secondattempt:img:attempt2v1harbor}
+\end{figure}
 
-% TODO talk about the problems of mapping the TOSCA definition from Openbaton
-% with the Kubernetes elements (which we actually solved), and talk about how we
-% weren't able to develop a VNFM plugin for Openbaton, and describe how Harbor
-% born from it.
+Terminated the Harbor development, we ended up in a situation similar the one
+depicted in Figure~\ref{chap:archimple:sec:secondattempt:img:attempt2v1harbor}.
+It is possible to see how the Openbaton framework is not necessary anymore:
+Harbor, in fact, ended up substituting it. We then started to think about the
+challenges of integrating the SFC structure inside a Kubernetes cluster. We
+identified the following challenges:
+\begin{itemize}
+\item whole system scalability: we wanted that every component had the
+  possibility to scale during intense workloads, without the necessity of human
+  intervention.
+\item ingress and egress points: there should be at least two points in the
+  cluster were the packect enters and exits;
+\item dynamic package routing: as formulated by one of our requirements, packet
+  routing had to be dynamic. We immediatly identified a possibility to create
+  this functionality with the already-built features of Kubernetes;
+\item a framework to automatically forward the data elaborated by the VNF: we
+  identified the possibility to build a framework that automatically handled the
+  packet receiving from another VNF, it properly called the function that had to
+  elaborate the packet payload and then it forwarded the result to the next VNF;
+\item connection status: having ingress and egress points implicates the
+  necessity to save some persistent data in a distributed manner.
+\end{itemize}
+
+\subsubsection{Scalability considerations}
+When adopting Kubernetes, we realized the possibility to make every component
+easily scalable. Indeed, all the following components can be described in
+Kubernetes as a \verb!Service!. For a \verb!Service! a \verb!ReplicaSet! and a
+consequent \verb!Deployment! can be associated, giving the possibility for it to
+scale under heavy workloads. The introduction of scalability meant that was not
+possible to refer to the components based on their IP, but we had to refer to
+their service name. As it will be explained later, this introduced challenges
+especially for the ingress and egress points of our network, that have to keep a
+connection with the sender and the receiver. On top of that, the scalability and
+the required DNS lookup meant a possible bottleneck. With a great number of
+components and VNFs constantly quering the centralized Kubernetes DNS lookup
+system a performance degradation could have easily happened. We decided to
+distribute the DNS service too, integrating the CoreDNS Kubernetes default
+service with \emph{DNSMasq}, a DNS server able to perform query caching for
+faster name resolutions. We created a DNSMasq \verb!DaemonSets!, which in turn
+deployed one Pod with DNSMasq running inside for every minion in the cluster. At
+the time of the VNF launch, we set that the DNS resolution should pass first for
+the local \verb!DNSMasq! DNS, and then for the Kubernetes CoreDNS service. In
+this way, we were able to distribute the DNS query workload from the master,
+using a local caching system to speed up the name resolution between services.
+
+\subsubsection{Ingress and Egress: Ironhide}
+As just said, the whole framework needs to have and entry and an exit point.
+These, defined as \emph{Ingress} and \emph{Egress} points, are performed by
+\emph{Ironhide}. Ironhide acts like a hides the whole packet processing to the
+sender $S$ and the receiver $R$. When a client $S$ performs a request to $R$,
+the packet actually goes through Ironhide, who has an internal classifier that
+it is able to recognize the type of connection and to choose the right NS the
+packet has to go through. This process is fundamental since it keeps the
+connection between $S$ and $R$ up, for both TCP and UDP based communications.
+Since the connection need to be end-to-end, the state of the connections are
+saved in the \emph{Roulette Controller} component.
+
+\subsubsection{Dyamic package routing: the Roulette component}
+\label{chap:prjan:sec:tech:sub:SFC:sub:roulette}
+Dynamic end-to-end communications between VNFs would not be possible without a
+third component acting as a route controller. Roulette fulfills this role,
+providing a back-end where the single VNF can ask the next packet hop. Indeed,
+routes must be submitted by another component, that we identified as Harbor.
+After a NS deployment, Roulette gets instructed with a new route describing a
+NS. Every NS has a proper ID (called \verb!sfid!), and thus when the classifier
+checks a packet typology, it labels that packet with the specific NS ID (for a
+detailed description about the SFC header see
+Section~\ref{chap:background:sec:sfc}). Finally, thanks to this label, every VNF
+knows the packet's chain and it will correctly forward the it to the next VNF.
+
+\subsubsection{Keeping the connection status}
+The scalability challenge introduces new issues in the system. The most
+important is regarding keeping up stateful connections, since the ingress and
+egress points could be more than one container. With this considerations in
+mind, we started thinking at how and where keeping information about the ingress
+container handling the connection with the sender $S$ and about the egress
+container talking with the receiver $R$. Since the Roulette component has a
+complete end-to-end topology view of the system, we decided to store these
+additional informations (we called it \emph{endpoints}) in it.
+
+\subsubsection{A VNF framework: Astaire}
+As is possible to denote, a VNF doesn't only process the incoming packets, but
+it has to manage the communications and the related forward operations. To
+possibly ease part of the transmission problems and to make it easier to create
+a VNF without requiring the whole knowledge about SFC, we decided to build a
+framework, Astaire, that could kept the SFC related details decoupled from the
+core of the VNF, in other words, the entity that actually elaborates the packet.
+Built using an event-based pattern, it presents hooks that allow other software
+written in different languages from the Astaire one (e.g. Java), to be called
+dynamically at runtime in order to process the packet. The result of this
+elaboration gets returned to Astaire, that performs the beforehand cited
+operations of VNFs communications and forwarding. In the SFC specification,
+Astaire is defined as a Service Function Forwarder (SFF).
+
+\subsection{Final architecture structure}
+At the end, we were able to create a scalable architecture that followed the
+ETSI MANO standards, with Kubernetes as VIM and Harbor has MANO. We faced
+additional challenges regarding the system scalability, that we solved using the
+Roulette controller. We eased the creation of VNFs with Astaire, and we created
+proper ingress and egress points with Ironhide, that supported scalability
+issues and performed a protocol-based packet classification. Is possible to see
+a final architectural schema in
+Figure~\ref{chap:archimpl:sec:secondattempt:img:attempt2v1total}.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.48]{Attempt2v1Total}
+  \caption[Final components organization]{Final components organization. In the
+    image is possible to denote how Egress, Ingress, the Roulette Controller and
+    the VNFs instances are optional or could not be present in the minion, while
+    DNSMasq is always deployed.}
+  \label{chap:archimpl:sec:secondattempt:img:attempt2v1total}
+\end{figure}

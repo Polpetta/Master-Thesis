@@ -204,47 +204,6 @@ thesis goals, we developed a complete solution to create a complete SFCs, trying
 to standardize our vocabulary as much as possible, and giving basic
 documentation when possible.
 
-\subsubsection{Roulette Controller}
-\label{chap:prjan:sec:tech:sub:SFC:sub:roulette}
-Dynamic communications between VNFs would not be possible without a third
-component acting as a route controller. Roulette fulfills this role, providing a
-back-end where the single VNF can ask the next packet hop. Indeed, routes must 
-be
-submitted by another component, that we identified as Harbor (component
-description available in
-section~\ref{chap:archimpl:sec:secondattempt:sub:harbor}). After a NS
-deployment, Roulette gets instructed with a new route describing a NS. Every NS
-has a proper ID (called \verb!sfid!), and thus when the classifier checks a
-packet typology, it labels that packet with the specific NS ID (for a detailed
-description about the SFC header see Section~\todo{Add section/chapter/paragraph
-  ref!}). Finally, thanks to this label, every VNF knows the packet's chain and
-it will correctly forward the it to the next VNF.
-
-\subsubsection{Astaire}
-As is possible to denote, a VNF doesn't only process the incoming packets, 
-but it has to manage the communications and the related forward operations. To 
-possibly ease part of the transmission problem and to make it easier to create 
-a 
-VNF without requiring the whole knowledge about SFC, it has been decided to 
-build a framework, Astaire, that could keep the SFC related details decoupled 
-from the core of the VNF, in other words, the entity that actually elaborates 
-the packet. Built using an event-based pattern, it presents hooks that allow 
-other software written in different languages from the Astaire one (e.g. Java), 
-to be called dynamically at runtime in order to process the packet. The result 
-of this elaboration gets returned to Astaire, that performs the beforehand 
-cited operations of VNFs communications and forwarding.
-
-\subsubsection{Ironhide}
-As described in chapter~\ref{chap:archimpl}, the whole framework need to have 
-and entry and an exit point. These, defined as \textit{Ingress} and 
-\textit{Egress} points, are performed by Ironhide. Ironhide acts like a proxy, 
-hiding the whole packet processing to the sender $S$ and the receiver $R$. When 
-a client $S$ performs a request to $R$, the packet actually goes through 
-Ironhide, who has an internal classifier that it is able to recognize the type 
-of connection and to choose the right NS the packet has to go through. This 
-process in fundamental since it keeps the connection between $S$ and $R$ up, 
-for both TCP and UDP based communications.
-
 \subsection{Technologies used during development}
 
 Since the test-bed is composed by different components and thanks to its 
