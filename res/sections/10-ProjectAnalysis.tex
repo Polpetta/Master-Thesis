@@ -10,7 +10,7 @@ project has been developed with the cloud provided by the University of Padua,
 Openstack (which a product analysis can be found later
 in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 
-\section{Available technologies in the market} \todo{Add images}
+\section{Available technologies in the market}
 \label{chap:prjan:sec:tech}
 Before starting any effective work on the project it has been decided to 
 perform an analysis of the possible technologies available in the market, 
@@ -19,10 +19,10 @@ points''. Proceeding with a top-down approach, the frameworks were chosen from
 the one that had the biggest role in the test-bed to conclude with the 
 less-important components.
 \subsection{VIM}
-A critical component, as the MANO one, is the VIM. Without it, network 
-resources can't be managed, and since our project was focused on dynamically 
-allocating containerized applications on cloud platforms, we decided to start 
-analyzing the right framework for this component first.
+A critical component, as the MANO one, is the VIM. Without it, network resources
+can not be managed, and since our project was focused on dynamically allocating
+containerized applications on cloud platforms, we decided to start analyzing the
+right framework for this component first.
 
 \subsubsection{Openstack}
 \label{chap:prjan:sec:openstack}
@@ -68,8 +68,7 @@ especially memory, because solutions like copy-and-write of in-memory pages are
 not viable anymore (since the kernel gets duplicated too), leading to
 duplication of loaded libraries and assets in the memory of the host. For large
 deployment containing only simple services (e.g. a back-end application serving
-a website or a database) this ends up in a waste of resources. \todo{Talk about
-  lxc containers and how Docker solved magically the problem.} It is here that,
+a website or a database) this ends up in a waste of resources. It is here that,
 in 2013~\cite{dockerWebsite}, Docker was created, basing its solution on an
 already existing product: Linux Container (LXC). From this framework, Docker
 built an entire ecosystem, consisting in a client/server model giving the
@@ -93,7 +92,7 @@ respectively, orchestrate containers in a single or a clustered system.
 % well-estabilished technologies used is performed, describing even solutions 
 % that at the end weren't chosen because they didn't fit with the defined goals.
 
-\subsection{MANO}
+\subsection{Available MANO solutions}
 
 Another fundamental component in the architecture is the MANO, that has to
 manage the Network Services and the deployment of new VNFs. Initially identified
@@ -105,7 +104,7 @@ project requisite that could not be easily changed, it has been decided to opt
 for the creation of a smaller and simpler clone that offered a full integration
 with Docker and Kubernetes.
 
-\subsection{SFC}
+\subsection{Available SFC solutions}
 The tools analysis revealed little about already existent VNF or NS
 implementations, so it was necessary to fill the gap. Since this one of our
 thesis goals, we developed a complete solution to create a complete SFCs, trying
