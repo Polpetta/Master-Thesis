@@ -35,7 +35,7 @@ one is a JSON array, for example:
 \section{Kubernetes Pods}
 
 All the SFC-related components have been developed with the idea of being
-containerized. This is a foundamental concept, because in this way all the
+containerized. This is a fundamental concept, because in this way all the
 components have the possibility to run inside Kubernetes, granting them the
 scalability and persistence benefits. On top of that, the use of
 \verb!Deployment! granted the possibility to perform easy an update of already
@@ -64,7 +64,7 @@ policy.
 
 Another important aspect to keep in consideration is how communications inside
 the chain are performed. The packet arriving in the ingress needs to be
-perserved, so that VNFs can perform packet elaboration. In order to otain this,
+preserved, so that VNFs can perform packet elaboration. In order to obtain this,
 packet encapsulation has been used. IP in IP encapsulation allow to preserve the
 original packet, making the incoming packet the payload of a new one.
 
@@ -74,5 +74,5 @@ receiver. Ironhide is able to fulfill the ingress and the egress role, and it
 provides the necessary tools to add and remove the SFC headers that gets appended
 and removed.
 
-Finally, we were able to create bidirectional chains, resistent to faults and
-degradations that saddisfty the defined requirements.
+Finally, we were able to create bidirectional chains, resistant to faults and
+degradation that satisfy the defined requirements.
