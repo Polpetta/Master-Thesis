@@ -2,8 +2,8 @@
 \label{chap:fw}
 
 The realization of this architecture proposal is not finished yet. Indeed, a lot
-of functionalities could be implemented and new components coul be added. We are
-now going to see possible future additions to improve the system.
+of functionalities could be implemented and new components could be added. We
+are now going to see possible future additions to improve the system.
 
 \section{Security concerns}
 
@@ -18,38 +18,38 @@ could lead to possible Denial of Service (DoS) attack of the disruption of NS
 services by a malicious attacker.
 
 Another security aspect which is important to provide is the isolation between
-the network slices. This isolation, in our implementation, should be achieved
+network slices. This isolation, in our implementation, should be achieved
 clearly identifing sets of nodes (the different slices) and restricting their
 possibility to talk and interact with the other sets. This kind of restrinction
-should be achieved using different group Policy through Kubernetes.
+should be achieved using different policy groups through Kubernetes.
 
 \section{Kubernetes federation}
 
 A single Kubernetes cluster presents limitations in terms of number of nodes
 available on a single cluster and regarding the geographical position of this
 nodes. Indeed, nodes in a cluster should be located or in the same network or
-geographically closer to each other, in order to ensure show latences between
+geographically closer to each other, in order to ensure low latences between
 data exchange and Pods communications. An available solution, introduced in
 version 1.9 of Kubernetes, is the possibility to create federated Kubernetes
-cluster. This solution ensures a proper division between groups of nodes, and
-the possibility to ensure better performances creating cluster with nodes closer
-to each other. Unfortunatly, we werent able to create a proper Kubernetes
-federation. On of the reason was related the current immaturity of the project,
-that could have created and instable cluster federation.
+clusters. This solution ensures a proper division between groups of nodes, and
+the possibility to ensure better performances creating clusters only with nodes
+closer to each other. Unfortunatly, we were not able to create a proper
+Kubernetes federation. One of the main reasons was related the current
+immaturity of the project, that could have created and instable cluster
+federation.
 
 \section{Dynamic chain update}
 
-The importance of having NS services updated as smooth as possible is without 
-doubts a feature that would ensure a continue service availability avoiding its 
-disruption. This kind of approach, though, requires particular attention about 
-keeping the current connections alive. This means at least keeping the old 
-chain up while deploying the new one, and gradefully redirect all the 
-new traffic from the chain to replace, until none is left. Only after this 
-operation, the old chain definition can be completely decomissioned and the 
-related VNFs removed. In our current implementation, the NS update 
-functionality relies on a simpler approach: when an update gets ordered, 
-Kubernetes gets instructed to remove the old chain and deploy the new one. 
-Meanwhile, all the Roulette controllers get updated with the new NS route. The 
-back of the medal of this soulution is, while it keeps the sistem implementation 
-simpler, that packets current travelling along the old NS could be lost during 
-the chain updating.
+The importance of having NS services updated as smooth as possible is without
+doubts a feature that would ensure a continue service availability avoiding its
+disruption. This kind of approach, though, requires particular attention about
+keeping the current connections alive. This means at least keeping the old chain
+up while deploying the new one, and gracefully redirect all the new traffic from
+the chain to replace, until none is left. Only after this operation, the old
+chain definition can be completely decomissioned and the related VNFs removed.
+In our current implementation, the NS update functionality relies on a simpler
+approach: when an update gets ordered, Kubernetes gets instructed to remove the
+old chain and deploy the new one. Meanwhile, all the Roulette controllers get
+updated with the new NS route. While this keeps the system implementation
+simpler the back of the medal of this soulution is that packets currently
+travelling along the old NS could be lost during the chain update.
