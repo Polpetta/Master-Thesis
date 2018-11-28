@@ -181,33 +181,7 @@ scheduling job the Kubernetes cluster has to do before launching the pod. A
 Kubernetes deployment is indeed a rather complex operation than launching a
 simple container. When a new deployment is launched on Kubernetes, the operation
 initiate with the scheduling of a Pod. A Pod can have several lifecycle
-states~\cite{kubePodLifecycle}:
-\begin{description}
-\item[pending:] The Pod has been accepted by the Kubernetes system, but one or
-  more of the Container images has not been created. This includes time before
-  being scheduled as well as time spent downloading images over the network,
-  which could take a while;
-\item[running:] The Pod has been bound to a node, and all of the Containers have
-  been created. At least one Container is still running, or is in the process of
-  starting or restarting;
-\item[succeeded:] All Containers in the Pod have terminated in success, and will
-  not be restarted;
-\item[failed:] All Containers in the Pod have terminated, and at least one
-  Container has terminated in failure. That is, the Container either exited with
-  non-zero status or was terminated by the system;
-\item[unknown:] For some reason the state of the Pod could not be obtained,
-  typically due to an error in communicating with the host of the Pod.
-\end{description}
-
-On top of that, different conditions can affect a Pod:
-\begin{itemize}
-\item \verb!PodScheduled!: the Pod has been scheduled to a node;
-\item \verb!Ready!: the Pod is able to serve requests and should be added to the
-  load balancing pools of all matching Services;
-\item \verb!Initialized!: all ``Init Containers'' have started successfully;
-\item \verb!Unschedulable!: the scheduler cannot schedule the Pod right now, for
-  example due to lacking of resources or other constraints.
-\end{itemize}
+states, that are explained in~\ref{pod}.
 
 These additional operations implicate some time overhead, that cause the
 deployment of a single Pod with a single container to be way longer that the
