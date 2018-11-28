@@ -57,3 +57,22 @@ The approved proposal for the creation of a proper chain has been based on four 
 \item Ironhide;
 \item Roulette.
 \end{itemize}
+
+In this context our chain has the ability to perform packet classification,
+making the whole system able to separate the traffic based on a packet-type
+policy. 
+
+Another important aspect to keep in consideration is how communications inside
+the chain are performed. The packet arriving in the ingress needs to be
+perserved, so that VNFs can perform packet elaboration. In order to otain this,
+packet encapsulation has been used. IP in IP encapsulation allow to preserve the
+original packet, making the incoming packet the payload of a new one.
+
+Ironhide, which was introduced in the previous chapter, plays a crucial role in
+the establishment of a end-to-end connection between the client and the
+receiver. Ironhide is able to fulfill the ingress and the egress role, and it
+provides the necessary tools to add and remove the SFC headers that gets appended
+and removed.
+
+Finally, we were able to create bidirectional chains, resistent to faults and
+degradations that saddisfty the defined requirements.
