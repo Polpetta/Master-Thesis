@@ -581,12 +581,12 @@ need to be end-to-end, the state of the connections are saved in the
 \label{chap:prjan:sec:tech:sub:SFC:sub:roulette}
 Dynamic end-to-end communications between VNFs would not be possible without a
 third component acting as a route controller. Roulette fulfills this role,
-providing a back-end where the single VNF can ask the next packet hop. Indeed,
-routes must be submitted by another component, that we identified as Harbor.
-After a NS deployment, Roulette gets instructed with a new route describing a
-NS. Every NS has a proper ID (called \verb!sfid!), and thus when the classifier
-checks a packet typology, it labels that packet with the specific NS ID (for a
-detailed description about the SFC header see
+providing a back-end where the single Service Function Forwarder (SFF) can ask
+the next packet hop. Indeed, routes must be submitted by another component, that
+we identified as Harbor. After a NS deployment, Roulette gets instructed with a
+new route describing a NS. Every NS has a proper ID (called \verb!sfid!), and
+thus when the classifier checks a packet typology, it labels that packet with
+the specific NS ID (for a detailed description about the SFC header see
 Section~\ref{chap:background:sec:sfc}). Finally, thanks to this label, every VNF
 knows the packet's chain and it will correctly forward the it to the next VNF.
 
@@ -600,19 +600,18 @@ container talking with the receiver $R$. Since the Roulette component has a
 complete end-to-end topology view of the system, we decided to store these
 additional information (we called it \emph{endpoints}) in it.
 
-\subsubsection{A VNF framework: Astaire}
-As is possible to denote, a VNF doesn't only process the incoming packets, but
-it has to manage the communications and the related forward operations. To
-possibly ease part of the transmission problems and to make it easier to create
-a VNF without requiring the whole knowledge about SFC, we decided to build a
-framework, Astaire, that could kept the SFC related details decoupled from the
-core of the VNF, in other words, the entity that actually elaborates the packet.
-Built using an event-based pattern, it presents hooks that allow other software
-written in different languages from the Astaire one (e.g. Java), to be called
-dynamically at runtime in order to process the packet. The result of this
-elaboration gets returned to Astaire, that performs the beforehand cited
-operations of VNFs communications and forwarding. In the SFC specification,
-Astaire is defined as a Service Function Forwarder (SFF).
+\subsubsection{A Service Function Forwarder: Astaire}
+As is possible to denote, an SFC-unaware VNF can not elaborate a packet directly
+coming from an SFC. The packet coming from an SFC contains additional
+information and metadata that have to be removed first. In this context, we
+decided to build a framework, Astaire, that could kept the SFC related details
+decoupled from the core of the VNF, in other words, the entity that actually
+elaborates the packet. Built using an event-based pattern, it presents hooks
+that allow other software written in different languages from the Astaire one
+(e.g. Java), to be called dynamically at runtime in order to process the packet.
+The result of this elaboration gets returned to Astaire, that performs the
+beforehand cited operations of VNFs communications and forwarding. In the SFC
+specification, Astaire is defined as a SFF.
 
 \subsection{Final architecture structure}
 At the end, we were able to create a scalable architecture that followed the
