@@ -39,4 +39,17 @@ that could have created and instable cluster federation.
 
 \section{Dynamic chain update}
 
-The importance of having NS services updated as smooth as possible.
+The importance of having NS services updated as smooth as possible is without 
+doubts a feature that would ensure a continue service availability avoiding its 
+disruption. This kind of approach, though, requires particular attention about 
+keeping the current connections alive. This means at least keeping the old 
+chain up while deploying the new one, and gradefully redirect all the 
+new traffic from the chain to replace, until none is left. Only after this 
+operation, the old chain definition can be completely decomissioned and the 
+related VNFs removed. In our current implementation, the NS update 
+functionality relies on a simpler approach: when an update gets ordered, 
+Kubernetes gets instructed to remove the old chain and deploy the new one. 
+Meanwhile, all the Roulette controllers get updated with the new NS route. The 
+back of the medal of this soulution is, while it keeps the sistem implementation 
+simpler, that packets current travelling along the old NS could be lost during 
+the chain updating.
