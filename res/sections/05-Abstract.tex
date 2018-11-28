@@ -3,9 +3,37 @@
 %**************************************************************
 \cleardoublepage
 \phantomsection
-\section*{Abstract}
+
 \thispagestyle{empty}
 
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
 
+\vspace*{\fill}
+\begin{changemargin}{1.5cm}{1.5cm}
+\section*{Abstract}
+The importance of Internet is growing every year. Mobile and wired traffic are
+continuously surging, asking for better performances. On this day, ISPs rely on
+optimized, ad-hoc and often in-hardware nework solutions. These network
+functions are costly and require time to be deployed and mantained. In this
+context, upcoming virtualization technolgies like hypervisor-based and
+container-based are providing the possibility to create virtualized network
+functions, that have the ability to be up and running in a matter of seconds.
+VNFs are the managed and orchestrated by a specific application, the MANO that
+handles their lifecycle.
 
-\bigskip
+In this thesis we are going to propose an Infrastructure Management and
+Orchestrator plane Proof-of-Concept, based on the container virtualization
+technology and on the 3GPP Release 15 specifications. In the current PoC, Docker
+and the container orchestrator Kubernetes play a fundamntal role.
+\vspace*{\fill}
+\end{changemargin}
+%\bigskip
