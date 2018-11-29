@@ -314,3 +314,5 @@ labelled
 DaemonSet
 hostname
 subsubsection
+Dnsmasq
+DHCP
