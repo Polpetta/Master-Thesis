@@ -391,7 +391,7 @@ consume a defined set of resources, otherwise the functions running on top of it
 could suffer performance degradation~\cite{richart2016resource}. Isolation has
 the benefits of offering more security and the possibility to individually
 manage the slice~\cite{ordonez2017network}. Slices have to respond to a defined
-set o requisites, first of all the possibility to being created by a template,
+set of requisites, first of all the possibility to being created by a template,
 defined as Network Slice Template (NST). After the NS and the related resources
 are created, a NS should be activated. Obviously, for a NS there should be the
 possibility to bring changes on-the-fly, and to decommission or deactivate it,
@@ -422,8 +422,8 @@ environments such as the cloud one.
 
 \noindent The NFV has its own architecture, divided in three main components:
 \begin{description}
-\item[Virtualized Network Function] that is a software implementation able to fun
-  a network function over a NFVI;
+\item[Virtualized Network Function] that is a software implementation able to
+  run a network function over a NFVI;
 \item[NFVI Infrastructure (NFVI)] that includes different physical resources
   and their respective virtualization, that have to support the execution of the
   aforementioned VNFs;
@@ -455,7 +455,7 @@ and wireless) can span between different domain, that can be of two typologies:
 
 \begin{figure}[t]
   \centering
-  \includegraphics[scale=0.7]{etsimano}
+  \includegraphics[scale=0.8]{etsimano}
   \caption[ETSI NFV MANO framework]{ETSI NFV MANO
     framework~\cite{mijumbi2016management}}
   \label{chap:background:img:etsimano}
@@ -463,9 +463,9 @@ and wireless) can span between different domain, that can be of two typologies:
 
 The MANagement and Orchestration (MANO) architecture is divided in turn in three
 main components, such as the Virtual Infrastructure Manager (VIM), the VNF
-Manager (VNFM) and the NFV Orchestrator (NFVO). The MANO organize and holds
+Manager (VNFM) and the NFV Orchestrator (NFVO). The MANO organizes and holds
 important data, regarding the Network Service (NS) catalog, the list of the VNFs
-definitions (VNF catalog) and the current NFV instances and the NFVI resources.
+definitions (VNF catalog), the current NFV instances and the NFVI resources.
 
 It is important to note how the mano is a critical aspect in ensuring
 cooperation between the NFVI and the VNFs. On top of that, is able to provide
@@ -475,8 +475,8 @@ and manage the VNFs lifecycle~\cite{mijumbi2016management}.
 As we can see from the Figure~\ref{chap:background:img:etsimano}, it is possible
 to denote the position of this component in the schema. The VIM has the role to
 communicate with the NFV infrastructure, and to control its physical and virtual
-resources. A VIM should has the possibility to control one or more of NFVI. In
-general a VIM can be in charge of control a defined set of
+resources. A VIM has the possibility to control one or more of NFVI. In general,
+a VIM can be in charge of control a defined set of
 NFVI~\cite{mijumbi2016management}
 
 \paragraph{VNFM}
@@ -492,9 +492,9 @@ resources and the services.
 
 \paragraph{Data Repositories}
 Data repositories can be seen as a sort of databases, holding information about
-the VNF definitions, the VNF instances with the respective lifecycle status, and
-list of the Network Services defined and the resources available and occupied of
-the NFVI.
+the VNF definitions, the VNF instances with the respective lifecycle status, a
+list of the Network Services defined and the resources rispectively available
+and occupied of the NFVI.
 
 \section{Service Function Chaining (SFC)}
 \label{chap:background:sec:sfc}
@@ -507,7 +507,7 @@ Chaining (SFC).
 \end{displayquote}
 
 \paragraph*{Service Function}
-A single element of an SFC is called Service Function (SF), and its duty is to
+A single SFC element is called Service Function (SF), and its duty is to
 elaborate the packets incoming and to forward them to the next receiver. SFs, as
 for NFs, can be virtualized or be a set of hardware functions. SF does not
 necessary know its part of a chain, and this defines it as SFC unaware or, on
