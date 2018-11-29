@@ -12,20 +12,20 @@
 \leftskip4em
 \rightskip\leftskip
 \section*{\centering Abstract}
-The importance of Internet is growing every year. Mobile and wired traffic are
-continuously surging, asking for better performances. On this day, ISPs rely on
-optimized, ad-hoc and often in-hardware nework solutions. These network
-functions are costly and require time to be deployed and mantained. In this
-context, upcoming virtualization technolgies like hypervisor-based and
-container-based are providing the possibility to create virtualized network
-functions, that have the ability to be up and running in a matter of seconds.
-VNFs are then managed and orchestrated by a specific application, the MANO, that
-handles their lifecycle.
-
-In this thesis we are going to propose an Infrastructure Management and
-Orchestrator plane Proof-of-Concept, based on the container virtualization
-technology and on the 3GPP Release 15 specifications. In the current PoC, Docker
-and the container orchestrator Kubernetes play a fundamental role.
+Network resource management and service optimization are two basic
+functionalities widely adopted by network operators. However, provisioning these
+two key capability is becoming increasingly difficult considering the high
+number of services delivered through today networks. The usual approach of
+optimization through middleboxes deployed in the end-to-end path between
+user/service is proving incapable in keeping up with the current pace of change.
+On the other side, advances in virtualization and softwarization techniques
+could provide the much needed flexibility, serving as enablers for an
+end-to-end, softwarized network management plane. In this context, taking
+inspiration from the recent proposal of the 3GPP Release 15, we propose a
+two-layer service orchestration architecture exploiting container technology. In
+specifics, we provide a proof of concept implementation of an infrastructure
+Management and Orchestration (MANO) plane, replying on the Kubernetes container
+orchestration framework.
 \par
 \endgroup
 \vspace*{\fill}
