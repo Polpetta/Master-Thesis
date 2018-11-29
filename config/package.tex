@@ -49,6 +49,12 @@
 \usepackage{graphicx}                   % immagini
 
 \usepackage{breakurl}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\g@addto@macro{\UrlBreaks}{%
+\do\/\do\d%
+}
+\makeatother
 %\usepackage{hyperref}                   % collegamenti ipertestuali
 
 
