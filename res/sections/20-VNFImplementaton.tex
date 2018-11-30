@@ -15,8 +15,8 @@ given.
 As already cited, Harbor acts as a MANO, orchestrating and managing VNFs and the
 related services. From the SFC point of view, it carries consistency checks when
 a NS definition is created. The checks are carried out based on the VNF ID.
-While the VNF definitions corresponds to a YAML Kubernetes configuration, the NS
-one is a JSON array, for example:
+While the VNF definition corresponds to a YAML Kubernetes configuration, the NS
+one is a JSON array, as illustrated in this example:
 
 \begin{lstlisting}[caption={Example of SFC definition}, captionpos=b,
                    language=json, label=chap:impl:lst:sfcexample]
@@ -37,9 +37,9 @@ one is a JSON array, for example:
 All the SFC-related components have been developed with the idea of being
 containerized. This is a fundamental concept, because in this way all the
 components have the possibility to run inside Kubernetes, granting them the
-scalability and persistence benefits. On top of that, the use of
-\verb!Deployment! granted the possibility to perform easy an update of already
-existing components.
+scalability and persistence benefits. On top of that, the use of the Kubernetes
+\verb!Deployment! feature granted the possibility to easily perform updates of
+already existing components.
 
 \section{Approved proposal}
 
@@ -65,14 +65,13 @@ policy.
 Another important aspect to keep in consideration is how communications inside
 the chain are performed. The packet arriving in the ingress needs to be
 preserved, so that VNFs can perform packet elaboration. In order to obtain this,
-packet encapsulation has been used. IP in IP encapsulation allow to preserve the
-original packet, making the incoming packet the payload of a new one.
+packet encapsulation has been used. IP in IP encapsulation allows to preserve
+the original packet, making the incoming packet the payload of a new one.
 
 Ironhide, which was introduced in the previous chapter, plays a crucial role in
-the establishment of a end-to-end connection between the client and the
+the establishment of an end-to-end connection between the client and the
 receiver. Ironhide is able to fulfill the ingress and the egress role, and it
-provides the necessary tools to add and remove the SFC headers that gets appended
-and removed.
+provides the necessary tools to add and remove the SFC headers.
 
 Finally, we were able to create bidirectional chains, resistant to faults and
-degradation that satisfy the defined requirements.
+degradations that satisfy the defined requirements.

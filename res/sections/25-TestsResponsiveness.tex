@@ -2,25 +2,24 @@
 \label{chap:test}
 After the test-bed implementation, tests about its performance and metrics were
 gathered in order to understand the real project effectiveness. We performed
-tests relatively two main sections: one testing the architecture overall
-responsiveness and one checking the SFC implementation and efficiency.
+tests relatively the architecture overall responsiveness.
 
 \section{System responsiveness}
 
 \subsection{Docker vs Virtual Box start-up measurement}
 
-Regarding the overall system responsiveness, a metric we considered worth to 
-test was the VNF start up time in a docker environment versus one virtualized 
-through a common virtual machine system (in this case Virtual Box was chosen). 
-To make this simulation as fair as possible, we used the same node (an 
-Openstack VM with 32GB of RAM, 8 vCPU and solid state storage) and used the 
-same ``boot sequence'' for both the VNFs: first we launched the Astaire 
-framework, ensuring its availability to process data and then we notified the 
-test machine of the successful boot. The start-up time was measured from the 
-beginning of the start-up command (\verb!docker run! for Docker and 
-\verb!VBoxManage -s! for Virtual Box) till the first TCP hit received by the 
-test back-end (to make things as smooth as possible, \verb!netcat! was used 
-to listen to incoming TCP data).
+Regarding the overall system responsiveness, a metric we considered worth to
+test was the VNF start up time in a docker environment versus one virtualized
+through a common virtual machine system (in this case Virtual Box was chosen).
+To make this simulation as fair as possible, we used the same node (an Openstack
+VM with 32GB of RAM, 8 vCPU and solid state storage) and used the same ``boot
+sequence'' for both the VNFs: first we launched the Astaire framework, ensuring
+its availability to process data and then we notified the test machine of the
+successful boot. The start-up time was measured from the beginning of the
+start-up command (\verb!docker run! for Docker and \verb!VBoxManage -s! for
+Virtual Box) till the first packet was received by the test back-end (to make
+things as smooth as possible, \verb!netcat! was used to listen to incoming
+data).
 
 It is worth saying that Docker metrics are generally more precise than the
 Virtual Box one: Docker allows to inspect the container and to gain start-up and
@@ -114,15 +113,15 @@ boot-up returning, eventually, the overall start up timing.
 \vspace{0.5cm}
 
 \noindent As is possible to see from the YAML definition, the test involved, for
-every launch (that included and $N = 100$, for a total for 1000 tests), the 
-download of the container image from the Docker hub repositories. This, while 
-it forced every node to delete and download the image for each test, it ensured 
-consistent measurements in cases where the selected node for the deployment did 
-not have the image already pulled. In addition to that, another consideration 
-needs to be taken into account: when the chain consists of two or more 
-elements, the container image which is used for the container deployment is the 
-same for every VNF involved, thus reducing the start up time for the subsequent 
-pods that reside in nodes that have already deployed one.
+every launch (that included an $N = 100$, for a total for 1000 tests), the
+download of the container image from the Docker hub repositories. This, while it
+forced every node to delete and download the image for each test, it ensured
+consistent measurements in cases where the selected nodes for the deployment did
+not have the image already pulled. In addition to that, another consideration
+needs to be taken into account: when the chain consists of two or more elements,
+the container image which is used for the container deployment is the same for
+every VNF involved, thus reducing the start up time for the subsequent pods that
+reside in nodes that have already deployed one.
 
 \begin{figure}[t]
   \centering
@@ -183,6 +182,6 @@ simple container. When a new deployment is launched on Kubernetes, the operation
 initiate with the scheduling of a Pod. A Pod can have several lifecycle
 states, that are explained in~\ref{pod}.
 
-These additional operations implicate some time overhead, that cause the
+These additional operations implicate some time overhead, that causes the
 deployment of a single Pod with a single container to be way longer that the
 deployment of a simple container directly from Docker.

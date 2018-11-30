@@ -9,13 +9,13 @@ are now going to see possible future additions to improve the system.
 
 One of the aspects that is usually not really given the required attention is
 the one regarding security. In this context, the security we talk is the one
-about the whole system, and not the single VNFs implementations. Fortunately,
+about the whole system, and not the single VNFs implementation. Fortunately,
 Kubernetes is equipped with out-of-the-box access management options. A good way
 to manage user authentication in the system should be integrate the Role Based
 Access model provided by Kubernetes directly in Harbor. In fact, Harbor does not
 come with security features, and the exposed APIs are usable by everyone. This
-could lead to possible Denial of Service (DoS) attack of the disruption of NS
-services by a malicious attacker.
+could lead to possible Denial of Service (DoS) attacks leading to the disruption
+of NS services by a malicious attacker.
 
 Another security aspect which is important to provide is the isolation between
 network slices. This isolation, in our implementation, should be achieved
