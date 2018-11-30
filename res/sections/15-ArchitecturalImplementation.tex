@@ -1,9 +1,9 @@
 \chapter{Architectural proposal}
 \label{chap:archimpl}
  
-In this chapter we will dig into the actual architectural proposal, seeing
-all the problems related to it and how they were solved. We will show all the
-various attempts made, and we will discussion about the technological issue and
+In this chapter we will dig into the actual architectural proposal, seeing all
+the problems related to it and how they were solved. We will show all the
+various attempts made, and we will discussion about the technological issues and
 changes we had to perform.
 
 \section{Architecture introduction}
@@ -13,7 +13,7 @@ some of its functional components and the way they work.
 \subsection{A two-level orchestration framework}
 \begin{figure}[t]
   \centering
-  \includegraphics[scale=0.5]{Architecture}
+  \includegraphics[scale=0.6]{Architecture}
   \caption[Architecture schema depicting the expected
     implementation]{Architecture schema depicting the expected implementation.
     It is possible to see how Openbaton interacts with the various components in
@@ -24,23 +24,24 @@ some of its functional components and the way they work.
 
 It is important to keep in consideration that the ETSI NFV architectural
 framework is to be considered service and/or application agnostic. This excludes
-this framework from the burden of being application aware for NS configuration
-and management and for the VNF application layer configuration and management.
+this framework from the burden of being application aware for any possible NS
+configuration and management, and for the VNF application layer configuration
+and management.
 
 The lack of these two management requires a service aware software, that has the
 task to perform service lifecycle management and monitoring via the API offered
-by the ETSI MANO. In this context, is possible to identify two different type of
-orchestrator, as represented in
+by the ETSI MANO. In this context, is possible to identify two different types
+of orchestrators, as represented in
 Figure~\ref{chap:archimpl:sec:fistattempt:img:architecture}:
 \begin{itemize}
 \item a high layer, service-aware;
 \item a low layer, service-unaware.
 \end{itemize}
-Both the layer would use Openbaton. The messages would be exchanged through
+Both the layers would use Openbaton. The messages would be exchanged through
 RabbitMQ, using the Advance Message Queuing Protocol (AMQP).
 
 \paragraph*{Low-layer orchestrator}
-The low-layer orchestrator jobs corresponds to the one defined in the ETSI MANO
+The low-layer orchestrator job corresponds to the one defined in the ETSI MANO
 definition, with the role of managing and orchestrating VNFs and NSs. The
 low-layer MANO holds different data repositories where VNF and NS definitions
 are stored, various monitoring tools and logs and the network services
@@ -51,9 +52,9 @@ services to the low-layer orchestrator, providing the necessary information.
 
 \subsection{Low-layer functional components}
 In the following section we are going to briefly talk about the role of the most
-peculiar components in the defined architecture. A description of the tasks that
-the components have to abide in the ETSI MANO architecture is available in
-Section~\ref{chap:archimpl:sec:secondattempt:sec:k8s}.
+peculiar components in the defined architecture. A detailed description of the
+tasks that the components have to abide in the ETSI MANO architecture is
+available in Section~\ref{chap:archimpl:sec:secondattempt:sec:k8s}.
 \begin{description}
 \item[VNFM] As is possible to see from the
   Figure~\ref{chap:archimpl:sec:fistattempt:img:architecture}, the following
@@ -62,7 +63,7 @@ Section~\ref{chap:archimpl:sec:secondattempt:sec:k8s}.
   particular, the use of different and specialized VNFMs allows to control and
   manage different functional aspects of the control/data plan.
 \item[Network service management] in this architectural proposal, it corresponds
-  the the brain of the infrastructure MANO, where service instantiation and
+  to the brain of the infrastructure MANO, where service instantiation and
   lifecycle management happens. This part interacts with the VNFM/VIM and with
   the RabbitMQ middleware. In this context, the NFVO is involved in chaining the
   required VNFs in order to create the service delivery path. Inside this
