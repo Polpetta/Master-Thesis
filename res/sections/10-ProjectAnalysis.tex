@@ -32,7 +32,7 @@ using bare-metal resources to provide common cloud services as object storage,
 virtual machine deploy, virtual networking. Furthermore its modularity offers
 the possibility to add additional components, even proprietary, to achieve a
 complete cloud solution.
-\begin{figure}[t]
+\begin{figure}[h]
  \centering \includegraphics[scale=0.58]{openstack_logo}
  \caption{Openstack logo}
  \label{chap:prjan:img:openstack_logo}
@@ -78,7 +78,7 @@ remotely with Docker-machine), a repository system where images, a layer-based
 stored and tagged in a sort of version control system. Finally, another couple
 of solutions, called Docker-compose, and Docker Swarm have the purpose to,
 respectively, orchestrate containers in a single or a clustered system.
-\begin{figure}[t]
+\begin{figure}[h]
  \centering \includegraphics[scale=0.7]{docker_logo}
  \caption{Official Docker logo}
  \label{chap:intro:img:docker_logo}
@@ -131,6 +131,12 @@ Docker-compose configuration in Docker Swarm (which a description of the product
 can be found in sub-section~\ref{chap:prjan:sec:tech:sub:other:sub:swarm}) it
 has become completely transparent, bundling all the necessaries resources.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=1]{dockercompose_logo}
+  \caption[Docker-Compose logo]{Docker-Compose logo}
+\end{figure}
+
 \subsection{Other technologies evaluated}
 
 Additional components have been evaluated during the development of the 
@@ -153,12 +159,13 @@ offers, thus making the product less flexible. This fundamental characteristic,
 although, makes the two solutions have different use cases leading to different
 market needs.
 
-\subsubsection{OpenVSwitch}
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
-  \includegraphics[scale=0.5]{ovs}
-  \caption[OpenVSwitch logo]{OpenVSwitch logo}
+  \includegraphics[scale=1]{dockerswarm_logo}
+  \caption[Docker Swarm logo]{Docker Swarm logo}
 \end{figure}
+
+\subsubsection{OpenVSwitch}
 Started in 2009~\cite{ovsGit}, the OpenVSwitch project aims to create an
 open-source multi-layer virtual switch. It provides a switching stack for
 hardware virtualization environments, implementing several interfaces and
@@ -169,6 +176,12 @@ table from software defined as \textit{controllers}. Additionally, it supports
 the OpenFlow communication protocol, in order to set previously cited routing
 definitions.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.5]{ovs}
+  \caption[OpenVSwitch logo]{OpenVSwitch logo}
+\end{figure}
+
 \subsubsection{Floodlight}
 \label{chap:prjan:sec:tech:sub:other:sub:floodlight}
 Community-developed and open source, Floodlight is an OpenFlow Controller
@@ -178,6 +191,11 @@ inquiring an OpenFlow network, querying the applications integrated with the
 purpose of solving different user needs over it. When instantiated, OpenVSwitch
 routers have to register to the controller in order to gain routing rules.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.5]{floodlight_logo}
+  \caption[Floodlight logo]{Floodlight logo}
+\end{figure}
 
 \subsubsection{Openbaton}
 \label{chap:prjan:sec:tech:sub:other:sub:openbaton}
@@ -196,6 +214,7 @@ management out-of-the-box, with the possibility to customize it based on the
 user needs. Its modular design allows developers to change parts of the codebase
 with custom ones, making the product really flexible to different platforms.
 Performing this operation requires a deep knowledge of the framework though.
+
 \begin{figure}[h]
  \centering \includegraphics[scale=0.45]{openbaton_logo}
  \caption{Openbaton logo}
@@ -211,3 +230,9 @@ is suited for medium to small network infrastructures. Along with the DNS
 server, it has the possibility to perform request caching, to speed up
 additional requests of the same type. On top of that, it provides different
 compilation options in order to eliminate unused features at compile time.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.25]{dnsmasq_logo}
+  \caption{Dnsmasq logo}
+\end{figure}
