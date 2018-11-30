@@ -327,10 +327,10 @@ which will be described.
 \subsubsection{Master architecture}
 \begin{description}
 \item[API Server] Fist of all, the User interacts with an API Server located in
-  the master node. This APIs are developed using the Swagger tools, ensuring
+  the master node. These APIs are developed using the Swagger tool, ensuring
   consistency and uniformity. From the image, is possible to see that the API
   Server communicates with all the main components of the architecture.
-\item[etcd] The \verb!etcd! component communicates via the gRCP protocol, a
+\item[etcd] The \verb!etcd! component communicates via the gRCP protocol, an
   efficient Remote Procedure Call (RPC) protocol to serve data to the API
   Server. This component is a distributed key-value storage, and allows data to
   be shared in a reliable way across different machines~\cite{etcddatamodel}.
@@ -340,18 +340,18 @@ which will be described.
   language-neutral, platform-neutral and extensible data serialization
   mechanism.
 \item[Scheduler] The Scheduler regulates the Pods distribution in the minions,
-  having a knowledge of the current cluster typologies and of the current
-  resources available. On top of that, is able to handle hardware constraints,
-  defined policy, and defined class of QoS.
+  having a knowledge of the current cluster typology and of the current
+  resources available. On top of that, it is able to handle hardware
+  constraints, defined policy, and defined class of QoS.
 \end{description}
 
-All of the previously descripted components are hide behind the API server,
-which is the only components the final user can really interact with. The
-protocol between the API server and the final user used is a common JSON data
-object interchange. To make the Kubernetes more human-friendly, Kubernetes comes
-with a command line interface (CLI) tool, called \verb!kubectl!, that allows to
-easily perform deployments and admin operations on the cluster without having a
-full knowledge of the official API.
+All of the previously descripted components are hidden behind the API server,
+which is the only component the final user can really interact with. The
+communication protocol between the API server and the final user used is a
+common JSON data object interchange. To make the Kubernetes more human-friendly,
+Kubernetes comes with a command line interface (CLI) tool, called
+\verb!kubectl!, that allows to easily perform deployments and admin operations
+on the cluster without having a full knowledge of the official API.
 
 \subsubsection{Minions architecture}
 
@@ -361,9 +361,9 @@ we can denote different modules.
 \begin{description}
 \item[Kubelet] The \verb!kubelet! daemon is the core component that runs in
   every minion, and \emph{de facto} acts like a local manager. It receives YAML
-  or JSON definition from the API Server of Pod specifications (PodSpec) that
+  or JSON definitions from the API Server of Pod specifications (PodSpec) that
   have to be deployed in the node where is running. Then, its role is to ensure
-  that the Pod deployed are up and healthy. This excludes possible
+  that the Pods deployed are up and healthy. This excludes possible
   interference with other virtualized deployments.
 \item[Container Runtime] This runtime does not have to necessarily be based on
   Docker or a container-based technology, but it can be based on an hypervisor
@@ -377,13 +377,13 @@ we can denote different modules.
   Additionally, the Container Runtime has to communicate with the underlying OS,
   and this operation is performed using the Open Container Initiative (OCI)
   specification, which seeks to provide a standard on how to interact and run
-  the container images on the OS.
+  the container images on the host OS.
 \item[Networking] This part aims to provide to the container runtime network
   connectivity. The role of the networking module is to provide, over than the
   standard Internet connectivity, the possibility for Pods to see each other as
   a part of the same network, even if Pods could be dislocated in other minions
-  working between different subnets or completely different networks. On top of
-  that, dynamic port allocation has to be kept in consideration too. The
+  working between different subnets or completely different network domains. On
+  top of that, dynamic port allocation has to be kept in consideration too. The
   Kubernetes networking model focus on three fundamental
   requirements~\cite{k8snetworkingwiki}:
   \begin{itemize}
@@ -397,12 +397,12 @@ we can denote different modules.
   It is important to note that the IP addresses are at the Pod scope and not at
   the container one. Every Pod has in fact its own networking space. Containers
   inside a Pod can reach each other using the \verb!localhost! address. In
-  Kubernetes, several networking implementation exists, like Flannel, Google
+  Kubernetes, several networking implementations exist, like Flannel, Google
   Compute Engine (GCE), Kube-route, Project Calico~\cite{k8snetworkingwiki}. For
   our deployment, we decided to use Flannel, that demonstrated to work without
   any particular configuration and to be mature enough to handle big workloads.
 
-  The communications between this component and the Kubelet one is carried
+  The communications between this component and the Kubelet one are carried
   through the Cloud Native Interface (CNI) protocol, that consists of a set
   of specification and libraries for writing plugins to configure network
   interfaces in Linux containers~\cite{cnigithub}.
@@ -424,31 +424,31 @@ we can denote different modules.
 After the Kubernetes configuration and installation, we started working for a
 viable integration between Kubernetes and Openbaton. Our first idea is the one
 illustrated in Figure~\ref{chap:archimpl:sec:secondattempt:img:schema1}:
-Openbaton, that had the TOSCA definitions, had to somehow convert these
-definition in a suitable YAML for Kubernetes, that had in turn to elaborate it
-and schedule to one minion in the cluster. The monitoring and management would
-remain untouched, as we planned to create an image with the integrated EMS tools
-that provided a seamless integration with Docker container. With this setting,
-the only thing remained was to solve the issue of converting TOSCA definitions
-in YAML one. The first thing we started thinking about was how to perform the
-conversion. This topic was quite important because the TOSCA definition does not
-really consider the possibility to have an alternative virtualization system
-apart from the hypervisor one. This causes the TOSCA definition to be, in our
-opinion, too much focused on the resources usage and regarding granularity
-aspects such the deployment flavour and the kind of virtual link (concept that
-does not really exists in container based systems) to instantiate. Nonetheless,
-we performed a mapping between most of the TOSCA keywords with some of the YAML
-definition, in a way that a TOSCA configuration file was able to generate a
-valid YAML deployment. After that, we started thinking instead who, in the
-current architecture, had the task to perform this operation. Initially we
-though that Kubernetes itself could have been a perfect candidate. From a
+Openbaton, that usually handles the TOSCA definitions storing them in its
+database, had to somehow convert these definition in a suitable YAML for
+Kubernetes, that had in turn to elaborate it and schedule to one minion in the
+cluster. The monitoring and management would remain untouched, as we planned to
+create an image with the integrated EMS tools that provided a seamless
+integration with Docker container. With this setting, the only thing to solve
+was how to convert TOSCA definitions in YAML one. The first thing we started
+thinking about was how to perform the conversion. This topic was quite important
+because the TOSCA definition does not really consider the possibility to have an
+alternative virtualization system apart from the hypervisor one. This causes the
+TOSCA definition to be, in our opinion, too much focused on the resources usage
+and granularity aspects such the deployment flavour and the kind of virtual link
+(concept that does not really exists in container based systems) to instantiate.
+Nonetheless, we performed a mapping between most of the TOSCA keywords with some
+of the YAML definitions, in a way that a TOSCA configuration file was able to
+generate a valid YAML deployment. After that, we started thinking instead who,
+in the current architecture, had the task to perform this operation. Initially
+we thought that Kubernetes itself could have been a perfect candidate. From a
 received TOSCA, a Kubernetes component should have validated and translated the
 TOSCA definition to generate a YAML suitable to be finally submitted to the
 Kubernetes API Server. Another feasible approach could have been to create a
-Openbaton plugin in order to take the TOSCA to deploy and convert it before
-submitting it to Kubernetes. This solution had great advantages in terms of
+Openbaton plugin in order to convert the TOSCA definition before submitting it
+to Kubernetes for the deployment. This solution had great advantages in terms of
 responsibility separation: in this way only the MANO had to know, for a VIM
-based on Kubernetes, that a conversion needed to be performed. From a Kubernetes
+based on Kubernetes, that a conversion was needed. From a Kubernetes
 point-of-view, nothing would have changed, since all the configuration
 conversion would have been performed by Openbaton.
 
@@ -464,17 +464,16 @@ We started inspecting the Openbaton framework, to identify possible modules
 where the conversion should have taken place. We identified first the VIM
 driver, that is the component that directly interacts with the VIM, and then the
 VNFM, because we discovered there were programmatic dependencies between the two
-Openbaton standard components. After we identified the VIM driver and the VNFM
-as components to be rewritten and to be adapted to the Kubernetes VIM, we
-studied the original components code. We discovered that regarding these
-components the documentation was very poor, especially regarding the code. On
-top of that, the program interfaces given by the developers did not match our
-expectations: we thought to find interfaces independent from the type of the
-virtualization technology, instead, we found that they were strictly coupled
-with frameworks like Openstack or cloud vendors like Google Compute engine or
-Amazon AWS. These reasons, with the fact that after two weeks we were not able
-to get any working prototype of VIM driver or VNFM we gave up, searching for
-another solution.
+Openbaton default components. After we identified the VIM driver and the VNFM as
+components to be rewritten and to be adapted to the Kubernetes VIM, we studied
+the original components code. We discovered that regarding these components the
+documentation was very poor, especially looking the code. On top of that, the
+program interfaces given by the developers did not match our expectations: we
+thought to find interfaces independent from the type of the virtualization
+technology, instead, we found that they were strictly coupled with frameworks
+like Openstack or cloud vendors like Google Compute engine or Amazon AWS. These
+reasons, with the fact that after two weeks we were not able to get any working
+prototype of VIM driver or VNFM we gave up, searching for another solution.
 
 \section{Second attempt - revision one}
 
@@ -497,7 +496,7 @@ the associated VNFs are set up too, making the whole operation of launching a
 SFC atomic from the user point-of-view. Since this architecture component grew
 until it became a Kubernetes MANO, we added a feature that, in our opinion,
 Openbaton lacks: smart resource utilization. Harbor, in fact, during an SFC
-deletion, it checks if any related VNF remains orphan (which means without any
+deletion, checks if any related VNF remains orphan (which means without any
 SFC using it). In that case the VNF will enter in a state of pruning: after five
 minutes, if the VNF has not be re-utilized by any other SFC it will be deleted.
 This mechanism assure faster deployments in environments where NSs are
@@ -552,22 +551,22 @@ When adopting Kubernetes, we realized the possibility to make every component
 easily scalable. Indeed, all the following components can be described in
 Kubernetes as a \verb!Service!. For a \verb!Service! a consequent
 \verb!Deployment! can be associated, giving the possibility for it to scale
-under heavy workloads. The introduction of scalability meant that was not
+under heavy workloads. The introduction of scalability meant that it was not
 possible to refer to the components based on their IP, but we had to refer to
 their service name. As it will be explained later, this introduced challenges
 especially for the ingress and egress points of our network, that have to keep a
 connection with the sender and the receiver. On top of that, the scalability and
-the required DNS lookup meant a possible bottleneck. With a great number of
+the required DNS lookups meant a possible bottleneck. With a great number of
 components and VNFs constantly querying the centralized Kubernetes DNS lookup
 system a performance degradation could have easily happened. We decided to
 distribute the DNS service too, integrating the CoreDNS Kubernetes default
-service with \emph{DNSMasq}, a DNS server able to perform query caching for
-faster name resolutions. We created a DNSMasq \verb!DaemonSets!, which in turn
-deployed one Pod with DNSMasq running inside for every minion in the cluster. At
+service with \emph{Dnsmasq}, a DNS server able to perform query caching for
+faster name resolution. We created a Dnsmasq \verb!DaemonSets!, which in turn
+deployed one Pod with Dnsmasq running inside for every minion in the cluster. At
 the time of the VNF launch, we set that the DNS resolution should pass first for
-the local \verb!DNSMasq! DNS, and then for the Kubernetes CoreDNS service. In
-this way, we were able to distribute the DNS query workload from the master,
-using a local caching system to speed up the name resolution between services.
+the local Dnsmasq DNS, and then for the Kubernetes CoreDNS service. In this way,
+we were able to distribute the DNS query workload from the master, using a local
+caching system to speed up the name resolution between services.
 
 \subsubsection{Ingress and Egress: Ironhide}
 As just said, the whole framework needs to have and entry and an exit point.
@@ -578,7 +577,7 @@ actually goes through Ironhide, who has an internal classifier that it is able
 to recognize the type of connection and to choose the right NS the packet has to
 go through. This process is fundamental since it keeps the connection between
 $S$ and $R$ up, for both TCP and UDP based communications. Since the connection
-need to be end-to-end, the state of the connections are saved in the
+needs to be end-to-end, the state of the connections are saved in the
 \emph{Roulette Controller} component.
 
 \subsubsection{Dynamic package routing: the Roulette component}
@@ -596,9 +595,9 @@ knows the packet's chain and it will correctly forward the it to the next VNF.
 
 \subsubsection{Keeping the connection status}
 The scalability challenge introduces new issues in the system. The most
-important is regarding keeping up stateful connections, since the ingress and
-egress points could be more than one container. With this considerations in
-mind, we started thinking at how and where keeping information about the ingress
+important is keeping up stateful connections, since the ingress and egress
+points could be more than one container. With this consideration in mind, we
+started thinking at how and where keeping information about the ingress
 container handling the connection with the sender $S$ and about the egress
 container talking with the receiver $R$. Since the Roulette component has a
 complete end-to-end topology view of the system, we decided to store these
@@ -614,12 +613,12 @@ elaborates the packet. Built using an event-based pattern, it presents hooks
 that allow other software written in different languages from the Astaire one
 (e.g. Java), to be called dynamically at runtime in order to process the packet.
 The result of this elaboration gets returned to Astaire, that performs the
-beforehand cited operations of VNFs communications and forwarding. In the SFC
+beforehand cited operations of VNFs communication and forwarding. In the SFC
 specification, Astaire is defined as a SFF.
 
 \subsection{Final architecture structure}
 At the end, we were able to create a scalable architecture that followed the
-ETSI MANO standards, with Kubernetes as VIM and Harbor has MANO. We faced
+ETSI MANO standard, with Kubernetes as VIM and Harbor has MANO. We faced
 additional challenges regarding the system scalability, that we solved using the
 Roulette controller. We eased the creation of VNFs with Astaire, and we created
 proper ingress and egress points with Ironhide, that supported scalability
