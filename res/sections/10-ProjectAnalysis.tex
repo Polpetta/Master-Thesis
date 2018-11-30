@@ -1,13 +1,13 @@
 \chapter{Project Analysis}
 \label{chap:prjan}
 
-As in chapter~\ref{chap:intro}, the creation of a full ETSI MANO compliant
-architecture, following the suggestions described in RFC 7665, require the
-integration of multiple tools (some of them have been already briefly introduced
-in~\ref{chap:intro}). The tools were chosen after their analysis, where pro and
-cons have been studied and compared to the necessity of this thesis. Since the
-project has been developed with the cloud provided by the University of Padua,
-Openstack (which a product analysis can be found later
+As described in chapter~\ref{chap:intro}, the creation of a full ETSI MANO
+compliant architecture, following the suggestions described in RFC 7665,
+requires the integration of multiple tools (some of them have been already
+briefly introduced in~\ref{chap:intro}). The tools were chosen after their
+analysis, where pro and cons have been studied and compared to the necessity of
+this thesis. Since the project has been developed with the cloud provided by the
+University of Padua, Openstack (which a product analysis can be found later
 in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
 
 \section{Available technologies in the market}
@@ -29,7 +29,7 @@ right framework for this component first.
 Created in 2010 by a joint operation between Rackspace Hosting and
 NASA~\cite{openstackWebsite}, Openstack allows on-premise cloud installations,
 using bare-metal resources to provide common cloud services as object storage,
-virtual machine deploy, virtual networking. Furthermore its modularity offers
+virtual machine deploy and virtual networking. Furthermore its modularity offers
 the possibility to add additional components, even proprietary, to achieve a
 complete cloud solution.
 \begin{figure}[h]
@@ -45,11 +45,11 @@ specialized in container management and orchestration. Developed by Google in
 2014 and written in Go~\cite{k8sGit}, it allows different machines (called nodes
 from now on) to create an abstraction layer and to form a cluster where is
 possible to run Docker containers without bothering about hardware constraints.
-Nodes can have specific roles and specialization, all of them managed by one or
+Nodes can have specific roles and specializations, all of them managed by one or
 many master nodes, that actually manage the orchestration. On top of that,
 Kubernetes is virtualization-agnostic, meaning that it offers the possibility to
 change the virtualization software in use (i.e. from Container-based technology
-to Virtual machine software).
+to Virtual machine one).
 \begin{figure}[h]
  \centering \includegraphics[scale=0.35]{kubernetes_logo}
  \caption{Kubernetes Logo}
@@ -101,15 +101,14 @@ in~\ref{chap:prjan:sec:tech:sub:other:sub:openbaton}), afterword it has been
 discovered to be not flexible enough to support other kinds of virtualization
 techniques than pure or in-cloud virtual machines. Since this was a strong
 project requisite that could not be easily changed, it has been decided to opt
-for the creation of a smaller and simpler clone that offered a full integration
-with Docker and Kubernetes.
+for the creation of a smaller and simpler alternative that offered a full
+integration with Docker and Kubernetes.
 
 \subsection{Available SFC solutions}
-The tools analysis revealed little about already existent VNF or NS
-implementations, so it was necessary to fill the gap. Since this one of our
-thesis goals, we developed a complete solution to create a complete SFCs, trying
-to standardize our vocabulary as much as possible, and giving basic
-documentation when possible.
+The tools analysis revealed little about already existent VNF or NS reusable
+framework implementations, so it was necessary to fill the gap. We then
+developed a complete solution to create complete SFCs, trying to standardize
+our vocabulary as much as possible, and giving basic documentation.
 
 \subsection{Technologies used during development}
 
@@ -120,7 +119,7 @@ help of additional tools, illustrated below
 \subsubsection{Docker-compose} 
 Docker-compose is a tool that allows services orchestration. It automates most
 of the tasks that should be performed by hand when launching one or multiple
-docker containers. It's particularly useful when more containers have to
+docker containers. It is particularly useful when more containers have to
 interact together, because all the services rules are described in a simple YAML
 file. On top of that, it is possible to restart/stop/destroy selected services,
 while keeping the other up. Additionally, it supports containers scaling and it
@@ -204,16 +203,17 @@ MANO-compliant framework, that offers many configurations options, and since
 it's written in Java, there is the possibility to add components (plug-ins)
 dynamically. Openbaton can be installed as a normal computer program (they offer
 packages for the most common distros) but it can be deployed on Docker
-containers too. It's designed to work with cloud providers like Amazon or Google
-Compute engine, but it offers compatibility with on-premise cloud solutions like
-Openstack, where it deploys virtual machines using the API the platform offers.
-It can store VNF configurations saved as Topology and Orchestration
-Specification for Cloud Applications (TOSCA) Yet Another Markup Language (YAML)
-and it can handle multiple Point of Presence (PoP). It offers a VNF lifecycle
-management out-of-the-box, with the possibility to customize it based on the
-user needs. Its modular design allows developers to change parts of the codebase
-with custom ones, making the product really flexible to different platforms.
-Performing this operation requires a deep knowledge of the framework though.
+containers too. It is designed to work with cloud providers like Amazon or
+Google Compute engine, but it offers compatibility with on-premise cloud
+solutions like Openstack, where it deploys virtual machines using the API the
+platform offers. It can store VNF configurations saved as Topology and
+Orchestration Specification for Cloud Applications (TOSCA) Yet Another Markup
+Language (YAML) and it can handle multiple Point of Presence (PoP). It offers a
+VNF lifecycle management out-of-the-box, with the possibility to customize it
+based on the user needs. Its modular design allows developers to change parts of
+the codebase with custom ones, making the product really flexible to different
+platforms. Performing this operation requires a deep knowledge of the framework
+though.
 
 \begin{figure}[h]
  \centering \includegraphics[scale=0.45]{openbaton_logo}

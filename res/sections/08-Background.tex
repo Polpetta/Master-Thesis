@@ -514,13 +514,13 @@ necessary know its part of a chain, and this defines it as SFC unaware or, on
 the contrary, SFC aware.
 
 \paragraph*{Architectural view}
-About the architectural view of SFCs, proposal defines several assumptions on
+About the SFCs architectural view, the proposal defines several assumptions on
 them, starting from considering every element of the chain an opaque processing
 unit. Another important assumption is that there is no global or standard SF
-chaining logic~\cite{rfc7665}. SFC can be easily seen as a graph, because some
-SF can have multiple address to forward the elaborated data, thus creating what
-is defined as \emph{fork} that ends up forming different branches. This could
-lead to loops, that must be treated consequently.
+chaining logic~\cite{rfc7665}. An SFC can be easily seen as a graph, because
+some SF can have multiple address to forward the elaborated data, thus creating
+what is defined as \emph{fork} that ends up forming different branches. This
+could lead to loops, that must be treated consequently.
 
 \paragraph*{Forwarding strategies}
 At high level, SFC proposes an abstracted view of a service, with a defined set
@@ -561,7 +561,7 @@ header length (16-Byte) and one with a dynamic context header length.
 
 \noindent Regarding this field, the standard does not make any assumption about
 the content, and it is left free to be filled with custom metadata. The only
-requirement is to set this filed with zeroes when is not used.
+requirement is to set this field with zeroes when is not used.
 
 \begin{figure}[t]
   \centering

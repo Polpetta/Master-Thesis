@@ -25,12 +25,12 @@ Kubernetes does not require too much resources \textit{per se} and in literature
 is possible to find solutions of Kubernetes installations performed on machines
 with the same hardware installed on the UAVs~\cite{pahl2016container}.
 
-One of the first proposal that take advantage of container in to take on network
-edges NFV is~\cite{cziva2017container}. The authors present the work, based on
-previous definition of the platform defined in~\cite{cziva2015container} to
-orchestrate the virtual function and to deploy it as close as possible to the
-data sender to classify traffic and choose the appropriate functions
-immediately.
+One of the first proposals that takes advantage of the container technology and
+to take to the network edges the NFV is~\cite{cziva2017container}. The authors
+present the work, based on previous definition of the platform defined
+in~\cite{cziva2015container} to orchestrate the virtual function and to deploy
+it as close as possible to the data sender to classify traffic and choose the
+appropriate functions immediately.
 
 \section{EPC virtual implementations}
 
@@ -48,12 +48,12 @@ EPC and ETSI MANO definitions are not the only solutions to have been explored
 at this time. An SDN/NFV-based end-to-end network slicing for 5G has been
 created in~\cite{chartsias2017sdn}, where the authors provided examples to
 demonstrate how end-to-end services can be provisioned using SDN networking, in
-particular with controllers like such as OpenDaylight, Pox, Ryu ONOD and
-Floodlight. The last one was studied by us too during the technologies analysis,
-and a description is available in
+particular with controllers like OpenDaylight, Pox, Ryu ONOD and Floodlight. The
+last one was studied by us too during the technologies analysis, and a
+description is available in
 Section~\ref{chap:prjan:sec:tech:sub:other:sub:floodlight}.
 
-Compared to our solution, these implementations does not present an unified
+Compared to our solution, these implementations do not present an unified
 framework that gives the possibility orchestrate different network slices
 consistently. Adopting Kubernetes gives the advantage to use the Kubernetes
 Federation feature~\cite{kubeFederation}, enabling the possibility to simplify
@@ -76,15 +76,15 @@ Finally, a Service-Level Agreement (SLA) based orchestration criteria between
 network slices is proposed as a viable solution to solve the security problems
 about isolation. We tried to mitigate the security concern presented above using
 the integrated Role Base Access Control system (RBAC) and other security policy
-bundled in by default in Kubernetes.
+bundled by default in Kubernetes.
 
 \section{Provision capabilities}
-We noted how, in some other NFV/ETSI-MANO proposals like~\cite{soares2015toward}
-and~\cite{abujoda2015midas}, the implementations relays on a static provision
-system, where the SFC paths are somehow defined at deploy time, and can't change
-without decommissioning, editing and deploying the chain again. Our proposal,
-instead, is able to support chain editing on-the-fly, allowing NFV to
-dynamically change the SFP.
+We noticed how, in some other NFV/ETSI-MANO proposals
+like~\cite{soares2015toward} and~\cite{abujoda2015midas}, the implementations
+relay on a static provision system, where the SFC paths are somehow defined at
+deploy time, and can not change without decommissioning, editing and deploying
+the chain again. Our proposal, instead, is able to support chain editing
+on-the-fly, allowing NFV to dynamically change the SFP.
 
 \vspace{1cm}
 
