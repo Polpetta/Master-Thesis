@@ -1,14 +1,15 @@
 \chapter{Project Analysis}
 \label{chap:prjan}
 
-As described in chapter~\ref{chap:intro}, the creation of a full ETSI MANO
-compliant architecture, following the suggestions described in RFC 7665,
-requires the integration of multiple tools (some of them have been already
-briefly introduced in~\ref{chap:intro}). The tools were chosen after their
-analysis, where pro and cons have been studied and compared to the necessity of
-this thesis. Since the project has been developed with the cloud provided by the
-University of Padua, Openstack (which a product analysis can be found later
-in~\ref{chap:prjan:sec:openstack}) has been used as base for our deployments.
+As discussed through Chapter ~\ref{chap:intro}, the implementation of an
+ETSI-compliant MANO architecture, contemplating service chain proovisioning
+capabilities as mandated by RFC 7665, requires the integration of multiple
+tools. The tools were chosen after their analysis, where pro and cons have been
+studied and compared to the necessity of this thesis. Since the project has been
+developed within the cloud environment provided by the Department of
+Mathematics, University of Padua, we initially relied on Openstack (which a
+product analysis can be found later in~\ref{chap:prjan:sec:openstack}) as the
+default infrastructure manager choice.
 
 \section{Available technologies in the market}
 \label{chap:prjan:sec:tech}
@@ -18,7 +19,8 @@ performing a choice between them and exploiting their possible ``weak
 points''. Proceeding with a top-down approach, the frameworks were chosen from 
 the one that had the biggest role in the test-bed to conclude with the 
 less-important components.
-\subsection{VIM}
+
+\subsection{Virtualized Infrastructure Manager}
 A critical component, as the MANO one, is the VIM. Without it, network resources
 can not be managed, and since our project was focused on dynamically allocating
 containerized applications on cloud platforms, we decided to start analyzing the

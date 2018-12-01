@@ -1,11 +1,15 @@
 \chapter{Background}
 \label{chap:background}
 
-In this chapter we are going to explain the most important concepts of the
-upcoming 5G standard, talking about the Virtual Network Functions (VNFs), the
-Network Slice (NS) concept and how first experiments with these new innovations
-already begun. Finally we are going to briefly introduce and explain the
-technologies involved and their role.
+This chapter provides some background information related to 5G technology
+confined to the domain under scrutiny. We start by introducing the concept the
+ETSI NFV- Management and Orchestration (MANO) proposal, outlining outlining key
+functional components and their modus operandi. Next, we provide some background
+information on the Software Defined Networking (SDN) paradigm and its
+data/control plane softwarization effort. Concluding, we introduce the Service
+Function Chaining paradigm, arguing how all the above mentioned technology could
+be employed in synergy in order to implement an end-to-end service delivery
+scheme.
 
 \section{Fifth generation mobile networks}
 
@@ -110,23 +114,35 @@ layers resources.
 
 \subsubsection{Network slicing}
 \label{chap:background:sec:5g:sub:ns}
-The role of a \emph{network slice} in a 5G architecture is to specifically
-handle the Control-plane of a particular service (e.g. smartphones traffic,
-autonomous driving, massive IoT), deploying resources in a manner that assure
-the required latency, security and reliability. While some very peculiar and
-legacy service could require specific hardware, the common resources between
-services could be shared in a virtualized way, providing auto-scaling
-capabilities in services that are under heavy network pressure.
+
+Network Slicing is a 5G related concept referring to the possibility of
+provisioning an end-to-end optimized service within the network, that responds
+to particular Quality of Service requirements (e.g. low latency, high
+throughput). The service under consideration might be constituted by one or more
+functional, either virtualized of physical components, all controlled and
+management by a logically centralized network brain. The service provider
+exposes a set of well-defined APIs to the consumer, through which it is possible
+to define and instantiate a fully fledged service whose deployment is enacted on
+a shared infrastructure layer. It is noteworthy to point out that no exact
+definition of a network slice exists, and different approaches on how to achieve
+it have been advanced.
+
+While some very peculiar and legacy service could require specific hardware, the
+common resources between services could be shared in a virtualized way,
+providing auto-scaling capabilities in services that are under heavy network
+pressure.
 
 \section{The VIBeS project}
 
-This thesis started as a part of the VIBES project~\cite{vibesesa}, whose main
-requirement is to enhance the performance of end-to-end IP based that involves
-satellite connections. To reach this goal, the project specifications suggest to
-exploit the 5G incoming technology and use the NFV-MANO architecture to perform
-first packets elaboration and performance improvement and finally TCP/IP
-satellite chunk optimization with the Performance Enhancing Proxy (PEP). The
-VIBES project proposed five technical requirements:
+VIBeS is a concrete example of a 5G project combining the use of SDN and NFV
+technology, working in concert to provide specialized network slices for several
+envisioned use-cases~\cite{vibesesa}. VIbES goals are ambitious, aiming to
+demonstrate the practical convergence of satellite and 5G in a unified frame. To
+reach this goal, the project specifications suggest to exploit the 5G incoming
+technology and use the NFV-MANO architecture to perform first packets
+elaboration and performance improvement and finally TCP/IP satellite chunk
+optimization with the Performance Enhancing Proxy (PEP). The VIBES project
+proposed five technical requirements:
 \begin{enumerate}
   \item Analysis of the applicability of current and new Internet protocols in
   the proposed VNF-PEP architecture;
@@ -197,7 +213,7 @@ on how to optimize certain communications.
 %the next chapter.\todo{This should be put at the end of the introduction.}
 % 
 
-\section{Virtualization}
+\section{Virtualization Technology}
 It is remarkable how cloud computing has surged in the recent years. This is due
 the numerous features it carries, such as a great way to isolate processes and
 mitigate possible attacks from malicious users. On top of that, it allows to run
