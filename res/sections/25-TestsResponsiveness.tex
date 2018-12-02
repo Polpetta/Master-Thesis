@@ -62,15 +62,13 @@ in range $0-1$.}
     \label{chap:tests:sec:dockervsvb:subimg:plots}
 \end{figure}
 
-
 \begin{table}[t]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|c|c}
-                     & \textbf{Standard deviation (seconds)} & \textbf{Average 
-start up time (seconds)} \\ \hline
-\textbf{Docker}      & 0.009620874                           & 0.016        \\
-\textbf{Virtual Box} & 0.755                                 & 20.211
+                     & \textbf{Average start up time (seconds)} & \textbf{Standard deviation (seconds)} \\ \hline
+\textbf{Docker}      & 0.016                                    & 0.009620874                           \\
+\textbf{Virtual Box} & 20.211                                   & 0.755                                
 \end{tabular}%
 }
 \caption[Docker vs Virtual Box start up times comparison]{Docker vs Virtual Box
@@ -79,9 +77,8 @@ start up time (seconds)} \\ \hline
   machine. The overall time required by the traditional virtualization system is
   approximately of 33 minutes, witch gives a significant insight of how much
   time is required to create and boot a virtualized environment.}
-\label{my-label}
+\label{chap:tests:sec:dockervsvb:tab:startup}
 \end{table}
-
 
 % The overall time required by the traditional virtualization system is
 % approximately of 33 minutes, witch gives a significant insight of how much 
@@ -146,29 +143,27 @@ with 32GB of RAM, 8 vCPU and 50GB of SSD storage.
 
 \newpage
 
-% TODO is it worth to keep it as a long table?
 \begin{longtable}[c]{c|c|c}
-\textbf{SFC length} & \textbf{Standard deviation (seconds)} & \textbf{Average 
-deploy time (seconds)} \\ \hline
+\textbf{SFC Length} & \textbf{Average deploy time (seconds)} & \textbf{Standard deviation (seconds)} \\ \hline
+\endfirsthead
+%
 \endhead
 %
-\textbf{1}          & 2.560102                   & 13.291                     \\
-\textbf{2}          & 0.6301444                  & 14.207                     \\
-\textbf{3}          & 1.14903                    & 15.345                     \\
-\textbf{4}          & 3.592179                   & 16.453                     \\
-\textbf{5}          & 0.9728132                  & 16.634                     \\
-\textbf{6}          & 1.103802                   & 17.418                     \\
-\textbf{7}          & 2.944699                   & 17.984                     \\
-\textbf{8}          & 1.733722                   & 18.480                     \\
-\textbf{9}          & 1.746296                   & 18.607                     \\
-\textbf{10}         & 1.291508                   & 20.511                     \\
+\textbf{1} & 13.291 & 2.560102 \\
+\textbf{2} & 14.207 & 0.6301444 \\
+\textbf{3} & 15.345 & 1.14903 \\
+\textbf{4} & 16.453 & 3.592179 \\
+\textbf{5} & 16.634 & 0.9728132 \\
+\textbf{6} & 17.418 & 1.103802 \\
+\textbf{7} & 17.984 & 2.944699 \\
+\textbf{8} & 18.480 & 1.733722 \\
+\textbf{9} & 18.607 & 1.746296 \\
+\textbf{10} & 20.511 & 1.291508 \\
 \caption[SFC start up time]{Table of the results. It is possible to see how the
   time required for the SFC to go up increases with the length, reaching an
   average of 20 seconds for chain of eight, nine and ten elements.}
 \label{chap:tests:sec:sfclength:tab:sfcdata}\\
-
 \end{longtable}
-
 
 \paragraph*{Considerations on container start-up in Kubernetes}
 Regarding the start-up times in Kubernetes is possible to denote a considerable
