@@ -556,6 +556,16 @@ and decapsulated between SFs, to give them the possibility to elaborate the
 payload contained.
 
 \subparagraph*{Network Service Header (NSH)}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.6]{nshtype1}
+  \caption[NSH MD Type \texttt{0x1}]{NSH MD Type \texttt{0x1}~\cite{rfc8300}.
+    The context header in this NSH has a fixed length. There is another possible
+    context header that has a variable length.}
+  \label{chap:background:img:nshtype1}
+\end{figure}
+
 The encapsulation has an header that is well defined and described in detail
 in~\cite{rfc8300}. This header is composed by a 4-byte base header, and a 4-byte
 Service Path Header (SPH). The base header provides information about the services
@@ -578,12 +588,3 @@ header length (16-Byte) and one with a dynamic context header length.
 \noindent Regarding this field, the standard does not make any assumption about
 the content, and it is left free to be filled with custom metadata. The only
 requirement is to set this field with zeroes when is not used.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[scale=0.6]{nshtype1}
-  \caption[NSH MD Type \texttt{0x1}]{NSH MD Type \texttt{0x1}~\cite{rfc8300}.
-    The context header in this NSH has a fixed length. There is another possible
-    context header that has a variable length.}
-  \label{chap:background:img:nshtype1}
-\end{figure}
