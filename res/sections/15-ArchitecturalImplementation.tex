@@ -1,14 +1,15 @@
 \chapter{Architectural proposal}
 \label{chap:archimpl}
  
-In this chapter we will dig into the actual architectural proposal, seeing all
-the problems related to it and how they were solved. We will show all the
-various attempts made, and we will discussion about the technological issues and
-changes we had to perform.
+In this chapter we dig into the actual architectural proposal, seeing all the
+problems related to it and how they were solved. We will show all the various
+attempts made, and we will discussion about the technological issues and changes
+we had to perform.
 
 \section{Architecture introduction}
-Before describing the real implementation, we are going to briefly introduce
-some of its functional components and the way they work.
+
+Before digging into the details of the actual implementation, we briefly
+introduce some of its functional components and the way they work.
 
 \subsection{A two-level orchestration framework}
 \begin{figure}[t]
@@ -37,7 +38,7 @@ Figure~\ref{chap:archimpl:sec:fistattempt:img:architecture}:
 \item a high layer, service-aware;
 \item a low layer, service-unaware.
 \end{itemize}
-Both the layers would use Openbaton. The messages would be exchanged through
+Both layers rely on the Openbaton NFVO. The messages would be exchanged through
 RabbitMQ, using the Advance Message Queuing Protocol (AMQP).
 
 \paragraph*{Low-layer orchestrator}
@@ -475,7 +476,7 @@ like Openstack or cloud vendors like Google Compute engine or Amazon AWS. These
 reasons, with the fact that after two weeks we were not able to get any working
 prototype of VIM driver or VNFM we gave up, searching for another solution.
 
-\section{Second attempt - revision one}
+\section{Final Design: End-to-end MANO}
 
 The impossibility to develop a custom VIM driver and VNFM manager led us to
 search for an alternative solution. Then, we started to work directly on the
@@ -483,7 +484,7 @@ VIM. The base approach was to create an API Server which in future an Openbaton
 plugin could contact and simply deploy TOSCA definitions, interacting with a set
 of RESTful APIs. We called this simple backend \emph{Harbor}.
 
-\subsection{Harbor}
+\subsection{Harbor: extending the capabilities}
 \label{chap:archimpl:sec:secondattempt:sub:harbor}
 Harbor grew considerably during the project development, as it revealed to be a
 key component of our architecture. Harbor does not have a web interface, but as
@@ -496,8 +497,8 @@ the associated VNFs are set up too, making the whole operation of launching a
 SFC atomic from the user point-of-view. Since this architecture component grew
 until it became a Kubernetes MANO, we added a feature that, in our opinion,
 Openbaton lacks: smart resource utilization. Harbor, in fact, during an SFC
-deletion, checks if any related VNF remains orphan (which means without any
-SFC using it). In that case the VNF will enter in a state of pruning: after five
+deletion, checks if any related VNF remains orphan (which means without any SFC
+using it). In that case the VNF will enter in a state of pruning: after five
 minutes, if the VNF has not be re-utilized by any other SFC it will be deleted.
 This mechanism assure faster deployments in environments where NSs are
 continuously taken up and down.
@@ -616,7 +617,7 @@ The result of this elaboration gets returned to Astaire, that performs the
 beforehand cited operations of VNFs communication and forwarding. In the SFC
 specification, Astaire is defined as a SFF.
 
-\subsection{Final architecture structure}
+\subsection{Discussion}
 At the end, we were able to create a scalable architecture that followed the
 ETSI MANO standard, with Kubernetes as VIM and Harbor has MANO. We faced
 additional challenges regarding the system scalability, that we solved using the

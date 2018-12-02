@@ -53,34 +53,35 @@ This new possibility of provisioning a network with specialized, heterogeneous
 classes of services, combined with emerging virtualization technologies like
 cloud computing, hypervisor-virtualized machine or container-based solutions,
 enables the deployment of Virtualized Network Functions (VNFs) within seconds
-running on generic purpose or custom hardware. While there may be some
-performances degradation, it has been demonstrated that their time-to-deploy and
-the possibility of automation they offer are unprecedented~\cite{nguyen2017sdn}.
-On top of that, a specialized software entity acts as a MANager and Orchestrator
-(MANO) for these VNFs, managing their lifecycle. While most of the current
-proposals are based on a hypervisor solution, in this thesis we set the
-objective of providing a proof-of-concept implementation of an Infrastructure
-Management and Orchestration plane based on the new container-based technology,
-called Docker, on a recent orchestrator framework: Kubernetes. Moreover,
-building on recent published results of the 3GPP Release 15, we outline a
-software architecture capable of end-to-end service orchestration exploiting
-container-technology.
+running on generic purpose or custom hardware. Even though the use
+virtualization is sometimes paid in terms of computational overhead, the
+technology has demonstrated its maturity and the possibilities of automation it
+offers are unprecedented~\cite{nguyen2017sdn}. On top of that, a specialized
+software entity acts as a MANager and Orchestrator (MANO) for these VNFs,
+managing their lifecycle. While most of the current proposals are based on a
+hypervisor solution, in this thesis we set the objective of providing a
+proof-of-concept implementation of an Infrastructure Management and
+Orchestration plane based on the new container-based technology, called Docker,
+on a recent orchestrator framework: Kubernetes. Moreover, building on recent
+published results of the 3GPP Release 15, we outline a software architecture
+capable of end-to-end service orchestration exploiting container-technology.
  
 \section*{Document organization}
  
 This thesis is organized as follows:
 \begin{itemize}
- \item Chapter~\ref{chap:background} describes background information about 5G
-   and the technologies used to build an ETSI compliant architecture;
- \item Chapter~\ref{chap:rel_wk} gives an insight of correlated works on this
-   field;
- \item Chapter~\ref{chap:prjan} explains the analysis performed on the
-   requirements provided and the overall project roadmap;
+ \item Chapter~\ref{chap:background} provides some background information about
+   5G and the technologies used to build an ETSI compliant architecture;
+ \item Chapter~\ref{chap:rel_wk} discusses some prior work of relevance in the
+   context;
+ \item Chapter~\ref{chap:prjan} provides a detailed analysis of the domain,
+   fixing some design requirements, stating the overall project roadmap.
  \item Chapter~\ref{chap:archimpl} provides an in-depth view of the high-level
    architectural implementation;
  \item Chapter~\ref{chap:vnf_ns_impl} gives a brief explanation of the SFC
    implementation;
- \item Chapter~\ref{chap:test} describes the tests done on the platform;
+ \item Chapter~\ref{chap:test} discusses the experimental setting along with
+   some obtained preliminary results
  \item Chapter~\ref{chap:fw} illustrates possible future works;
  \item Chapter~\ref{chap:conclusions} wraps up the overall project experience.
 \end{itemize}
