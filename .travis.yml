@@ -21,10 +21,10 @@ addons:
     - aspell-en
 script:
 - make ci LANG=en OUTPUT_NAME=ThesisNoPrint
-- make OUTPUT_NAME=ThesisPrint PRINT=y
 after_failure:
 - cat Thesis.log
 before_deploy:
+- make OUTPUT_NAME=ThesisPrint PRINT=y
 - git fetch --tags
 deploy:
   provider: releases
