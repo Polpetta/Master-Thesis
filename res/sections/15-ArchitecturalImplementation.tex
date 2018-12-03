@@ -296,8 +296,8 @@ Docker. Kubernetes has an architecture based on plug-ins, giving the possibility
 to the users to change part of Kubernetes itself, such as the networking routing
 strategy or the persistence layer. With this flexibility Kubernetes offered to
 us what Docker Swarm was not able to give. Additionally, we developed a custom
-Domain Name System (DNS) lookup process and distribute other internal components
-in order to avoid requests bottleneck (as explained better in
+Domain Name System (DNS) lookup process and distributed other internal
+components in order to avoid requests bottleneck (as explained better in
 Section~\ref{chap:archimple:sec:secondattempt:sub:scalability}).
 
 \subsection{Kubernetes configuration}
@@ -322,12 +322,13 @@ like a reworked DNS lookup system and new storage features\footnote{A full
   kubernetes log release can be found at:
   \url{https://kubernetes.io/blog/2018/06/27/kubernetes-1.11-release-announcement/}}.
 For the initial deployment we relied on an internal Openstack instance installed
-at the University of Padua made of four nodes with 4GB of RAM, 10GB of SSD
-storage and 2vCPU on Ubuntu 16.04 machines (that we later swapped with CentOS
+at the University of Padua, creating four nodes with 4GB of RAM, 10GB of SSD
+storage and 2 vCPU on Ubuntu 16.04 machines (that we later swapped with CentOS
 7). We performed the installation using the official Kubernetes repositories,
-taking care of performing an accurate cluster configuration, as better explained
-in Appendix~\ref{kubernetes}. After the initial installation, we obtained a
-configuration similar to the one illustrated in
+taking care of performing an accurate cluster configuration complete with
+additional modules (e.g. networking and distributed persistent storage), as
+better explained in Appendix~\ref{kubernetes}. After the initial installation,
+we obtained a configuration similar to the one illustrated in
 Figure~\ref{chap:archimpl:sec:secondattempt:img:k8scp}. In this figure is
 possible to denote different components on the master node and on the minions,
 which will be described.
@@ -484,7 +485,7 @@ prototype of VIM driver or VNFM we gave up, searching for another solution.
 \section{Final Design: End-to-end MANO}
 
 The impossibility to develop a custom VIM driver and VNFM manager, given the
-resources of hand, led us to search for an alternative solution. Then, we
+resources at hand, led us to search for an alternative solution. Then, we
 started to work directly on the VIM. The base approach was to create an API
 Server which in future an Openbaton plugin could contact and simply deploy TOSCA
 definitions, interacting with a set of RESTful APIs. We called this simple
