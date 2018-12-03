@@ -20,7 +20,8 @@ addons:
     - aspell
     - aspell-en
 script:
-- make ci LANG=en
+- make ci LANG=en OUTPUT_NAME=ThesisNoPrint
+- make OUTPUT_NAME=ThesisPrint PRINT=y
 after_failure:
 - cat Thesis.log
 before_deploy:
@@ -29,7 +30,9 @@ deploy:
   provider: releases
   api_key:
     secure: r2+bKePEA+GhhMNQNvlPZytURYEquHNRKo1N51WnBUg0cnKNdCurjFY/oCFWEka3ZakXuG5dAfyzx5uEJ+f798SvQjhMT+5LnJYDg+d2IicaIRFk3HBwNyd9vRAxmCXVh8IhV2M59YesfAK2xme3vsJigcXOmg0NdGPikig34E8Pi0OuWOqFl6ugfbOql69QIIaqhW01sv3/wWsAs5AtPF+O6S9etGHaIc7GMn1CcPZcK2psE49Oczcl1ZvkzmL+ZJcKjW+Iil1P4GwJKIpiMFZRF7QCOneb9Pzx3CmW9qb5CVWFCuh/1+cwD3jyW2dE5CMrLERnBs01glE8kNYKJoCXCcj0j0ATziUBas/IewkJsdHXeyYYuwxsFt326iDIhVJcL+M/dUhfsT7nFrUUpn7u7yhMuPIkzTpi/c5WlRXPmPsw+BScADqQjlS+e7NpVFeMOc1DfyDUV7/7LJyARvj9ZeFGBcNRcpiaJRxl1+y89uFyw0ZeSNvxcjgu0jerSD+udkWMqB3vAhaGb8K9tKW/0zgfq1nF1qAd9vhvTiWJbHkY7jSZbCvkz4yWgFpLoAJ01bVvPKPLCjbJFTVB5FhIxnWgc71uzqC0P8YgoE/i5pNRlvG0mMp7HmXZhr1+R+ZcDpCjetiOroKLOB/Yw4ol9lv0+kxeSM0lxu72z2w=
-  file: Thesis.pdf
+  file:
+    - ThesisNoPrint.pdf
+    - ThesisPrint.pdf
   skip_cleanup: true
   on:
     repo: Polpetta/Master-Thesis
