@@ -272,7 +272,7 @@ frameworks.
   \label{chap:archimpl:sec:secondattempt:img:dockerswarm}
 \end{figure}
 
-First we started assesing the Docker Swarm orchestrator. Docker Swarm is a
+First we started assessing the Docker Swarm orchestrator. Docker Swarm is a
 product directly made by the Docker Inc., so it seamlessly integrates with other
 Docker tools such as Docker Compose. The installation and set-up is pretty
 straightforward, and the configuration is almost automatically handled by Docker
@@ -322,10 +322,10 @@ like a reworked DNS lookup system and new storage features\footnote{A full
   kubernetes log release can be found at:
   \url{https://kubernetes.io/blog/2018/06/27/kubernetes-1.11-release-announcement/}}.
 For the initial deployment we relied on an internal Openstack instance installed
-at the University of Padova made of four nodes with 4GB of RAM, 10GB of SSD
+at the University of Padua made of four nodes with 4GB of RAM, 10GB of SSD
 storage and 2vCPU on Ubuntu 16.04 machines (that we later swapped with CentOS
 7). We performed the installation using the official Kubernetes repositories,
-taking care of performing a accurated cluster configuration, as better explained
+taking care of performing an accurate cluster configuration, as better explained
 in Appendix~\ref{kubernetes}. After the initial installation, we obtained a
 configuration similar to the one illustrated in
 Figure~\ref{chap:archimpl:sec:secondattempt:img:k8scp}. In this figure is
@@ -540,7 +540,7 @@ identified the following challenges:
 \item whole system scalability: we want for every component to have the
   possibility of scaling during intense workloads, without the necessity of
   human intervention;
-\item ingress and egress points: specularized entities of our framework handling
+\item ingress and egress points: specialized entities of our framework handling
   SFC encapsulation/decapsulation session data;
 \item dynamic packet routing: as formulated by one of our requirements, packet
   routing had to be dynamic. We immediately identified a possibility to create
@@ -604,7 +604,7 @@ Section~\ref{chap:background:sec:sfc}). Finally, thanks to this label, every VNF
 knows the packet's chain and it will correctly forward the it to the next VNF.
 
 \subsubsection{Keeping the connection status}
-Desining for scalability gave rise to new issues. The most important is keeping
+Designing for scalability gave rise to new issues. The most important is keeping
 up stateful connections, since the ingress and egress points could be more than
 one container. With this consideration in mind, we started thinking at how and
 where keeping information about the ingress container handling the connection
