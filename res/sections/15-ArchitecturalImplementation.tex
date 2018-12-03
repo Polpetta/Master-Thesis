@@ -6,7 +6,7 @@ problems related to it and how they were solved. We will show all the various
 attempts made, and we will discussion about the technological issues and changes
 we had to perform.
 
-\section{Architecture introduction}
+\section{A top-down overview}
 
 Before digging into the details of the actual implementation, we briefly
 introduce some of its functional components and the way they work.
@@ -42,15 +42,14 @@ Both layers rely on the Openbaton NFVO. The messages would be exchanged through
 RabbitMQ, using the Advance Message Queuing Protocol (AMQP).
 
 \paragraph*{Low-layer orchestrator}
-The low-layer orchestrator job corresponds to the one defined in the ETSI MANO
-definition, with the role of managing and orchestrating VNFs and NSs. The
-low-layer MANO holds different data repositories where VNF and NS definitions
-are stored, alongside with various monitoring tools, logs and network services
-repositories. The low layer MANO exposes a set of APIs to the upper layer
-(related to handling services) MANO, that is able to configure and manage the
-services. In other words, the service MANO has the possibility to configure and
-launch services to the low-layer orchestrator, providing the necessary
-information.
+The low-layer orchestrator job corresponds to the one defined in the ETSI MANO,
+with the role of managing and orchestrating VNFs and NSs. The low-layer MANO
+holds different data repositories where VNF and NS definitions are stored,
+alongside with various monitoring tools, logs and network services repositories.
+The low layer MANO exposes a set of APIs to the upper layer (related to handling
+services) MANO, that is able to configure and manage the services. In other
+words, the service MANO has the possibility to configure and launch services to
+the low-layer orchestrator, providing the necessary information.
 
 \subsection{Low-layer functional components}
 In the following section we are going to briefly talk about the role of the most
