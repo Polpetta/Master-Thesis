@@ -2,13 +2,12 @@
 \label{chap:vnf_ns_impl}
 
 The complexity behind the creation of a working Service Function Chain system
-was so high to require particular care and a separated study. Indeed, the SFCs
-are the at the base of the whole architecture: packet transmission and
+was high demanding for particular care and a separated study. Indeed, the SFCs
+are the at the core of the whole architecture: packet transmission and
 elaboration is made here. Challenges regarding this topic are building a system
 that is flexible enough to allow dynamic packet routing, support scalability and
 provide methods to recovery from failures. In this chapter, a brief explanation
-about the challenges and the issues encountered building this system will be
-given.
+about the challenges and the issues encountered building this system are given.
 
 \section{Harbor}
 
@@ -49,8 +48,9 @@ already existing components.
   \caption{Final review schema}
   \label{chap:impl:img:finalreview}
 \end{figure}
-
-The approved proposal for the creation of a proper chain has been based on four components:
+In Figure~\ref{chap:impl:img:finalreview} is shown a high level schema
+evidencing the components and their relationships. The approved proposal for the
+creation of a proper chain has been based on four components:
 \begin{itemize}
 \item Astaire, which aim is to performing packet encapsulation and decapsulation
   between VNFs;
@@ -67,7 +67,7 @@ policy.
 Another important aspect to keep in consideration is how communications inside
 the chain are performed. The packet arriving in the ingress needs to be
 preserved, so that VNFs can perform packet elaboration. In order to obtain this,
-packet encapsulation has been used. IP in IP encapsulation allows to preserve
+packet encapsulation has been used. An IP/IP encapsulation allows to preserve
 the original packet, making the incoming packet the payload of a new one.
 
 Ironhide, which was introduced in the previous chapter, plays a crucial role in

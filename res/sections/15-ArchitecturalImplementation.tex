@@ -84,13 +84,14 @@ the issue we encountered.
 
 In our first attempt we started building our infrastructure on top of Ubuntu
 16.04 (for Openstack) and Ubuntu 18.04 (for Openbaton). Our main goal was to set
-up Openstack as our VIM while setting Openbaton as our MANO. Then, Openbaton
-would have registered Openstack as PoP, where TOSCA definitions would have been
-launched on Openstack that, instead of deploying hypervisor based virtual
-machines, it would have deployed container instances. The VNFs lifecycles would
-have been controlled through an Element Management System (EMS), transmitting
-the various VNF states via the message broker RabbitMQ. It is possible to see the
-interactions between elements in a minimum schema available in
+up Openstack as our VIM while setting Openbaton as our MANO. Then, Openstack
+would register with Openbaton and TOSCA definitions would be deployed on
+Openstack following the Infrastructure as Code (IaC) paradigm. In this context
+we are interested in deploying container-based instances instead of hypervisor
+based virtual machines. The VNFs lifecycles would have been controlled through
+an Element Management System (EMS), transmitting the various VNF state changes
+via the message broker RabbitMQ. It is possible to see the interactions between
+the elements in a minimal schema available in
 Figure~\ref{chap:archimpl:sec:fistattempt:img:schema1}.
 
 \begin{figure}[t]
@@ -106,25 +107,26 @@ Figure~\ref{chap:archimpl:sec:fistattempt:img:schema1}.
 
 \subsection{Openstack for container orchestration}
 
-Our first step was to try and use Openstack to create a container orchestration.
-The reason behind this approach was simple: Openbaton, on the paper, comes with
-an out-of-the-box support for Openstack. In fact, it natively supports Openstack
-PoPs, giving to us a great possibility to reuse the two frameworks and to ease
-the development phase of our software.
+Our first step was to try and use Openstack to create a container orchestration
+environment. The reason behind this approach was simple: Openbaton, on the
+paper, comes with an out-of-the-box support for Openstack. In fact, it natively
+supports Openstack registered as a PoP, giving to us a great possibility to
+reuse the two frameworks and to ease the development phase of our software.
 \subsubsection{Devstack: Openstack for developers}
 Openstack is composed by modules, giving the possibility to the user who wants
 to install it to choose only the components it really needs. So the first thing
 we decided was to perform a selection of these modules between the 33 available
 in the installation page. The installation of this components span between
 multiple machines (nodes), therefore creating a whole cluster of resources.
-Since we considered too time-consuming to install Openstack in a distributed
-manner, we considered to test first the developer version, called
-\emph{Devstack}. Devstack offers the possibility to install a subset of modules
-in the local machine, and to leverage a Openstack environment able to perform
-the same operations of the production-grade installation. Thus, we started
-configuring the Devstack installation, installing first of all the Nova module,
-that is required to perform computing operations such as the launch of virtual
-machines, and lately we installed Tacker too.
+
+Since a distributed Openstack installation was too time consuming, we considered
+to test first the developer version, called \emph{Devstack}. Devstack offers the
+possibility to install a subset of modules in the local machine, and to leverage
+a Openstack environment able to perform the same operations of the
+production-grade installation. Thus, we started configuring the Devstack
+installation, installing first of all the Nova module, that is required to
+perform computing operations such as the launch of virtual machines, and lately
+we installed Tacker too.
 
 \paragraph*{Tacker}
 \begin{figure}[t]
@@ -152,14 +154,14 @@ The Openstack installation is not an easy one, particularly for newcomers, that
 have to deal with a great set of tools and not-always-clear instructions. Here 
 we will describe how we managed to get a single-node deployment up and running.
 
-First of all, Devstack needs a machine with at least 16GB of ram and 50GB of HD 
-space.
-We decided to install these components:
+First of all, Devstack needs a machine with at least 16GB of ram and 50GB of HD
+space. We decided to install these components:
 \begin{itemize}
- \item Keystone (for identity management)
+ \item Keystone: identity management module
  \item Object storage
  \item Compute
- \item Tacker (we tested this module to see is Openstack was a suitable VIM too)
+ \item Tacker: a VNF and NFVO (as explained), tested to see if Openstack was a
+   suitable VIM too
 \end{itemize}
 
 Using Devstack is a simple operation, but the time required to reach a correct 
@@ -188,7 +190,7 @@ Openbaton currently offers three ways to be deployed:
     standard and full deployment were offered.
 \end{itemize}
 
-A short description about every installation/deploy method will be briefly
+A short description about every installation/deploy method is briefly
 illustrated.
 
 \subparagraph*{Installation via repository}
@@ -218,6 +220,8 @@ possibility to graphically see the data fetch from Openbaton about the system
 state. Finally, a Docker based solution seemed to be the best approach since all
 of our components were meant to be put inside Docker containers.
 
+\vfill
+
 \subsection{Docker integration in Openstack}
 
 \begin{figure}[t]
@@ -228,25 +232,25 @@ of our components were meant to be put inside Docker containers.
   \label{chap:archimpl:sec:fistattempt:img:dockeropnestackmodule}
 \end{figure}
 
-After the initial Openstack and Openbaton configuration we started making the
-components talking to each other. First, we tried a simple \verb!iperf! data
-transmission with two VNFs deployed by Openbaton as a common hypervisor-based
-Openstack instances, as explained in~\cite{openbatonIperf}. With this test
-completed, we started tinkering Openstack for using Docker containers instead of
-traditional hypervisor instances. When we started developing this solution, we
-adopted the Zun module, that aims to smoothly integrate Docker in Openstack.
-Unfortunately, we were not able to make it properly work, in particular, it was
-not possible to open desired ports on the Docker containers. This lead to the
-impossibility to perform packet forwarding between VNFs. On top of that, we
-found difficulties regarding the integration of Docker images in TOSCA
-definitions and Openstack. These two issues are related: the TOSCA definition
-does not have any keyword to specificate in any way that the image used for the
-VNF definition is a Docker image, and Openstack, with the Zun plugin, at the
-time of the implementation did not performed the image pull from any Docker
-registry. The impossibility to easily set the containers ports and the lack of
-some support between the TOSCA definition and the Openstack Zun plugin pushed us
-to drop Openstack as a possible solution and to start looking for another valid
-VIM component.
+After the deployment of Openstack and Openbaton, the next logical step is to try
+and make the components talk to each other. First, we tried a simple
+\verb!iperf! data transmission with two VNFs deployed by Openbaton as a common
+hypervisor-based Openstack instances, as explained in~\cite{openbatonIperf}.
+With this test completed, we started experimenting Openstack so as to use Docker
+containers instead of traditional hypervisor instances. When we started
+developing this solution, we adopted the Zun module~\cite{zunmoduleos}, that
+aims to smoothly integrate Docker in Openstack. Unfortunately, we were not able
+to make it work properly. In particular, it was not possible to open
+communications ports on the Docker containers, hence making it impossible for
+the VNFs to communicate. On top of that, we found difficulties regarding the
+integration of Docker images in TOSCA definitions and Openstack. These two
+issues are related: the TOSCA definition does not have any keyword to
+specificate in any way that the image used for the VNF definition is a Docker
+image, and Openstack, with the Zun plugin, at the time of the implementation did
+not performed the image pull from any Docker registry. The impossibility to
+easily set the containers ports and the lack of some support between the TOSCA
+definition and the Openstack Zun plugin pushed us to drop Openstack as a
+possible solution and to start looking for another valid VIM component.
 
 \section{Second attempt}
 
@@ -255,8 +259,9 @@ around for other solutions. We started studying proper Docker container
 orchestrators that could offer all the features we needed: container lifecycle
 management, scaling, healing and monitoring. We decided to pick two of the most
 mature and famous ones: Docker Swarm and Kubernetes. The decision to study only
-these two relies on their big community supporting them and the possibility to
-easily found projects that used the aforementioned frameworks.
+these two, relies on the big communities supporting them and the possibility to
+easily find Open Source projects built on them that used the aforementioned
+frameworks.
 
 \subsection{Docker Swarm}
 
@@ -267,21 +272,21 @@ easily found projects that used the aforementioned frameworks.
   \label{chap:archimpl:sec:secondattempt:img:dockerswarm}
 \end{figure}
 
-First we started playing with Docker Swarm. Docker Swarm is a product directly
-made by the Docker Inc., so it seamlessly integrates with other Docker tools
-such as Docker Compose. The installation and set-up is pretty straightforward,
-and the configuration is almost automatically handled by Docker itself. The
-minimum number of nodes in order to create a proper Docker Swarm cluster is of
-three, where one must be a manager node (designed to orchestrate the other
-nodes in the cluster), while the others can be simple workers. Multiple managers
-can coexist in the same cluster, as long as only one effectively operates. The
-others act like backup manager in case the one orchestrating goes down for some
-reason. The networking is given out-of-the box, and the same holds for
-distributed persistence. While this for most of the uses cases can be considered
-a pro, in our specific situation the impossibility to tweak the network
-configuration was a cons, since it was important for us to have the full control
-over the network, especially regarding the SFC implementation, explained better
-in Chapter~\ref{chap:vnf_ns_impl}.
+First we started assessing the Docker Swarm orchestrator. Docker Swarm is a
+product directly made by the Docker Inc., so it seamlessly integrates with other
+Docker tools such as Docker Compose. The installation and set-up is pretty
+straightforward, and the configuration is almost automatically handled by Docker
+itself. The minimum number of nodes needed to create a proper Docker Swarm
+cluster is three, where one must be a manager node (designed to orchestrate the
+other nodes in the cluster), while the others can be simple workers. Multiple
+managers can coexist in the same cluster, as long as only one effectively
+operates. The others act like backup managers in case the one orchestrating goes
+down for some reason. The networking is given out-of-the box, and the same holds
+for distributed persistence. While this for most of the uses cases can be
+considered a pro, in our specific situation the impossibility to tweak the
+network configuration was a cons, since it was important for us to have the full
+control over the network, especially regarding the SFC implementation, explained
+better in Chapter~\ref{chap:vnf_ns_impl}.
 
 \subsection{Kubernetes}
 Kubernetes, as already described in the technology section, is an orchestrator
@@ -290,9 +295,10 @@ virtualization technology. This enables Kubernetes to create an integration with
 Docker. Kubernetes has an architecture based on plug-ins, giving the possibility
 to the users to change part of Kubernetes itself, such as the networking routing
 strategy or the persistence layer. With this flexibility Kubernetes offered to
-us what Docker Swarm was not able to give. Additionally, we had the possibility
-to set custom Domain Name System (DNS) lookups and distribute other internal
-components in order to avoid requests bottleneck.
+us what Docker Swarm was not able to give. Additionally, we developed a custom
+Domain Name System (DNS) lookup process and distributed other internal
+components in order to avoid requests bottleneck (as explained better in
+Section~\ref{chap:archimple:sec:secondattempt:sub:scalability}).
 
 \subsection{Kubernetes configuration}
 \label{chap:archimpl:sec:secondattempt:sec:k8s}
@@ -308,18 +314,21 @@ components in order to avoid requests bottleneck.
   \label{chap:archimpl:sec:secondattempt:img:k8scp}
 \end{figure}
 
-Kubernetes does not have a minimum number of nodes in order to properly work.
+Kubernetes does not require a minimum number of nodes in order to properly work.
 Nonetheless, we decided to use a four node cluster configured in the following
 way: three slaves nodes (also known as \emph{minions}) and one master node. The
 Kubernetes version installed was the 1.11, enabling us to exploit new features
 like a reworked DNS lookup system and new storage features\footnote{A full
   kubernetes log release can be found at:
   \url{https://kubernetes.io/blog/2018/06/27/kubernetes-1.11-release-announcement/}}.
-We initially deployed from the internal Openstack of the University four nodes
-with 4GB of RAM, 10 GB of SSD storage and 2 vCPUs on Ubuntu 16.04 machines (that
-we later swapped with CentOS 7). We performed the installation using the
-official Kubernetes repositories. After the initial installation, we obtained a
-configuration similar to the one illustrated in
+For the initial deployment we relied on an internal Openstack instance installed
+at the University of Padua, creating four nodes with 4GB of RAM, 10GB of SSD
+storage and 2 vCPU on Ubuntu 16.04 machines (that we later swapped with CentOS
+7). We performed the installation using the official Kubernetes repositories,
+taking care of performing an accurate cluster configuration complete with
+additional modules (e.g. networking and distributed persistent storage), as
+better explained in Appendix~\ref{kubernetes}. After the initial installation,
+we obtained a configuration similar to the one illustrated in
 Figure~\ref{chap:archimpl:sec:secondattempt:img:k8scp}. In this figure is
 possible to denote different components on the master node and on the minions,
 which will be described.
@@ -429,28 +438,26 @@ database, had to somehow convert these definition in a suitable YAML for
 Kubernetes, that had in turn to elaborate it and schedule to one minion in the
 cluster. The monitoring and management would remain untouched, as we planned to
 create an image with the integrated EMS tools that provided a seamless
-integration with Docker container. With this setting, the only thing to solve
-was how to convert TOSCA definitions in YAML one. The first thing we started
-thinking about was how to perform the conversion. This topic was quite important
+integration with Docker container. Under these settings, a key issue is the
+conversion of TOSCA definitions in YAML ones. This topic was quite important
 because the TOSCA definition does not really consider the possibility to have an
-alternative virtualization system apart from the hypervisor one. This causes the
-TOSCA definition to be, in our opinion, too much focused on the resources usage
-and granularity aspects such the deployment flavour and the kind of virtual link
-(concept that does not really exists in container based systems) to instantiate.
-Nonetheless, we performed a mapping between most of the TOSCA keywords with some
-of the YAML definitions, in a way that a TOSCA configuration file was able to
-generate a valid YAML deployment. After that, we started thinking instead who,
-in the current architecture, had the task to perform this operation. Initially
-we thought that Kubernetes itself could have been a perfect candidate. From a
-received TOSCA, a Kubernetes component should have validated and translated the
-TOSCA definition to generate a YAML suitable to be finally submitted to the
-Kubernetes API Server. Another feasible approach could have been to create a
-Openbaton plugin in order to convert the TOSCA definition before submitting it
-to Kubernetes for the deployment. This solution had great advantages in terms of
-responsibility separation: in this way only the MANO had to know, for a VIM
-based on Kubernetes, that a conversion was needed. From a Kubernetes
-point-of-view, nothing would have changed, since all the configuration
-conversion would have been performed by Openbaton.
+alternative virtualization system apart from the hypervisor one. In particular,
+we found the Openbaton TOSCA definition to be virtual machine centric, without
+providing the possibility of formulating a agnostic approach to virtualization
+enabling container-based deployments. Nonetheless, we performed a mapping
+between most of the TOSCA keywords with some of the YAML definitions, in a way
+that a TOSCA configuration file was able to generate a valid YAML deployment.
+After that, we started thinking who, in the current architecture, had the task
+to perform this operation. Initially we thought that Kubernetes itself could
+have been a perfect candidate. From a received TOSCA, a Kubernetes component
+should have validated and translated the TOSCA definition to generate a YAML
+suitable to be finally submitted to the Kubernetes API Server. Another feasible
+approach could have been to create a Openbaton plugin in order to convert the
+TOSCA definition before submitting it to Kubernetes for the deployment. This
+solution had great advantages in terms of responsibility separation: in this way
+only the MANO had to know, for a VIM based on Kubernetes, that a conversion was
+needed. From a Kubernetes point-of-view, nothing would have changed, since all
+the configuration conversion would have been performed by Openbaton.
 
 \begin{figure}[t]
   \centering
@@ -477,11 +484,12 @@ prototype of VIM driver or VNFM we gave up, searching for another solution.
 
 \section{Final Design: End-to-end MANO}
 
-The impossibility to develop a custom VIM driver and VNFM manager led us to
-search for an alternative solution. Then, we started to work directly on the
-VIM. The base approach was to create an API Server which in future an Openbaton
-plugin could contact and simply deploy TOSCA definitions, interacting with a set
-of RESTful APIs. We called this simple backend \emph{Harbor}.
+The impossibility to develop a custom VIM driver and VNFM manager, given the
+resources at hand, led us to search for an alternative solution. Then, we
+started to work directly on the VIM. The base approach was to create an API
+Server which in future an Openbaton plugin could contact and simply deploy TOSCA
+definitions, interacting with a set of RESTful APIs. We called this simple
+backend \emph{Harbor}.
 
 \subsection{Harbor: extending the capabilities}
 \label{chap:archimpl:sec:secondattempt:sub:harbor}
@@ -530,12 +538,12 @@ Harbor, in fact, ended up substituting it. We then started to think about the
 challenges of integrating the SFC structure inside a Kubernetes cluster. We
 identified the following challenges:
 \begin{itemize}
-\item whole system scalability: we wanted that every component had the
-  possibility to scale during intense workloads, without the necessity of human
-  intervention.
-\item ingress and egress points: there should be at least two points in the
-  cluster were the packet enters and exits;
-\item dynamic package routing: as formulated by one of our requirements, packet
+\item whole system scalability: we want for every component to have the
+  possibility of scaling during intense workloads, without the necessity of
+  human intervention;
+\item ingress and egress points: specialized entities of our framework handling
+  SFC encapsulation/decapsulation session data;
+\item dynamic packet routing: as formulated by one of our requirements, packet
   routing had to be dynamic. We immediately identified a possibility to create
   this functionality with the already-built features of Kubernetes;
 \item a framework to automatically forward the data elaborated by the VNF: we
@@ -545,40 +553,43 @@ identified the following challenges:
 \item connection status: having ingress and egress points implicates the
   necessity to save some persistent data in a distributed manner.
 \end{itemize}
+In the following, we provide some details on how we achieved the aforementioned
+properties.
 
 \subsubsection{Scalability considerations}
+\label{chap:archimple:sec:secondattempt:sub:scalability}
 When adopting Kubernetes, we realized the possibility to make every component
 easily scalable. Indeed, all the following components can be described in
-Kubernetes as a \verb!Service!. For a \verb!Service! a consequent
-\verb!Deployment! can be associated, giving the possibility for it to scale
-under heavy workloads. The introduction of scalability meant that it was not
-possible to refer to the components based on their IP, but we had to refer to
-their service name. As it will be explained later, this introduced challenges
-especially for the ingress and egress points of our network, that have to keep a
-connection with the sender and the receiver. On top of that, the scalability and
-the required DNS lookups meant a possible bottleneck. With a great number of
-components and VNFs constantly querying the centralized Kubernetes DNS lookup
-system a performance degradation could have easily happened. We decided to
-distribute the DNS service too, integrating the CoreDNS Kubernetes default
-service with \emph{Dnsmasq}, a DNS server able to perform query caching for
-faster name resolution. We created a Dnsmasq \verb!DaemonSets!, which in turn
-deployed one Pod with Dnsmasq running inside for every minion in the cluster. At
-the time of the VNF launch, we set that the DNS resolution should pass first for
-the local Dnsmasq DNS, and then for the Kubernetes CoreDNS service. In this way,
-we were able to distribute the DNS query workload from the master, using a local
-caching system to speed up the name resolution between services.
+Kubernetes as a \verb!Service!. A \verb!Service! can have zero or many
+\verb!Deployment!s, giving the possibility for it to scale under heavy
+workloads. Contemplating for scalability meant that it was not possible to refer
+to the components based on their IP, but we had to refer to their service name.
+As it will be explained later, this introduced challenges especially for the
+ingress and egress points of our network, that have to keep a connection with
+the sender and the receiver. On top of that, the scalability and the required
+DNS lookups meant a possible bottleneck. With a great number of components and
+VNFs constantly querying the centralized Kubernetes DNS lookup system a
+performance degradation could have easily happened. We decided to distribute the
+DNS service too, integrating the CoreDNS Kubernetes default service with
+\emph{Dnsmasq}, a DNS server able to perform query caching for faster name
+resolution. We created a Dnsmasq \verb!DaemonSets!, which in turn deployed one
+Pod with Dnsmasq running inside for every minion in the cluster. At the time of
+the VNF launch, we set that the DNS resolution should pass first for the local
+Dnsmasq DNS, and then for the Kubernetes CoreDNS service. In this way, we were
+able to distribute the DNS query workload from the master, using a local caching
+system to speed up the name resolution between services.
 
 \subsubsection{Ingress and Egress: Ironhide}
 As just said, the whole framework needs to have and entry and an exit point.
-These, defined as \emph{Ingress} and \emph{Egress} points, are performed by
-\emph{Ironhide}. Ironhide hides the whole packet processing to the sender $S$
-and the receiver $R$. When a client $S$ performs a request to $R$, the packet
-actually goes through Ironhide, who has an internal classifier that it is able
-to recognize the type of connection and to choose the right NS the packet has to
-go through. This process is fundamental since it keeps the connection between
-$S$ and $R$ up, for both TCP and UDP based communications. Since the connection
-needs to be end-to-end, the state of the connections are saved in the
-\emph{Roulette Controller} component.
+These entities, defined as \emph{Ingress} and \emph{Egress} points, are
+provisioned by \emph{Ironhide}. Ironhide hides the whole packet processing to
+the sender $S$ and the receiver $R$. When a client $S$ performs a request to
+$R$, the packet actually goes through Ironhide, who has an internal classifier
+that it is able to recognize the type of connection and to choose the right NS
+the packet has to go through. This process is fundamental since it keeps the
+connection between $S$ and $R$ up, for both TCP and UDP based communications.
+Since the connection needs to be end-to-end, the state of the connections are
+saved in the \emph{Roulette Controller} component.
 
 \subsubsection{Dynamic package routing: the Roulette component}
 \label{chap:prjan:sec:tech:sub:SFC:sub:roulette}
@@ -594,14 +605,14 @@ Section~\ref{chap:background:sec:sfc}). Finally, thanks to this label, every VNF
 knows the packet's chain and it will correctly forward the it to the next VNF.
 
 \subsubsection{Keeping the connection status}
-The scalability challenge introduces new issues in the system. The most
-important is keeping up stateful connections, since the ingress and egress
-points could be more than one container. With this consideration in mind, we
-started thinking at how and where keeping information about the ingress
-container handling the connection with the sender $S$ and about the egress
-container talking with the receiver $R$. Since the Roulette component has a
-complete end-to-end topology view of the system, we decided to store these
-additional information (we called it \emph{endpoints}) in it.
+Designing for scalability gave rise to new issues. The most important is keeping
+up stateful connections, since the ingress and egress points could be more than
+one container. With this consideration in mind, we started thinking at how and
+where keeping information about the ingress container handling the connection
+with the sender $S$ and about the egress container talking with the receiver
+$R$. Since the Roulette component has a complete end-to-end topology view of the
+system, we decided to store these additional information (we called it
+\emph{endpoints}) in it.
 
 \subsubsection{A Service Function Forwarder: Astaire}
 As is possible to denote, an SFC-unaware VNF can not elaborate a packet directly
@@ -618,7 +629,7 @@ specification, Astaire is defined as a SFF.
 
 \subsection{Discussion}
 At the end, we were able to create a scalable architecture that followed the
-ETSI MANO standard, with Kubernetes as VIM and Harbor has MANO. We faced
+ETSI MANO standard, with Kubernetes as VIM and Harbor as MANO. We faced
 additional challenges regarding the system scalability, that we solved using the
 Roulette controller. We eased the creation of VNFs with Astaire, and we created
 proper ingress and egress points with Ironhide, that supported scalability
