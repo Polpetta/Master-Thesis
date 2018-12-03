@@ -34,7 +34,7 @@ Summing up, Docker employs only the $0,08\%$ of the overall time spent for the
 test, underlining how isolating the process with a set of defined policy and 
 avoiding a virtualized kernel boot-up saves a considerable amount of time.
 
-\begin{figure}[H]
+\begin{figure}[t]
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[scale=0.4]{docker_vs_vmBarplotGraph}
@@ -53,16 +53,11 @@ in range $0-1$.}
       Virtual Box is very high compared to the time required to the overall
       Docker containers to boot. A single VirtualBox instance requires on
       average 20,211 seconds to boot up, while a container requires, on average,
-      only 0.016 seconds. The main reason behind this difference, as already
-      explained in other parts of this thesis, it is caused by the guest's
-      kernel that has to initialized itself, before starting any program. On
-      Docker, instead, the kernel is the same of the host, so the only
-      operations needed are to isolate the program from the rest of the OS and
-      add it to the process list.}
+      only 0.016 seconds.}
     \label{chap:tests:sec:dockervsvb:subimg:plots}
 \end{figure}
 
-\begin{table}[t]
+\begin{table}[h]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|c|c}
@@ -93,22 +88,12 @@ directly with Docker and not through the orchestrator we used in the thesis
 development, Kubernetes. The following measurement will allow us to see the time
 required in order to deploy an SFC of different elements in a Kubernetes
 environment. The deployment consists in a Pod inside a Deployment definition
-with a related Service, to simulate a real VNF. After the Pod start-up, a 
-request
-is made to a back-end designed to count the chain elements that have 
-successfully
-boot-up returning, eventually, the overall start up timing.
-
-% TODO: missing YAML definition: [language=YAML]
-%https://tex.stackexchan
-%ge.com/questions/152829/how-can-i-highlight-yaml-code-in
-%- a-pretty-way-with-listings
+with a related Service, to simulate a real VNF. After the Pod start-up, a
+request is made to a back-end designed to count the chain elements that have
+successfully boot-up returning, eventually, the overall start up timing.
 \lstinputlisting[caption={Kubernetes YAML configuration that has been used to
     simulate a single VNF deployment}, captionpos=b,
   language=yaml]{res/code/sfc_test.yaml}
-
-\vspace{0.5cm}
-
 \noindent As is possible to see from the YAML definition, the test involved, for
 every launch (that included an $N = 100$, for a total for 1000 tests), the
 download of the container image from the Docker hub repositories. This, while it
