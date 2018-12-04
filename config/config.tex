@@ -91,6 +91,7 @@
 %**************************************************************
 % Impostazioni di hyperref
 %**************************************************************
+\definecolor{linkgrey}{RGB}{96,96,96}
 \hypersetup{
     %hyperfootnotes=false,
     %pdfpagelabels,
@@ -115,9 +116,9 @@
     pdfhighlight=/O,
     %nesting=true,
     %frenchlinks,
-    urlcolor=webbrown,
-    linkcolor=webbrown,
-    citecolor=webgreen,
+    urlcolor=linkgrey,
+    linkcolor=linkgrey,
+    citecolor=linkgrey,
     %pagecolor=RoyalBlue,
     %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,
     pdftitle={\myTitle},
@@ -323,7 +324,7 @@
 
 \titleformat{\chapter}[display]
   {\normalsize \huge  \color{black}}%
-  {\flushright\normalsize \color{Pantone}%
+  {\flushright\normalsize \color{linkgrey}%
    \MakeUppercase{\chaptertitlename}\hspace{1ex}%
    {\fontsize{60}{60}\selectfont\thechapter}}%
   {10 pt}%
