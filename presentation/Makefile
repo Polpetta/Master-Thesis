@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 COMPILER_OPTIONS= pdflatex -interaction=nonstopmode
-OUTPUT_NAME= GameBankPresentation
+OUTPUT_NAME= ThesisPresentation
 
 
 all:
