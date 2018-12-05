@@ -244,4 +244,4 @@ TSWLatexianTemp*
 *.fuse*
 *.pdf
 .directory
-res/listOfSections.tex
+*listOfSections.tex
