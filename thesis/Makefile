@@ -5,6 +5,7 @@ OUTPUT_NAME= Thesis
 LIST_NAME= listOfSections.tex
 PATH_OF_CONTENTS= res/sections
 MAIN_FILE= main
+SOURCE_DIR= thesis/res/sections
 export PRINT= n
 
 SHELL := /bin/bash #Need bash not shell
@@ -33,8 +34,8 @@ compile: clean
 			echo "Adding $$i into $(LIST_NAME)"; \
 			echo "\input{$$i}" >> res/$(LIST_NAME); \
 		done; \
- 	else \
- 		for i in $(FILE_LIST); do \
+	else \
+		for i in $(FILE_LIST); do \
 			echo "Adding $$i into $(LIST_NAME)"; \
 			echo "\input{$$i}" >> res/$(LIST_NAME); \
 		done; \
@@ -50,8 +51,8 @@ compile: clean
 clean:
 	git clean -Xfd
 	if [[ -a "$(OUTPUT_NAME)" ]]; then rm -rv $(OUTPUT_NAME)/; fi;
-	
+
 spellcheck:
-	../tools/spellchecker/spellcheck.sh $(LANG)
+	../tools/spellchecker/spellcheck.sh $(LANG) /$(SOURCE_DIR)/*.tex
 
 ci: spellcheck compile
