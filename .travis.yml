@@ -15,10 +15,12 @@ addons:
     - texlive-fonts-recommended
     - texlive-lang-italian
     - latex-xcolor
+    - texlive-publishers
     - pgf
     - lmodern
     - aspell
     - aspell-en
+    - latex-beamer
 script:
 - make thesis -B MODE=ci LANG=en OUTPUT_NAME=ThesisNoPrint
 - make presentation -B MODE=ci LANG=en OUTPUT_NAME=Presentation
