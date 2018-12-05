@@ -242,6 +242,6 @@ TSWLatexianTemp*
 *.spl
 
 *.fuse*
-Thesis.pdf
+*.pdf
 .directory
 res/listOfSections.tex
