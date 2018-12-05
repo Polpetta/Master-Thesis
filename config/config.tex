@@ -162,6 +162,7 @@
 %}
 \definecolor{codegreen}{RGB}{0,153,0}
 \definecolor{codegray}{RGB}{96,96,96}
+\definecolor{darkgray}{RGB}{66,66,66} 
 \definecolor{codered}{RGB}{204,0,0}
 \definecolor{codeblue}{RGB}{0,0,153}
 \definecolor{codelightblue}{RGB}{0,204,204}
@@ -169,7 +170,7 @@
 \definecolor{backcolour}{RGB}{235,235,235}
 
 \newcommand\YAMLcolonstyle{\color{black}\footnotesize}
-\newcommand\YAMLkeystyle{\color{blue}\footnotesize}
+\newcommand\YAMLkeystyle{\color{darkgray}\footnotesize}
 \newcommand\YAMLvaluestyle{\color{black}\footnotesize}
 
 \makeatletter
@@ -182,21 +183,21 @@
 \expandafter{\language@yaml}
 {
   keywords={true,false,null,y,n},
-  keywordstyle=\color{codeblue}\bfseries,
+  keywordstyle=\color{darkgray}\bfseries,
   basicstyle=\YAMLkeystyle\ttfamily,                                 % assuming a key comes first
   sensitive=false,
   comment=[l]{\#},
   morecomment=[s]{/*}{*/},
   commentstyle=\color{codegrey}\ttfamily,
   stringstyle=\YAMLvaluestyle\ttfamily,
-  moredelim=[l][\color{codered}]{\&},
-  moredelim=[l][\color{codered}]{*},
+  moredelim=[l][\color{black}]{\&},
+  moredelim=[l][\color{black}]{*},
   moredelim=**[il][\YAMLcolonstyle{:}\YAMLvaluestyle]{:},   % switch to value style at :
   morestring=[b]',
   morestring=[b]",
   literate =    {---}{{\ProcessThreeDashes}}3
-                {>}{{\textcolor{codered}\textgreater}}1     
-                {|}{{\textcolor{codered}\textbar}}1 
+                {>}{{\textcolor{black}\textgreater}}1     
+                {|}{{\textcolor{black}\textbar}}1 
                 {\ -\ }{{\ -\ }}3,
 }
 
@@ -204,7 +205,7 @@
 \lst@AddToHook{EveryLine}{\ifx\lst@language\language@yaml\YAMLkeystyle\fi}
 \makeatother
 
-\newcommand\ProcessThreeDashes{\hspace*{0.4cm}\llap{\color{codered}\footnotesize-{-}-}}
+\newcommand\ProcessThreeDashes{\hspace*{0.4cm}\llap{\color{black}\footnotesize-{-}-}}
 
 \colorlet{punct}{red!60!black}
 \definecolor{background}{HTML}{EEEEEE}
@@ -222,22 +223,22 @@
     %frame=lines,
     %backgroundcolor=\color{background},
     literate=
-     *{0}{{{\color{numb}0}}}{1}
-      {1}{{{\color{numb}1}}}{1}
-      {2}{{{\color{numb}2}}}{1}
-      {3}{{{\color{numb}3}}}{1}
-      {4}{{{\color{numb}4}}}{1}
-      {5}{{{\color{numb}5}}}{1}
-      {6}{{{\color{numb}6}}}{1}
-      {7}{{{\color{numb}7}}}{1}
-      {8}{{{\color{numb}8}}}{1}
-      {9}{{{\color{numb}9}}}{1}
-      {:}{{{\color{punct}{:}}}}{1}
-      {,}{{{\color{punct}{,}}}}{1}
-      {\{}{{{\color{delim}{\{}}}}{1}
-      {\}}{{{\color{delim}{\}}}}}{1}
-      {[}{{{\color{delim}{[}}}}{1}
-      {]}{{{\color{delim}{]}}}}{1},
+     *{0}{{{\color{black}0}}}{1}
+      {1}{{{\color{black}1}}}{1}
+      {2}{{{\color{black}2}}}{1}
+      {3}{{{\color{black}3}}}{1}
+      {4}{{{\color{black}4}}}{1}
+      {5}{{{\color{black}5}}}{1}
+      {6}{{{\color{black}6}}}{1}
+      {7}{{{\color{black}7}}}{1}
+      {8}{{{\color{black}8}}}{1}
+      {9}{{{\color{black}9}}}{1}
+      {:}{{{\color{darkgray}{:}}}}{1}
+      {,}{{{\color{darkgray}{,}}}}{1}
+      {\{}{{{\color{darkgray}{\{}}}}{1}
+      {\}}{{{\color{darkgray}{\}}}}}{1}
+      {[}{{{\color{darkgray}{[}}}}{1}
+      {]}{{{\color{darkgray}{]}}}}{1},
 }
 
 \lstdefinestyle{mystyle}{
