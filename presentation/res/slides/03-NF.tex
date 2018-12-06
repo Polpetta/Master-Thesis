@@ -1,27 +1,32 @@
-\begin{frame}{5G - Network Function functionalities}
-  Network Functions can perform:
+\begin{frame}{5G - Network Function \& SFC}
+
   \begin{itemize}
-  \item<1-> Packet elaboration
-  \item<2-> Deep Packet Inspection
-  \item<3-> Firewalling
-  \item<4-> Header enrichment
-  \item<5-> Compression
-  \item<6-> Traffic Layer optimization
-  \item<7-> \dots
+  \item[]<1-> Network Functions can perform:
+    \begin{itemize}
+    \item<2-> Packet elaboration
+    \item<3-> Deep Packet Inspection
+    \item<4-> Firewalling
+    \item<5-> Header enrichment
+    \item<6-> Compression
+    \item<7-> Traffic Layer optimization
+    \item<8-> \dots
+    \end{itemize}
+  \item[]<9-> An ordered NF sequence forms an SFC
+
   \end{itemize}
 
   % ... and how you can imagine all the mentioned network function, deployed in
   % a hardwarized manner can be a hell to manage
   \begin{textblock*}{5cm}(1.25cm,1.4cm)
     \begin{itemize}
-      \item[]<8-> \includegraphics[scale=0.5]{server_spaghetti}
+      \item[]<10-> \includegraphics[scale=0.5]{server_spaghetti}
     \end{itemize}
   \end{textblock*}
 \end{frame}
 
 \begin{frame}{5G - \textit{Virtual} Network Function}
   \begin{itemize}
-    \item[]<1-> Why don't we go ``virtual''?
+    \item[]<1-> Why do not we go ``virtual''?
   \end{itemize}
 
   \begin{itemize}

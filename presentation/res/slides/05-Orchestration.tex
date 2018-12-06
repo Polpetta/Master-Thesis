@@ -1,5 +1,5 @@
 \section{Architectural proposal}
-\begin{frame}{Orchestration}
+\begin{frame}{Orchestrators}
   \begin{itemize}
   \item<1-> VNFs can be orchestrated
   \item<2-> Serveral orchestrators are available
@@ -31,6 +31,19 @@
   \end{textblock*}
 \end{frame}
 
-\begin{frame}{Proposal}
+\begin{frame}{MANagement and Orchestration}
+  Tasks:
+  \begin{itemize}
+  \item<1-> Manage VNFs lifecycle
+  \item<2-> Deploy VNF and orchestrate\\ Service Function Chains (SFC)
+  \item<3-> Holds the SFC topology view
+  \item<4-> Contains data repositories
+  \item<5-> Can handle one or multiple Point-of-Presence (PoP)
+  \end{itemize}
 
+  \begin{textblock*}{5cm}(7cm,2.5cm)
+    \begin{itemize}
+    \item[] \includegraphics[scale=1]{orchestra}
+    \end{itemize}
+  \end{textblock*}
 \end{frame}
