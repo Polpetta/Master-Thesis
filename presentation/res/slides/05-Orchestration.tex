@@ -1,0 +1,59 @@
+\section{Architectural proposal}
+\begin{frame}{Section studied}
+  \begin{figure}
+    \centering
+    \includegraphics[scale=0.75]{etsimano2}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Orchestrators}
+  \begin{itemize}
+  \item<1-> Virtual network functions (VNFs) can be\\ orchestrated
+  \item<2-> Several orchestrators are available
+  \item<7-> Act as Virtual Infrastructure Manager (VIM)
+  \end{itemize}
+
+  \begin{textblock*}{5cm}(2cm,6.5cm)
+    \begin{itemize}
+    \item[]<3-> \includegraphics[scale=0.25]{openstack_logo}
+    \end{itemize}
+  \end{textblock*}
+
+  \begin{textblock*}{5cm}(4cm,1cm)
+    \begin{itemize}
+    \item[]<4-> \includegraphics[scale=0.5]{dockerswarm_logo}
+    \end{itemize}
+  \end{textblock*}
+
+  \begin{textblock*}{5cm}(8cm,3cm)
+    \begin{itemize}
+    \item[]<5-> \includegraphics[scale=0.5]{dockercompose_logo}
+    \end{itemize}
+  \end{textblock*}
+
+  \begin{textblock*}{5cm}(6.8cm,5.5cm)
+    \begin{itemize}
+    \item[]<6-> \includegraphics[scale=0.25]{kubernetes_logo}
+    \end{itemize}
+  \end{textblock*}
+\end{frame}
+
+\begin{frame}{MANagement and Orchestration}
+  Tasks
+  \begin{itemize}
+  \item<1-> Deploy VNF and orchestrate Service Function Chains (SFC)
+  \item<2-> Manage VNFs lifecycle
+  \item<3-> Contains data repositories
+  \item<4-> Can handle one or multiple Point-of-Presence (PoP)
+  \end{itemize}
+
+%   \begin{textblock*}{5cm}(6.9cm,1.5cm)
+%     \includegraphics[scale=0.48]{etsimano}
+%   \end{textblock*}
+
+  \begin{textblock*}{5cm}(2cm,6.5cm)
+    \begin{itemize}
+    \item[] \includegraphics[scale=0.6]{orchestra}
+    \end{itemize}
+  \end{textblock*}
+\end{frame}
