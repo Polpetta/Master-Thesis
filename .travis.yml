@@ -34,7 +34,7 @@ deploy:
   file:
     - thesis/ThesisNoPrint.pdf
     - thesis/ThesisPrint.pdf
-    - presentation/Presentation.pdf
+    - presentation/ThesisPresentation.pdf
   skip_cleanup: true
   on:
     repo: Polpetta/Master-Thesis
