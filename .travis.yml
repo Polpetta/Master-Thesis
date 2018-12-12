@@ -25,7 +25,9 @@ script:
 - make thesis -B MODE=ci LANG=en OUTPUT_NAME=ThesisNoPrint
 - make presentation -B MODE=ci LANG=en OUTPUT_NAME=Presentation
 before_deploy:
+- mv thesis/ThesisNoPrint.pdf{,.release}
 - make thesis -B OUTPUT_NAME=ThesisPrint PRINT=y
+- mv thesis/ThesisNoPrint.pdf.release thesis/ThesisNoPrint.pdf
 - git fetch --tags
 deploy:
   provider: releases
@@ -34,7 +36,7 @@ deploy:
   file:
     - thesis/ThesisNoPrint.pdf
     - thesis/ThesisPrint.pdf
-    - presentation/ThesisPresentation.pdf
+    - presentation/Presentation.pdf
   skip_cleanup: true
   on:
     repo: Polpetta/Master-Thesis
