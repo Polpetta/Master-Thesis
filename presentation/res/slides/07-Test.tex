@@ -17,18 +17,22 @@
   % TODO insert data?
   \begin{figure}
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
       \includegraphics[width=\textwidth]{docker_vs_vmBarplotGraph}
     \end{subfigure}
     ~
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
       \includegraphics[width=\textwidth]{docker_vs_vmBoxplotGraph}
     \end{subfigure}
   \end{figure}
+
+  \noindent $N = 100$ per technology
+
   \begin{itemize}
   \item Average start up time for Docker: 0.016 seconds
   \item Average start up time for Virtual Box: 20.211 seconds
   \end{itemize}
+
 \end{frame}
 
 % \subsection{SFC length startup}
@@ -40,7 +44,9 @@
 
   \vspace*{1cm}
 
-  Overhead due to
+  \noindent $N = 100$ per SFC \newline
+
+  \noindent Overhead due to
   \begin{itemize}
   \item Pod scheduling
   \item Resource allocation
